@@ -1,7 +1,7 @@
 {
-  "name": "namup-ke",
-  "version": "1.0.0",
-  "description": "National Missing and Unidentified Persons Kenya",
+  "name": "calendar-app",
+  "version": "0.0.1",
+  "description": "simple calendar app",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
@@ -11,7 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "keywords": [],
-  "author": "Larry Miami",
+  "author": "Josef Nagy",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.1",

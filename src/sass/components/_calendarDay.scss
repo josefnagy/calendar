@@ -1,0 +1,57 @@
+.calendar__day {
+  border: 1px solid black;
+  display: grid;
+  justify-content: left;
+  align-items: end;
+  transition: all 0.3s;
+
+  background: linear-gradient(
+    to top right,
+    rgba(0, 0, 0, 0.15),
+    rgba(55, 55, 58, 0.15)
+  );
+
+  &:hover {
+    background-color: $primary;
+    cursor: pointer;
+  }
+}
+
+.prev,
+.next {
+  background: none;
+  border: 1px solid $event-gray;
+  color: $event-gray;
+}
+
+.holiday {
+  border: 1px solid coral;
+}
+
+.ranni {
+  @include event("ranni");
+}
+
+.denni {
+  @include event("denni");
+}
+
+.odpoledni {
+  @include event("odpoledni");
+}
+
+.nocni {
+  @include event("nocni");
+}
+
+.nemocenska {
+  @include event("nemocenska");
+}
+
+.paragraf {
+  @include event("paragraf");
+}
+
+.preventivka {
+  @include event("preventivka");
+}

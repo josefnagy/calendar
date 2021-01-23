@@ -15,5 +15,9 @@ body {
   font-size: 1.5rem;
   color: coral;
 
-  background: linear-gradient(to left, $primary, $secondary);
+  background: linear-gradient(to right, $background-black, $background-gray);
+}
+
+#root::before {
+  z-index: -1;
 }
