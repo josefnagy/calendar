@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { prevMonthDate, nextMonthDate } from "../js/cal";
 
 const Arrows = ({ month, year, setMonth, setYear, currMonth, currYear }) => {

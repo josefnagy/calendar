@@ -25,13 +25,14 @@ module.exports = {
     "import/no-unresolved": "error",
     "import/named": "error",
     "prettier/prettier": "error",
-    "react/no-typos": "error",
-    "react/no-unused-state": "error",
-    "react/jsx-no-bind": "error",
+    "react/no-typos": "warn",
+    "react/no-unused-state": "warn",
+    "react/prop-types": "warn",
+    "react/jsx-no-bind": "off",
     "array-callback-return": "error",
     "consistent-return": "error",
     "babel/no-invalid-this": "error",
-    "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
   settings: {
     react: {

@@ -5,6 +5,7 @@ import "./sass/main.scss";
 
 import "./js/vendor/grained";
 
+// eslint-disable-next-line no-undef
 grained("#root", {
   animate: true,
   patternWidth: 100,
