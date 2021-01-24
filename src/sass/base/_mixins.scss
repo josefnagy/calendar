@@ -11,3 +11,11 @@
     text-transform: uppercase;
   }
 }
+
+@mixin button-reset {
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}

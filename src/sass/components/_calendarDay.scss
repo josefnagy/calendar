@@ -13,6 +13,7 @@
 
   &:hover {
     background-color: $primary;
+    color: black;
     cursor: pointer;
   }
 }
@@ -20,7 +21,7 @@
 .prev,
 .next {
   background: none;
-  border: 1px solid $event-gray;
+  border: 1px solid $prev-gray;
   color: $event-gray;
 }
 

@@ -1,9 +1,13 @@
-$primary: #cc5333;
+$yellow: #eeff05;
+
+// $primary: #cc5333;
+$primary: $yellow;
 $secondary: #23074d;
 
 $background-black: #0a0808;
 $background-gray: #34211f;
 
 $event-gray: #676464;
+$prev-gray: hsla(0, 1%, 40%, 0.3);
 
 $font: "Raleway", sans-serif;

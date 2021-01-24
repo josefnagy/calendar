@@ -1,0 +1,61 @@
+.header__arrows {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & button:not(:last-of-type) {
+    margin-right: 3rem;
+  }
+}
+
+.arrows__button-left {
+  @include button-reset;
+  width: 3.5rem;
+  transform: rotate(180deg);
+
+  &:hover {
+    .arrow {
+      fill: $primary;
+    }
+  }
+}
+.arrows__button-right {
+  @include button-reset;
+  width: 3.5rem;
+  margin-top: 5px;
+
+  &:hover {
+    .arrow {
+      fill: $primary;
+    }
+  }
+}
+
+.button-today {
+  @include button-reset;
+  text-transform: uppercase;
+  color: white;
+  position: relative;
+  transition: all 0.4s;
+
+  &:hover {
+    &::before {
+      position: absolute;
+      content: "";
+      top: 2.3rem;
+      left: -1.4rem;
+      width: 72px;
+      height: 35px;
+      border: 1px solid $primary;
+      background-color: $primary;
+      z-index: -1;
+    }
+
+    color: black;
+  }
+}
+
+.arrow {
+  fill: $event-gray;
+  transition: all 0.4s;
+}
