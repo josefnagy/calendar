@@ -27,6 +27,7 @@ const App = () => {
   const [day, setDay] = useState(currDay);
   const [month, setMonth] = useState(currMonth);
   const [year, setYear] = useState(currYear);
+  const currentDate = [currYear, currMonth, currDay];
 
   return (
     <div className="app-container">
@@ -45,7 +46,7 @@ const App = () => {
         </div>
       </header>
       <main className="main">
-        <Calendar month={month} year={year} day={day} />
+        <Calendar month={month} year={year} today={currentDate} />
       </main>
     </div>
   );

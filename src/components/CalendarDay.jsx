@@ -8,6 +8,7 @@ const CalendarDay = ({ day }) => {
         ${day.when}
         ${day.holiday !== "" ? "holiday" : ""}
         ${day.event !== "" ? day.event.type : ""}
+        ${day.today ? "today" : ""}
       `}
     >
       {day.day}
