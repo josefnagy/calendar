@@ -1,10 +1,14 @@
 .calendar__day {
   border: 1px solid black;
   display: grid;
-  justify-content: left;
-  align-items: end;
+  grid-template-columns: 40% auto;
+  grid-template-rows: 50% auto;
   transition: all 0.3s;
-  //
+  width: 100%;
+
+  ul {
+    list-style-type: none;
+  }
 
   background: linear-gradient(
     to top right,
@@ -16,6 +20,31 @@
     background-color: $primary;
     color: black;
     cursor: pointer;
+  }
+
+  .events {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+
+    font-size: 1.1rem;
+    color: $event-gray;
+    text-transform: uppercase;
+    text-shadow: none;
+    text-align: right;
+    padding: 0.5rem 0.5rem 0 0;
+  }
+
+  .notices {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    text-shadow: none;
+  }
+
+  .day {
+    grid-column: 1 / 2;
+    grid-row: 12 / 3;
+    font-size: 6rem;
+    text-shadow: none;
   }
 }
 
@@ -36,10 +65,12 @@
   &::after {
     content: "";
     position: absolute;
+    left: 0;
+    bottom: 0;
     width: 80px;
     height: 80px;
     background: $primary;
-    clip-path: circle(65% at 26% 80%);
+    clip-path: circle(65% at 35% 80%);
     z-index: -1;
     text-shadow: none;
   }

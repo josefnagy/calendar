@@ -103,6 +103,13 @@ const events = [
     label: "Ranní",
   },
   {
+    day: 5,
+    month: 1,
+    year: 2021,
+    type: "preventivka",
+    label: "Preventivka",
+  },
+  {
     day: 12,
     month: 1,
     year: 2021,
@@ -295,7 +302,7 @@ const createCalendar = (setYear, setMonth) => {
         return holiday.day === i && holiday.month === prevMonth;
       });
 
-      const event = events.find((event) => {
+      const eventsInADay = events.filter((event) => {
         return (
           event.day === i &&
           event.month === prevMonth &&
@@ -303,19 +310,20 @@ const createCalendar = (setYear, setMonth) => {
         );
       });
 
-      calendar.push({
+      const day = {
         day: i,
         month: prevMonth,
         year: prevMonthsYear,
         when: "prev",
         holiday: holiday ? holiday.name : "",
-        event: event
-          ? {
-              type: event.type,
-              label: event.label,
-            }
-          : "",
+        events: [],
+      };
+
+      eventsInADay.forEach((event) => {
+        day.events.push(event);
       });
+
+      calendar.push(day);
     }
   }
   for (let i = 1; i <= daysInMonth; i++) {
@@ -323,7 +331,7 @@ const createCalendar = (setYear, setMonth) => {
       return holiday.day === i && holiday.month === month;
     });
 
-    const event = events.find((event) => {
+    const eventsInADay = events.filter((event) => {
       return event.day === i && event.month === month && event.year === year;
     });
 
@@ -333,39 +341,38 @@ const createCalendar = (setYear, setMonth) => {
       year,
       when: "current",
       holiday: holiday ? holiday.name : "",
-      event: event
-        ? {
-            type: event.type,
-            label: event.label,
-          }
-        : "",
+      events: [],
     };
+
+    eventsInADay.forEach((event) => {
+      day.events.push(event);
+    });
     calendar.push(day);
   }
   for (let i = 1; i <= nextMonthDaysToShow; i++) {
     const holiday = holidays.find((holiday) => {
       return holiday.day === i && holiday.month === nextMonth;
     });
-    const event = events.find((event) => {
+    const eventsInADay = events.filter((event) => {
       return (
         event.day === i &&
         event.month === nextMonth &&
         event.year === nextMonthsYear
       );
     });
-    calendar.push({
+
+    const day = {
       day: i,
       month: nextMonth,
       year: nextMonthsYear,
       when: "next",
       holiday: holiday ? holiday.name : "",
-      event: event
-        ? {
-            type: event.type,
-            label: event.label,
-          }
-        : "",
+      events: [],
+    };
+    eventsInADay.forEach((event) => {
+      day.events.push(event);
     });
+    calendar.push(day);
   }
 
   console.log(calendar);
