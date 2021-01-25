@@ -10,7 +10,7 @@
 
 .arrows__button-left {
   @include button-reset;
-  width: 3.5rem;
+  width: 1.5rem;
   transform: rotate(180deg);
 
   &:hover {
@@ -21,7 +21,7 @@
 }
 .arrows__button-right {
   @include button-reset;
-  width: 3.5rem;
+  width: 1.5rem;
   margin-top: 5px;
 
   &:hover {
@@ -45,7 +45,7 @@
     left: -1.4rem;
     width: 72px;
     height: 35px;
-    // border: 1px solid $primary;
+
     transition: all 0.2s;
     z-index: -1;
   }
