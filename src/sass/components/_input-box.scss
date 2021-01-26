@@ -10,13 +10,11 @@
   font-weight: 300;
   color: white;
 
-  input {
-  }
-
   &:focus {
     border-bottom: 1px solid white;
   }
-  &:focus + .input-label {
+  &:focus + .input-label,
+  &:valid + .input-label {
     color: $event-gray;
     font-size: 1.2rem;
     transform: translateY(-25px);

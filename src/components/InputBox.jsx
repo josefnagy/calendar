@@ -3,7 +3,7 @@ import React from "react";
 const InputBox = () => {
   return (
     <div className="input__container">
-      <input id="input" className="input-box" type="text" />
+      <input id="input" className="input-box" type="text" required />
       <label className="input-label" htmlFor="input">
         note ...
       </label>

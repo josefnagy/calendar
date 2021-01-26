@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Calendar from "./components/Calendar.jsx";
 import Arrows from "./components/Arrows.jsx";
 
-import InputBox from "./components/InputBox.jsx";
+// import InputBox from "./components/InputBox.jsx";
 
 const date = new Date();
 const currDay = date.getDate();
@@ -36,7 +36,7 @@ const App = () => {
       <aside className="aside"></aside>
       <header className="header">
         <div className="header__date">{`${monthsName[month - 1]} ${year}`}</div>
-        <InputBox />
+        {/* <InputBox /> */}
         <div className="header__arrows">
           <Arrows
             month={month}
