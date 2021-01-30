@@ -18,6 +18,11 @@ body {
   background: linear-gradient(to right, $background-black, $background-gray);
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
 #root::before {
   z-index: -1;
 }

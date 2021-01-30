@@ -9,21 +9,6 @@ const daysInWeek = [
   "Neděle",
 ];
 
-const monthsName = [
-  "Leden",
-  "Únor",
-  "Březen",
-  "Duben",
-  "Květen",
-  "Červen",
-  "Červenec",
-  "Srpen",
-  "Září",
-  "Říjen",
-  "Listopad",
-  "Prosinec",
-];
-
 const holidays = [
   {
     day: 1,
@@ -374,7 +359,7 @@ const createCalendar = (setYear, setMonth) => {
     });
     calendar.push(day);
   }
-
+  console.log(calendar);
   return calendar;
 };
 

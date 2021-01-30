@@ -1,25 +1,30 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CalendarDay = ({ day }) => {
   const renderEvents = day.events.map((event) => {
     return <li key={event.type}>{event.label}</li>;
   });
 
+  const dayId = `${day.year}-${day.month}-${day.day}`;
+
   return (
-    <div
-      className={`
+    <Link to={`/day/${dayId}`}>
+      <div
+        className={`
         calendar__day
         ${day.when}
         ${day.holiday !== "" ? "holiday" : ""}
         ${day.today ? "today" : ""}
       `}
-    >
-      <div className="notices"></div>
-      <div className="events">
-        <ul>{renderEvents}</ul>
+      >
+        <div className="notices"></div>
+        <div className="events">
+          <ul>{renderEvents}</ul>
+        </div>
+        <div className="day">{day.day}</div>
       </div>
-      <div className="day">{day.day}</div>
-    </div>
+    </Link>
   );
 };
 
