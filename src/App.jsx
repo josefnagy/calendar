@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Calendar from "./components/Calendar.jsx";
 import Arrows from "./components/Arrows.jsx";
 
+// import Dropdown from "./components/Dropdown.jsx";
 // import InputBox from "./components/InputBox.jsx";
 
 const date = new Date();
@@ -24,6 +25,21 @@ const monthsName = [
   "Prosinec",
 ];
 
+const options = [
+  {
+    name: "Strojvedoucí",
+    value: "str",
+  },
+  {
+    name: "Staniční dozorce",
+    value: "stD",
+  },
+  {
+    name: "Vedoucí posunu",
+    value: "vp",
+  },
+];
+
 const App = () => {
   console.log("App rendered");
   const [day, setDay] = useState(currDay);
@@ -36,6 +52,7 @@ const App = () => {
       <aside className="aside"></aside>
       <header className="header">
         <div className="header__date">{`${monthsName[month - 1]} ${year}`}</div>
+
         {/* <InputBox /> */}
         <div className="header__arrows">
           <Arrows
@@ -49,6 +66,10 @@ const App = () => {
         </div>
       </header>
       <main className="main">
+        {/* <div className="center">
+          <Dropdown options={options} />
+        </div> */}
+
         <Calendar month={month} year={year} today={currentDate} />
       </main>
     </div>
