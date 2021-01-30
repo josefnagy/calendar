@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { Router, Route } from "react-router-dom";
+
+import Header from "./components/Header.jsx";
+import Aside from "./components/Aside.jsx";
 import Calendar from "./components/Calendar.jsx";
-import Arrows from "./components/Arrows.jsx";
 
 // import Dropdown from "./components/Dropdown.jsx";
 // import InputBox from "./components/InputBox.jsx";
+
+import history from "./history";
 
 const date = new Date();
 const currDay = date.getDate();
@@ -49,13 +54,11 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <aside className="aside"></aside>
-      <header className="header">
-        <div className="header__date">{`${monthsName[month - 1]} ${year}`}</div>
-
-        {/* <InputBox /> */}
-        <div className="header__arrows">
-          <Arrows
+      <Router history={history}>
+        <>
+          <Aside />
+          <Header
+            monthsName={monthsName}
             month={month}
             year={year}
             setMonth={setMonth}
@@ -63,15 +66,15 @@ const App = () => {
             currMonth={currMonth}
             currYear={currYear}
           />
-        </div>
-      </header>
-      <main className="main">
-        {/* <div className="center">
+          <main className="main">
+            {/* <div className="center">
           <Dropdown options={options} />
         </div> */}
 
-        <Calendar month={month} year={year} today={currentDate} />
-      </main>
+            <Calendar month={month} year={year} today={currentDate} />
+          </main>
+        </>
+      </Router>
     </div>
   );
 };
