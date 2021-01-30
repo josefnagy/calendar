@@ -27,7 +27,7 @@ module.exports = {
     "prettier/prettier": "error",
     "react/no-typos": "warn",
     "react/no-unused-state": "warn",
-    "react/prop-types": "warn",
+    "react/prop-types": "off",
     "react/jsx-no-bind": "off",
     "array-callback-return": "error",
     "consistent-return": "error",

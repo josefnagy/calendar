@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
+import dateReducer from "./dateReducer";
+
 export default combineReducers({
-  replaceMe: () => "qqq",
+  date: dateReducer,
 });

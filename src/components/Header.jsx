@@ -1,33 +1,25 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Arrows from "./Arrows.jsx";
 
-const Header = ({
-  monthsName,
-  month,
-  year,
-  setMonth,
-  setYear,
-  currMonth,
-  currYear,
-}) => {
+const Header = ({ date }) => {
   return (
     <header className="header">
-      <div className="header__date">{`${monthsName[month - 1]} ${year}`}</div>
+      <div className="header__date">{`${date.monthsNames[date.calMonth - 1]} ${
+        date.calYear
+      }`}</div>
 
       {/* <InputBox /> */}
       <div className="header__arrows">
-        <Arrows
-          month={month}
-          year={year}
-          setMonth={setMonth}
-          setYear={setYear}
-          currMonth={currMonth}
-          currYear={currYear}
-        />
+        <Arrows />
       </div>
     </header>
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return { date: state.date };
+};
+
+export default connect(mapStateToProps)(Header);

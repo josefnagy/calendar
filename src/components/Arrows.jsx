@@ -1,23 +1,28 @@
 import React from "react";
-import { prevMonthDate, nextMonthDate } from "../js/cal";
+import { connect } from "react-redux";
 
-const Arrows = ({ month, year, setMonth, setYear, currMonth, currYear }) => {
+import { prevMonthDate, nextMonthDate } from "../js/cal";
+import { setDate } from "../actions";
+
+// const Arrows = ({ month, year, setMonth, setYear, currMonth, currYear }) => {
+const Arrows = ({ date, setDate }) => {
+  const month = date.calMonth;
+  const year = date.calYear;
+  const currMonth = date.currentMonth;
+  const currYear = date.currentYear;
+
   const onPrevButtonClick = (year, month) => {
     const [prevYear, prevMonth] = prevMonthDate(year, month);
-    setYear(prevYear);
-    setMonth(prevMonth);
+    setDate({ calYear: prevYear, calMonth: prevMonth });
   };
 
   const onNextButtonClick = (year, month) => {
     const [nextYear, nextMonth] = nextMonthDate(year, month);
-    setYear(nextYear);
-    setMonth(nextMonth);
+    setDate({ calYear: nextYear, calMonth: nextMonth });
   };
 
   const onTodayButtonClick = (year, month) => {
-    // console.log(year, month);
-    setYear(year);
-    setMonth(month);
+    setDate({ calYear: year, calMonth: month });
   };
 
   return (
@@ -60,4 +65,8 @@ const Arrows = ({ month, year, setMonth, setYear, currMonth, currYear }) => {
   );
 };
 
-export default Arrows;
+const mapStateToProps = (state) => {
+  return { date: state.date };
+};
+
+export default connect(mapStateToProps, { setDate })(Arrows);

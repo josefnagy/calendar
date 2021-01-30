@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
+import { setDate } from "../actions";
 
 import createCalendar from "../js/cal";
 
-const Calendar = ({ year, month, today }) => {
-  const calendar = createCalendar(year, month);
+const Calendar = ({ date, setDate }) => {
+  useEffect(() => {
+    setDate({ calYear: date.currentYear, calMonth: date.currentMonth });
+  }, [setDate]);
+
+  const calendar = createCalendar(date.calYear, date.calMonth);
 
   const renderCal = calendar.map((day, index) => {
     if (
-      day.year === today[0] &&
-      day.month === today[1] &&
-      day.day === today[2]
+      day.year === date.currentYear &&
+      day.month === date.currentMonth &&
+      day.day === date.currentDay
     ) {
       day.today = true;
     }
@@ -20,4 +26,8 @@ const Calendar = ({ year, month, today }) => {
   return <div className="calendar">{renderCal}</div>;
 };
 
-export default Calendar;
+const mapStateToProps = (state) => {
+  return { date: state.date };
+};
+
+export default connect(mapStateToProps, { setDate })(Calendar);

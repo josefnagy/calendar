@@ -375,7 +375,6 @@ const createCalendar = (setYear, setMonth) => {
     calendar.push(day);
   }
 
-  console.log(calendar);
   return calendar;
 };
 
