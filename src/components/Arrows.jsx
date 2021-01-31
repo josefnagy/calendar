@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
-import { setDate } from "../actions";
+import { setDate, fetchEvents } from "../actions";
 
-const Arrows = ({ date, setDate }) => {
+const Arrows = ({ date, setDate, fetchEvents }) => {
   const month = date.calMonth;
   const year = date.calYear;
   const currMonth = date.currentMonth;
@@ -13,11 +13,13 @@ const Arrows = ({ date, setDate }) => {
   const onPrevButtonClick = (year, month) => {
     const [prevYear, prevMonth] = prevMonthDate(year, month);
     setDate({ calYear: prevYear, calMonth: prevMonth });
+    fetchEvents(prevYear, prevMonth);
   };
 
   const onNextButtonClick = (year, month) => {
     const [nextYear, nextMonth] = nextMonthDate(year, month);
     setDate({ calYear: nextYear, calMonth: nextMonth });
+    fetchEvents(nextYear, nextMonth);
   };
 
   const onTodayButtonClick = (year, month) => {
@@ -68,4 +70,4 @@ const mapStateToProps = (state) => {
   return { date: state.date };
 };
 
-export default connect(mapStateToProps, { setDate })(Arrows);
+export default connect(mapStateToProps, { setDate, fetchEvents })(Arrows);

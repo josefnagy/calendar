@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CalendarDay = ({ day }) => {
-  const renderEvents = day.events.map((event) => {
+const CalendarDay = ({ day, events }) => {
+  const renderEvents = events.map((event) => {
     return <li key={event.type}>{event.label}</li>;
   });
 
