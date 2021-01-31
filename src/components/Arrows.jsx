@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { prevMonthDate, nextMonthDate } from "../js/cal";
 import { setDate } from "../actions";
 
-// const Arrows = ({ month, year, setMonth, setYear, currMonth, currYear }) => {
 const Arrows = ({ date, setDate }) => {
   const month = date.calMonth;
   const year = date.calYear;

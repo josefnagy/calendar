@@ -1,4 +1,5 @@
 import { SET_CAL_DATE } from "../actions/types";
+import createCalendar from "../js/cal";
 
 const INITIAL_STATE = {
   date: new Date(),
@@ -9,6 +10,12 @@ const INITIAL_STATE = {
     return this.date.getMonth() + 1;
   },
   get currentYear() {
+    return this.date.getFullYear();
+  },
+  get calMonth() {
+    return this.date.getMonth() + 1;
+  },
+  get calYear() {
     return this.date.getFullYear();
   },
   monthsNames: [
@@ -25,6 +32,9 @@ const INITIAL_STATE = {
     "Listopad",
     "Prosinec",
   ],
+  get calendar() {
+    return createCalendar(this.currentYear, this.currentMonth);
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,6 +44,10 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         calMonth: action.payload.calMonth,
         calYear: action.payload.calYear,
+        calendar: createCalendar(
+          action.payload.calYear,
+          action.payload.calMonth
+        ),
       };
 
     default:
