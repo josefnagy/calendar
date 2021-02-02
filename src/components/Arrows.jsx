@@ -24,6 +24,7 @@ const Arrows = ({ date, setDate, fetchEvents }) => {
 
   const onTodayButtonClick = (year, month) => {
     setDate({ calYear: year, calMonth: month });
+    fetchEvents(year, month);
   };
 
   return (
