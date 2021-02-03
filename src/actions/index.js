@@ -12,9 +12,14 @@ export const setDate = (date) => {
 export const fetchEvents = (year, month) => {
   // get previous month date (becouse you are showing events in calendar from previous and next month)
   // so you must get events from tree months
+  const currentMonthDateId = `${year}-${month}`;
+
   const [prevYear, prevMonth] = prevMonthDate(year, month);
+  const prevMonthDateId = `${prevYear}-${prevMonth}`;
+
   //get next month date
   const [nextYear, nextMonth] = nextMonthDate(year, month);
+  const nextMonthDateId = `${nextYear}-${nextMonth}`;
 
   //DB FILLER
   // events.forEach((event) => {
@@ -35,25 +40,21 @@ export const fetchEvents = (year, month) => {
   return async (dispatch) => {
     const res = await db
       .collection("events")
+      .where("dateId", "in", [
+        currentMonthDateId,
+        prevMonthDateId,
+        nextMonthDateId,
+      ])
       .get()
       .then((querySnapshot) => {
-        let events = [];
+        const events = [];
         querySnapshot.forEach((doc) => {
-          // console.log(`${doc.id} => ${doc.data()}`);
-          // console.log(doc.data());
           events.push(doc.data());
         });
         return events;
       });
 
-    const evnts = Object.values(res).filter((event) => {
-      return (
-        (event.year === year && event.month === month) ||
-        (event.year === prevYear && event.month === prevMonth) ||
-        (event.year === nextYear && event.month === nextMonth)
-      );
-    });
-    dispatch({ type: FETCH_EVENTS, payload: evnts });
+    dispatch({ type: FETCH_EVENTS, payload: res });
   };
 };
 
@@ -251,4 +252,5 @@ const events = [
 
 events.forEach((event) => {
   event.id = `${event.year}-${event.month}-${event.day}`;
+  event.dateId = `${event.year}-${event.month}`;
 });
