@@ -2,8 +2,10 @@ import db from "../utils/firebaseConfig";
 
 import { SET_CAL_DATE, FETCH_EVENTS } from "./types";
 import { nextMonthDate, prevMonthDate } from "../js/cal";
+import history from "../history";
 
 export const setDate = (date) => {
+  history.push("/");
   return { type: SET_CAL_DATE, payload: date };
 };
 
