@@ -10,8 +10,36 @@
   // border: 1px solid black;
 
   .event-list__item {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     list-style-type: none;
     border: 1px solid black;
     margin: 1rem 0;
+  }
+
+  .item__label {
+    grid-column: 1 / span 10;
+    grid-row: 1;
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    color: $event-gray;
+    margin-bottom: 3rem;
+  }
+
+  .item__buttons {
+    grid-column: 11 / span 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .item__location {
+    grid-column: 1 / span 6;
+    grid-row: 2;
+  }
+
+  .item__notes {
+    grid-column: 7 / span 6;
+    grid-row: 2;
+    justify-self: end;
   }
 }

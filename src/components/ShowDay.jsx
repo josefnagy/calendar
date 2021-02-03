@@ -13,8 +13,8 @@ const ShowDay = ({ showADay, match, events }) => {
       <li key={event.label} className="event-list__item">
         <span className="item__label">{event.label}</span>
         <span className="item__buttons">X +</span>
-        <span className="item__location">{event.label}</span>
-        <span className="item__notes">{event.label}</span>
+        <span className="item__location">{event.location}</span>
+        <span className="item__notes">{event.notes}</span>
       </li>
     );
   });

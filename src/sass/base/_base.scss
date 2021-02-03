@@ -4,6 +4,10 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -12,7 +16,6 @@ html {
 }
 
 body {
-
   color: coral;
 
   background: linear-gradient(to right, $background-black, $background-gray);
