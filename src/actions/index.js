@@ -1,12 +1,31 @@
 import db from "../utils/firebaseConfig";
+import _ from "lodash";
 
-import { SET_CAL_DATE, FETCH_EVENTS } from "./types";
+import { SET_CAL_DATE, FETCH_EVENTS, SHOW_A_DAY } from "./types";
 import { nextMonthDate, prevMonthDate } from "../js/cal";
 import history from "../history";
 
 export const setDate = (date) => {
   history.push("/");
   return { type: SET_CAL_DATE, payload: date };
+};
+
+export const showADay = (id) => {
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .where("id", "==", id)
+      .get()
+      .then((querySnapshot) => {
+        const events = [];
+        querySnapshot.forEach((doc) => {
+          events.push(doc.data());
+          // console.log(doc.data());
+        });
+        return events;
+      });
+    dispatch({ type: SHOW_A_DAY, payload: res });
+  };
 };
 
 export const fetchEvents = (year, month) => {
@@ -27,7 +46,7 @@ export const fetchEvents = (year, month) => {
   //   evnts[event.id] = event;
 
   //   db.collection("events")
-  //     .doc(event.id)
+  //     .doc()
   //     .set(event)
   //     .then(() => {
   //       console.log("ok");
@@ -56,6 +75,49 @@ export const fetchEvents = (year, month) => {
 
     dispatch({ type: FETCH_EVENTS, payload: res });
   };
+};
+
+const ev = {
+  "2021-2-10": [
+    {
+      day: 10,
+      month: 2,
+      year: 2021,
+      dateId: "2021-2",
+      id: "2021-2-10",
+      type: "ranni",
+      label: "Ranní",
+    },
+    {
+      day: 10,
+      month: 2,
+      year: 2021,
+      dateId: "2021-2",
+      id: "2021-2-10",
+      type: "preventivka",
+      label: "Preventivka",
+    },
+    {
+      day: 10,
+      month: 2,
+      year: 2021,
+      dateId: "2021-2",
+      id: "2021-2-10",
+      type: "custom",
+      label: "Narozky",
+    },
+  ],
+  "2021-2-14": [
+    {
+      day: 14,
+      month: 2,
+      year: 2021,
+      dateId: "2021-2",
+      id: "2021-2-14",
+      type: "kalba",
+      label: "Kalba jak cip",
+    },
+  ],
 };
 
 const events = [

@@ -1,3 +1,11 @@
 .showday {
   padding: $main-section-padding;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.showday__event-list {
+  border: 1px solid black;
 }
