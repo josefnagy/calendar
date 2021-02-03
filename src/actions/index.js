@@ -77,49 +77,6 @@ export const fetchEvents = (year, month) => {
   };
 };
 
-const ev = {
-  "2021-2-10": [
-    {
-      day: 10,
-      month: 2,
-      year: 2021,
-      dateId: "2021-2",
-      id: "2021-2-10",
-      type: "ranni",
-      label: "Ranní",
-    },
-    {
-      day: 10,
-      month: 2,
-      year: 2021,
-      dateId: "2021-2",
-      id: "2021-2-10",
-      type: "preventivka",
-      label: "Preventivka",
-    },
-    {
-      day: 10,
-      month: 2,
-      year: 2021,
-      dateId: "2021-2",
-      id: "2021-2-10",
-      type: "custom",
-      label: "Narozky",
-    },
-  ],
-  "2021-2-14": [
-    {
-      day: 14,
-      month: 2,
-      year: 2021,
-      dateId: "2021-2",
-      id: "2021-2-14",
-      type: "kalba",
-      label: "Kalba jak cip",
-    },
-  ],
-};
-
 const events = [
   {
     day: 5,
@@ -127,6 +84,8 @@ const events = [
     year: 2021,
     type: "ranni",
     label: "Ranní",
+    notes: "Vzit si ampuli na moč",
+    location: "Uhelná",
   },
   {
     day: 5,
@@ -134,6 +93,8 @@ const events = [
     year: 2021,
     type: "preventivka",
     label: "Preventivka",
+    notes: "Nezapomenout nachcat do ampule",
+    location: "Hornická poliklinika",
   },
   {
     day: 5,
@@ -141,6 +102,8 @@ const events = [
     year: 2021,
     type: "preventivka",
     label: "Preventivka",
+    notes: "",
+    location: "Hornická poliklinika",
   },
   {
     day: 12,
@@ -148,6 +111,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 25,
@@ -155,6 +120,8 @@ const events = [
     year: 2021,
     type: "nocni",
     label: "Nocni",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 23,
@@ -162,6 +129,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpoledni",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 16,
@@ -169,6 +138,8 @@ const events = [
     year: 2021,
     type: "preventivka",
     label: "Preventivka",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 10,
@@ -176,6 +147,8 @@ const events = [
     year: 2021,
     type: "nemocenska",
     label: "Nemocenska",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 1,
@@ -183,6 +156,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 2,
@@ -190,6 +165,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpolední",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 3,
@@ -197,6 +174,8 @@ const events = [
     year: 2021,
     type: "nv",
     label: "Náhradní volno",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 6,
@@ -204,6 +183,8 @@ const events = [
     year: 2021,
     type: "ranni",
     label: "Ranní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 7,
@@ -211,6 +192,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 8,
@@ -218,6 +201,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpolední",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 9,
@@ -225,6 +210,8 @@ const events = [
     year: 2021,
     type: "nocni",
     label: "Noční",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 12,
@@ -232,6 +219,8 @@ const events = [
     year: 2021,
     type: "ranni",
     label: "Ranní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 13,
@@ -239,6 +228,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 14,
@@ -246,6 +237,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpolední",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 15,
@@ -253,6 +246,8 @@ const events = [
     year: 2021,
     type: "nocni",
     label: "Noční",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 18,
@@ -260,6 +255,8 @@ const events = [
     year: 2021,
     type: "ranni",
     label: "Ranní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 19,
@@ -267,6 +264,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 20,
@@ -274,6 +273,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpolední",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 21,
@@ -281,6 +282,8 @@ const events = [
     year: 2021,
     type: "nocni",
     label: "Noční",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 24,
@@ -288,6 +291,8 @@ const events = [
     year: 2021,
     type: "ranni",
     label: "Ranní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 25,
@@ -295,6 +300,8 @@ const events = [
     year: 2021,
     type: "denni",
     label: "Denní",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 26,
@@ -302,6 +309,8 @@ const events = [
     year: 2021,
     type: "odpoledni",
     label: "Odpolední",
+    notes: "",
+    location: "Uhelná",
   },
   {
     day: 27,
@@ -309,6 +318,8 @@ const events = [
     year: 2021,
     type: "nocni",
     label: "Noční",
+    notes: "",
+    location: "Uhelná",
   },
 ];
 

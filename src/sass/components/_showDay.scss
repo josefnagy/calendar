@@ -4,12 +4,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   height: 100%;
-
-  li {
-    list-style-type: none;
-  }
 }
 
 .showday__event-list {
-  border: 1px solid black;
+  // border: 1px solid black;
+
+  .event-list__item {
+    list-style-type: none;
+    border: 1px solid black;
+    margin: 1rem 0;
+  }
 }

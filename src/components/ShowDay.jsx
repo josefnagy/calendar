@@ -7,8 +7,16 @@ const ShowDay = ({ showADay, match, events }) => {
     showADay(match.params.id);
   }, [showADay]);
 
+  console.log(events);
   const renderEventList = events.map((event) => {
-    return <li key={event.label}>{event.label}</li>;
+    return (
+      <li key={event.label} className="event-list__item">
+        <span className="item__label">{event.label}</span>
+        <span className="item__buttons">X +</span>
+        <span className="item__location">{event.label}</span>
+        <span className="item__notes">{event.label}</span>
+      </li>
+    );
   });
 
   return (
