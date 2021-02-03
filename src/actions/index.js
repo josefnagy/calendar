@@ -1,4 +1,4 @@
-import firebase from "../apis/firebase";
+import db from "../utils/firebaseConfig";
 
 import { SET_CAL_DATE, FETCH_EVENTS } from "./types";
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -16,20 +16,41 @@ export const fetchEvents = (year, month) => {
 
   //DB FILLER
   // events.forEach((event) => {
-  //   firebase.post("events.json", event).then((res) => console.log(res));
+  //   const evnts = {};
+  //   evnts[event.id] = event;
+
+  //   db.collection("events")
+  //     .doc(event.id)
+  //     .set(event)
+  //     .then(() => {
+  //       console.log("ok");
+  //     })
+  //     .catch(function (error) {
+  //       console.error("Error adding document: ", error);
+  //     });
   // });
 
   return async (dispatch) => {
-    const res = await firebase.get("events.json");
-    // console.log(Object.values(res.data));
-    const evnts = Object.values(res.data).filter((event) => {
+    const res = await db
+      .collection("events")
+      .get()
+      .then((querySnapshot) => {
+        let events = [];
+        querySnapshot.forEach((doc) => {
+          // console.log(`${doc.id} => ${doc.data()}`);
+          // console.log(doc.data());
+          events.push(doc.data());
+        });
+        return events;
+      });
+
+    const evnts = Object.values(res).filter((event) => {
       return (
         (event.year === year && event.month === month) ||
         (event.year === prevYear && event.month === prevMonth) ||
         (event.year === nextYear && event.month === nextMonth)
       );
     });
-
     dispatch({ type: FETCH_EVENTS, payload: evnts });
   };
 };
@@ -225,3 +246,7 @@ const events = [
     label: "Noční",
   },
 ];
+
+events.forEach((event) => {
+  event.id = `${event.year}-${event.month}-${event.day}`;
+});
