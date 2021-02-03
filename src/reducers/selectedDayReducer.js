@@ -1,11 +1,11 @@
-import { FETCH_EVENTS } from "../actions/types";
+import { SHOW_A_DAY } from "../actions/types";
 
 const INITIAL_STATE = [];
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_EVENTS:
-      return [...action.payload];
+    case SHOW_A_DAY:
+      return action.payload;
 
     default:
       return state;

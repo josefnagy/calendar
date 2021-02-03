@@ -4,6 +4,10 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   height: 100%;
+
+  li {
+    list-style-type: none;
+  }
 }
 
 .showday__event-list {

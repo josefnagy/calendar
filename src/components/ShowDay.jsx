@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { showADay } from "../actions";
 
-const ShowDay = ({ date, showADay, match, events }) => {
+const ShowDay = ({ showADay, match, events }) => {
   useEffect(() => {
     showADay(match.params.id);
-  }, []);
+  }, [showADay]);
 
   const renderEventList = events.map((event) => {
     return <li key={event.label}>{event.label}</li>;
@@ -20,8 +20,7 @@ const ShowDay = ({ date, showADay, match, events }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  return { date: state.date, events: state.events };
+  return { events: state.selectedDay };
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);
