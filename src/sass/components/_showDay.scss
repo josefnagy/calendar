@@ -7,7 +7,7 @@
 }
 
 .showday__event-list {
-  // border: 1px solid black;
+  text-align: center;
 
   .event-list__item {
     display: grid;
@@ -15,6 +15,7 @@
     list-style-type: none;
     border: 1px solid black;
     margin: 1rem 0;
+    text-align: left;
   }
 
   .item__label {
@@ -30,6 +31,26 @@
     grid-column: 11 / span 2;
     grid-row: 1;
     justify-self: end;
+    display: flex;
+    font-weight: bold;
+
+    .item__edit,
+    .item__delete {
+      display: grid;
+      place-items: center;
+
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid black;
+    }
+
+    .item__edit:hover {
+      background-color: $primary;
+      color: black;
+    }
+    .item__delete:hover {
+      background-color: $danger;
+    }
   }
 
   .item__location {
@@ -41,5 +62,21 @@
     grid-column: 7 / span 6;
     grid-row: 2;
     justify-self: end;
+  }
+
+  .event-list__btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .event-list__add-event-btn {
+    border: 1px solid black;
+    padding: 1rem 3rem;
+  }
+
+  .event-list__add-event-btn:hover {
+    background-color: $primary;
+    color: black;
   }
 }

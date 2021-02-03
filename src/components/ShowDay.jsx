@@ -18,7 +18,7 @@ const ShowDay = ({ showADay, match, events }) => {
             to={`/day/${event.id}/event/${event.key}/edit/`}
             className="item__edit"
           >
-            edit
+            e
           </Link>
           <Link to="" className="item__delete">
             x
@@ -33,8 +33,17 @@ const ShowDay = ({ showADay, match, events }) => {
   return (
     <div className="showday">
       <div className="showday__event-list">
-        {renderEventList}
-        <Link to={`/day/${match.params.id}/event/new`}>+ Add Event +</Link>
+        {events.length > 0
+          ? renderEventList
+          : "Sorry bro, no events today.... Try add some"}
+        <div className="event-list__btn-container">
+          <Link
+            to={`/day/${match.params.id}/event/new`}
+            className="event-list__add-event-btn"
+          >
+            + Add Event +
+          </Link>
+        </div>
       </div>
       <div className="showday__img">qq</div>
     </div>
