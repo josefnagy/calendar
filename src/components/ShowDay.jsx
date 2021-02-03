@@ -32,7 +32,10 @@ const ShowDay = ({ showADay, match, events }) => {
 
   return (
     <div className="showday">
-      <div className="showday__event-list">{renderEventList}</div>
+      <div className="showday__event-list">
+        {renderEventList}
+        <Link to={`/day/${match.params.id}/event/new`}>+ Add Event +</Link>
+      </div>
       <div className="showday__img">qq</div>
     </div>
   );
