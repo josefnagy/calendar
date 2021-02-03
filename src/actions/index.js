@@ -10,6 +10,20 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
+const createEventsArray = (querySnapshot) => {
+  const events = [];
+  const ids = [];
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.id);
+    events.push(doc.data());
+    ids.push(doc.id);
+  });
+  for (let i = 0; i < events.length; i++) {
+    events[i].key = ids[i];
+  }
+  return events;
+};
+
 export const showADay = (id) => {
   return async (dispatch) => {
     const res = await db
@@ -17,12 +31,7 @@ export const showADay = (id) => {
       .where("id", "==", id)
       .get()
       .then((querySnapshot) => {
-        const events = [];
-        querySnapshot.forEach((doc) => {
-          events.push(doc.data());
-          // console.log(doc.data());
-        });
-        return events;
+        return createEventsArray(querySnapshot);
       });
     dispatch({ type: SHOW_A_DAY, payload: res });
   };
@@ -66,18 +75,7 @@ export const fetchEvents = (year, month) => {
       ])
       .get()
       .then((querySnapshot) => {
-        const events = [];
-        const ids = [];
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.id);
-          events.push(doc.data());
-          ids.push(doc.id);
-        });
-        for (let i = 0; i < events.length; i++) {
-          events[i].key = ids[i];
-        }
-
-        return events;
+        return createEventsArray(querySnapshot);
       });
 
     dispatch({ type: FETCH_EVENTS, payload: res });

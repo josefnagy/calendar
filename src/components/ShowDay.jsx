@@ -8,13 +8,16 @@ const ShowDay = ({ showADay, match, events }) => {
     showADay(match.params.id);
   }, [showADay]);
 
-  console.log(events);
+  // console.log(events);
   const renderEventList = events.map((event) => {
     return (
-      <li key={event.label} className="event-list__item">
+      <li key={event.key} className="event-list__item">
         <span className="item__label">{event.label}</span>
         <span className="item__buttons">
-          <Link to={`/day/${event.id}/edit/`} className="item__edit">
+          <Link
+            to={`/day/${event.id}/event/${event.key}/edit/`}
+            className="item__edit"
+          >
             edit
           </Link>
           <Link to="" className="item__delete">
