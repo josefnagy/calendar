@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { showADay } from "../actions";
+import { Link } from "react-router-dom";
 
 const ShowDay = ({ showADay, match, events }) => {
   useEffect(() => {
@@ -12,7 +13,14 @@ const ShowDay = ({ showADay, match, events }) => {
     return (
       <li key={event.label} className="event-list__item">
         <span className="item__label">{event.label}</span>
-        <span className="item__buttons">X +</span>
+        <span className="item__buttons">
+          <Link to={`/day/${event.id}/edit/`} className="item__edit">
+            edit
+          </Link>
+          <Link to="" className="item__delete">
+            x
+          </Link>
+        </span>
         <span className="item__location">{event.location}</span>
         <span className="item__notes">{event.notes}</span>
       </li>

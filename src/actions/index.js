@@ -67,9 +67,16 @@ export const fetchEvents = (year, month) => {
       .get()
       .then((querySnapshot) => {
         const events = [];
+        const ids = [];
         querySnapshot.forEach((doc) => {
+          // console.log(doc.id);
           events.push(doc.data());
+          ids.push(doc.id);
         });
+        for (let i = 0; i < events.length; i++) {
+          events[i].key = ids[i];
+        }
+
         return events;
       });
 
