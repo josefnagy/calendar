@@ -71,12 +71,10 @@
   }
 
   .event-list__add-event-btn {
-    border: 1px solid black;
-    padding: 1rem 3rem;
+    @include button-primary;
   }
 
   .event-list__add-event-btn:hover {
-    background-color: $primary;
-    color: black;
+    @include button-primary-hover;
   }
 }

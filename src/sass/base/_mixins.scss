@@ -8,3 +8,20 @@
   cursor: pointer;
   outline: none;
 }
+
+@mixin button-primary {
+  border: 1px solid black;
+  padding: 1rem 3rem;
+  text-transform: uppercase;
+}
+
+@mixin button-primary-hover {
+  background-color: $primary;
+  color: black;
+  font-weight: bold;
+}
+
+@mixin button-danger-hover {
+  background-color: $danger;
+  color: black;
+}

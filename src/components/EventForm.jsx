@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import InputBox from "./InputBox.jsx";
 import Dropdown from "./Dropdown.jsx";
 
@@ -39,27 +40,35 @@ const EventForm = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notes, setNotes] = useState("");
 
+  console.log(selectedLocation);
+
   return (
     <div className="center">
-      <Dropdown
-        options={eventTypes}
-        selected={selectedEvents}
-        setSelected={setSelectedEvents}
-        label="Event Type"
-      />
-      <Dropdown
-        options={functionTypes}
-        selected={selectedFunctions}
-        setSelected={setSelectedFunctions}
-        label="Function"
-      />
-      <Dropdown
-        options={locationTypes}
-        selected={selectedLocation}
-        setSelected={setSelectedLocation}
-        label="Location"
-      />
-      <InputBox />
+      <form className="form">
+        <Dropdown
+          options={eventTypes}
+          selected={selectedEvents}
+          setSelected={setSelectedEvents}
+          label="Event Type"
+        />
+        <Dropdown
+          options={functionTypes}
+          selected={selectedFunctions}
+          setSelected={setSelectedFunctions}
+          label="Function"
+        />
+        <Dropdown
+          options={locationTypes}
+          selected={selectedLocation}
+          setSelected={setSelectedLocation}
+          label="Location"
+        />
+        <InputBox label="Notes" value={notes} setValue={setNotes} />
+        <div className="form__buttons">
+          <button className="btn__discard">Zahodit změny</button>
+          <button className="btn__add">Uložit event</button>
+        </div>
+      </form>
     </div>
   );
 };

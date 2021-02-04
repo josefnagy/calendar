@@ -1,0 +1,30 @@
+.center {
+  display: grid;
+  place-items: center;
+  // width: 60rem;
+  height: 100%;
+}
+
+.form {
+  width: 40rem;
+}
+
+.form__buttons {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-around;
+
+  .btn__add,
+  .btn__discard {
+    @include button-reset;
+    @include button-primary;
+  }
+
+  .btn__add:hover {
+    @include button-primary-hover;
+  }
+
+  .btn__discard:hover {
+    @include button-danger-hover;
+  }
+}
