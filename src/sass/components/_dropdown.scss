@@ -6,4 +6,19 @@
 
 .dropdown {
   font-size: 1.7rem;
+  cursor: pointer;
+  width: 100%;
+
+  .dropdown__option {
+    padding: 1rem 5rem;
+    background-color: $event-gray;
+  }
+
+  .dropdown__menu {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
 }

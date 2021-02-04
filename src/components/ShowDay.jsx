@@ -51,6 +51,7 @@ const ShowDay = ({ showADay, match, events }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return { events: state.selectedDay };
 };
 
