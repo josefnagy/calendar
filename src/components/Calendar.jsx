@@ -8,7 +8,6 @@ const Calendar = ({ date, fetchEvents, events }) => {
   useEffect(() => {
     fetchEvents(date.calYear, date.calMonth);
   }, [fetchEvents]);
-  console.log(events);
 
   const renderCal = date.calendar.map((day, index) => {
     if (

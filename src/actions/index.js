@@ -1,13 +1,43 @@
 import db from "../utils/firebaseConfig";
 import _ from "lodash";
 
-import { SET_CAL_DATE, FETCH_EVENTS, SHOW_A_DAY, NEW_EVENT } from "./types";
+import {
+  SET_CAL_DATE,
+  FETCH_EVENTS,
+  SHOW_A_DAY,
+  NEW_EVENT,
+  EDIT_EVENT,
+  SHOW_EDIT,
+} from "./types";
+
 import { nextMonthDate, prevMonthDate } from "../js/cal";
 import history from "../history";
 
 export const setDate = (date) => {
   history.push("/");
   return { type: SET_CAL_DATE, payload: date };
+};
+
+export const showEdit = (id) => {
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return doc.data();
+        } else {
+          console.log("no such document");
+          return null;
+        }
+      })
+      .catch((err) => {
+        console.log("Error adding event ", err);
+      });
+    res.key = id;
+    dispatch({ type: SHOW_EDIT, payload: res });
+  };
 };
 
 export const newEvent = (formValues) => {

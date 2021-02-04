@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import InputBox from "./InputBox.jsx";
@@ -35,11 +35,20 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit, id }) => {
+const EventForm = ({ onSubmit, id, event }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notes, setNotes] = useState("");
+
+  useEffect(() => {
+    if (event) {
+      setSelectedEvents({ name: event.label, type: event.type });
+      setSelectedFunctions({ name: event.function });
+      setSelectedLocation({ name: event.location });
+      setNotes(event.notes);
+    }
+  }, [event]);
 
   const date = id.split("-");
   const year = Number(date[0]);
@@ -96,7 +105,7 @@ const EventForm = ({ onSubmit, id }) => {
 };
 const mapStateToProps = (state) => {
   console.log(state);
-  return {};
+  return { event: state.editedDay };
 };
 
 export default connect(mapStateToProps, {})(EventForm);

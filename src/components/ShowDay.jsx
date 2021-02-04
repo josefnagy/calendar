@@ -21,6 +21,15 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
           >
             e
           </Link>
+          {/* <Link
+            to={{
+              pathname: "/day/" + event.id + "/event/" + event.key + "/edit/",
+              event,
+            }}
+            className="item__edit"
+          >
+            e
+          </Link> */}
           <Link to="" className="item__delete">
             x
           </Link>
