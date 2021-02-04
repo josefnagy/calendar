@@ -17,6 +17,7 @@ const eventTypes = [
 const EventForm = () => {
   return (
     <div className="center">
+      <InputBox />
       <Dropdown options={eventTypes} />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 const Dropdown = ({ options }) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState("");
   const ref = useRef();
 
   useEffect(() => {
@@ -40,7 +40,14 @@ const Dropdown = ({ options }) => {
 
   return (
     <div className="dropdown" ref={ref}>
-      <div className="dropdown__option visible" onClick={() => setOpen(!open)}>
+      <label
+        className={`dropdown__label ${
+          open && selected === "" ? "animate-label" : ""
+        }`}
+      >
+        Event type...
+      </label>
+      <div className="dropdown__first visible" onClick={() => setOpen(!open)}>
         {selected.name}
       </div>
       <div className={`dropdown__menu ${open ? "visible" : ""}`}>
