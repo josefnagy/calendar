@@ -53,7 +53,6 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   if (state.selectedDay.length === 0) {
     const selectedEvnts = state.events.filter((event) => {
       return event.id === ownProps.match.params.id;
@@ -64,7 +63,6 @@ const mapStateToProps = (state, ownProps) => {
       return { selectedEvents: selectedEvnts, load: true };
     }
   }
-  // console.log(state);
   return { selectedEvents: state.selectedDay, load: true };
 };
 

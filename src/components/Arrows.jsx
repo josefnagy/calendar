@@ -10,21 +10,23 @@ const Arrows = ({ date, setDate, fetchEvents }) => {
   const currMonth = date.currentMonth;
   const currYear = date.currentYear;
 
+  const getCal = (year, month) => {
+    setDate({ calYear: year, calMonth: month });
+    fetchEvents(year, month);
+  };
+
   const onPrevButtonClick = (year, month) => {
     const [prevYear, prevMonth] = prevMonthDate(year, month);
-    setDate({ calYear: prevYear, calMonth: prevMonth });
-    fetchEvents(prevYear, prevMonth);
+    getCal(prevYear, prevMonth);
   };
 
   const onNextButtonClick = (year, month) => {
     const [nextYear, nextMonth] = nextMonthDate(year, month);
-    setDate({ calYear: nextYear, calMonth: nextMonth });
-    fetchEvents(nextYear, nextMonth);
+    getCal(nextYear, nextMonth);
   };
 
   const onTodayButtonClick = (year, month) => {
-    setDate({ calYear: year, calMonth: month });
-    fetchEvents(year, month);
+    getCal(year, month);
   };
 
   return (
