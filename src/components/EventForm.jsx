@@ -34,17 +34,26 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = () => {
+const EventForm = ({ onSubmit }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notes, setNotes] = useState("");
 
-  console.log(selectedLocation);
+  const handleAddEvent = () => {
+    const newEvent = {
+      label: selectedEvents.name,
+      type: selectedEvents.type,
+      function: selectedFunctions.name,
+      location: selectedLocation.name,
+      notes,
+    };
+    console.log(newEvent);
+  };
 
   return (
     <div className="center">
-      <form className="form">
+      <div className="form">
         <Dropdown
           options={eventTypes}
           selected={selectedEvents}
@@ -66,9 +75,11 @@ const EventForm = () => {
         <InputBox label="Notes" value={notes} setValue={setNotes} />
         <div className="form__buttons">
           <button className="btn__discard">Zahodit změny</button>
-          <button className="btn__add">Uložit event</button>
+          <button className="btn__add" onClick={() => handleAddEvent()}>
+            Uložit event
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

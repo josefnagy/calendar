@@ -6,7 +6,6 @@ import { fetchEvents } from "../actions";
 
 const Calendar = ({ date, fetchEvents, events, fetchData }) => {
   useEffect(() => {
-    console.log(fetchData);
     if (fetchData) {
       fetchEvents(date.calYear, date.calMonth);
     }

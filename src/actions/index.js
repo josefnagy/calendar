@@ -1,7 +1,7 @@
 import db from "../utils/firebaseConfig";
 import _ from "lodash";
 
-import { SET_CAL_DATE, FETCH_EVENTS, SHOW_A_DAY } from "./types";
+import { SET_CAL_DATE, FETCH_EVENTS, SHOW_A_DAY, NEW_EVENT } from "./types";
 import { nextMonthDate, prevMonthDate } from "../js/cal";
 import history from "../history";
 
@@ -10,18 +10,20 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
-const createEventsArray = (querySnapshot) => {
-  const events = [];
-  const ids = [];
-  querySnapshot.forEach((doc) => {
-    // console.log(doc.id);
-    events.push(doc.data());
-    ids.push(doc.id);
-  });
-  for (let i = 0; i < events.length; i++) {
-    events[i].key = ids[i];
-  }
-  return events;
+export const newEvent = (event) => {
+  console.log(event);
+  // return async (dispatch) => {
+  //   const res = await db
+  //     .collection("events")
+  //     .doc()
+  //     .set(event)
+  //     .then((data) => {
+  //       // console.log(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error adding event ", err);
+  //     });
+  // };
 };
 
 export const showADay = (id) => {
@@ -80,6 +82,21 @@ export const fetchEvents = (year, month) => {
 
     dispatch({ type: FETCH_EVENTS, payload: res });
   };
+};
+
+// helper function
+const createEventsArray = (querySnapshot) => {
+  const events = [];
+  const ids = [];
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.id);
+    events.push(doc.data());
+    ids.push(doc.id);
+  });
+  for (let i = 0; i < events.length; i++) {
+    events[i].key = ids[i];
+  }
+  return events;
 };
 
 const events = [

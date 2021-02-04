@@ -1,13 +1,19 @@
 import React from "react";
-import EventForm from "./EventForm.jsx";
+import { connect } from "react-redux";
 
-const EventAdd = () => {
+import EventForm from "./EventForm.jsx";
+import { newEvent } from "../actions/index";
+
+const EventAdd = ({ newEvent }) => {
+  const onSubmit = (formValues) => {
+    console.log(formValues);
+  };
+
   return (
-    <div>
-      EventAdd
-      <EventForm />
+    <div className="add-event">
+      <EventForm onSubmit={onSubmit} />
     </div>
   );
 };
 
-export default EventAdd;
+export default connect(null, { newEvent })(EventAdd);
