@@ -14,11 +14,52 @@ const eventTypes = [
   { name: "Dovolená", type: "dovolena" },
 ];
 
+const functionTypes = [
+  { name: "Strojvedoucí", type: "str" },
+  { name: "Vlakvedoucí", type: "vv" },
+  { name: "Vedoucí posunu", type: "vp" },
+  { name: "posunovač", type: "p" },
+  { name: "Staniční dozorce", type: "std" },
+  { name: "Civilista", type: "cv" },
+  { name: "Ostatní..", type: "other" },
+];
+
+const locationTypes = [
+  { name: "Uhelná služba", type: "usl" },
+  { name: "Základní závod", type: "zz" },
+  { name: "Heřmanice", type: "her" },
+  { name: "Muglinov", type: "mug" },
+  { name: "Hornická poliklinika", type: "hp" },
+  { name: "Ostatní..", type: "other" },
+];
+
 const EventForm = () => {
+  const [selectedEvents, setSelectedEvents] = useState("");
+  const [selectedFunctions, setSelectedFunctions] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [notes, setNotes] = useState("");
+
   return (
     <div className="center">
+      <Dropdown
+        options={eventTypes}
+        selected={selectedEvents}
+        setSelected={setSelectedEvents}
+        label="Event Type"
+      />
+      <Dropdown
+        options={functionTypes}
+        selected={selectedFunctions}
+        setSelected={setSelectedFunctions}
+        label="Function"
+      />
+      <Dropdown
+        options={locationTypes}
+        selected={selectedLocation}
+        setSelected={setSelectedLocation}
+        label="Location"
+      />
       <InputBox />
-      <Dropdown options={eventTypes} />
     </div>
   );
 };
