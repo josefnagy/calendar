@@ -12,7 +12,7 @@
   margin-top: 5rem;
 
   &:focus {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid $primary;
   }
   &:focus + .input-label,
   &:valid + .input-label {
