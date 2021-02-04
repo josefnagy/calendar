@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 
 import Arrows from "./Arrows.jsx";
 
-const Header = ({ date }) => {
+const Header = ({ date, day, year, month }) => {
   return (
     <header className="header">
-      <div className="header__date">{`${date.monthsNames[date.calMonth - 1]} ${
-        date.calYear
-      }`}</div>
+      <div className="header__date">{`${day ? day + "." : ""} ${
+        month
+          ? date.monthsNames[month - 1]
+          : date.monthsNames[date.calMonth - 1]
+      } ${year ? year : date.calYear}`}</div>
 
-      {/* <InputBox /> */}
       <div className="header__arrows">
         <Arrows />
       </div>
@@ -19,7 +20,12 @@ const Header = ({ date }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { date: state.date };
+  return {
+    date: state.date,
+    day: state.selectedDay.day,
+    month: state.selectedDay.month,
+    year: state.selectedDay.year,
+  };
 };
 
 export default connect(mapStateToProps)(Header);

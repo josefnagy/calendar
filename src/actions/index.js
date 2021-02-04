@@ -11,7 +11,7 @@ export const setDate = (date) => {
 };
 
 export const newEvent = (event) => {
-  console.log(event);
+  // console.log(event);
   // return async (dispatch) => {
   //   const res = await db
   //     .collection("events")
@@ -35,7 +35,20 @@ export const showADay = (id) => {
       .then((querySnapshot) => {
         return createEventsArray(querySnapshot);
       });
-    dispatch({ type: SHOW_A_DAY, payload: res });
+    // res.unshift(id);
+    const date = id.split("-");
+    const year = date[0];
+    const month = date[1];
+    const day = date[2];
+    const dayInfo = {
+      day,
+      month,
+      year,
+      events: res,
+    };
+    // console.log(res);
+    // console.log(dayInfo);
+    dispatch({ type: SHOW_A_DAY, payload: dayInfo });
   };
 };
 

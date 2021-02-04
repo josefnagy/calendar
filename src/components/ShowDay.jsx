@@ -10,7 +10,6 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
     }
   }, [showADay]);
 
-  // console.log(events);
   const renderEventList = selectedEvents.map((event) => {
     return (
       <li key={event.key} className="event-list__item">
@@ -53,17 +52,21 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  if (state.selectedDay.length === 0) {
-    const selectedEvnts = state.events.filter((event) => {
-      return event.id === ownProps.match.params.id;
-    });
-    if (state.events.length > 0) {
-      return { selectedEvents: selectedEvnts, load: false };
-    } else {
-      return { selectedEvents: selectedEvnts, load: true };
-    }
+  // console.log(state);
+  // if (state.selectedDay.length === 0) {
+  //   const selectedEvnts = state.events.filter((event) => {
+  //     return event.id === ownProps.match.params.id;
+  //   });
+  //   if (state.events.length > 0) {
+  //     return { selectedEvents: selectedEvnts, load: false };
+  //   } else {
+  //     return { selectedEvents: selectedEvnts, load: true };
+  //   }
+  // }
+  if (!state.selectedDay.events) {
+    return { selectedEvents: [], load: true };
   }
-  return { selectedEvents: state.selectedDay, load: true };
+  return { selectedEvents: state.selectedDay.events, load: true };
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);
