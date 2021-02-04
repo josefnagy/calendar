@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import InputBox from "./InputBox.jsx";
 import Dropdown from "./Dropdown.jsx";
@@ -34,21 +35,31 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit }) => {
+const EventForm = ({ onSubmit, id }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notes, setNotes] = useState("");
 
+  const date = id.split("-");
+  const year = Number(date[0]);
+  const month = Number(date[1]);
+  const day = Number(date[2]);
+
   const handleAddEvent = () => {
-    const newEvent = {
+    const formValues = {
+      id,
+      day,
+      month,
+      year,
+      dateId: year + "-" + month,
       label: selectedEvents.name,
       type: selectedEvents.type,
       function: selectedFunctions.name,
       location: selectedLocation.name,
       notes,
     };
-    console.log(newEvent);
+    onSubmit(formValues);
   };
 
   return (
@@ -83,5 +94,9 @@ const EventForm = ({ onSubmit }) => {
     </div>
   );
 };
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {};
+};
 
-export default EventForm;
+export default connect(mapStateToProps, {})(EventForm);

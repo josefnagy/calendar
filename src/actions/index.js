@@ -10,20 +10,23 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
-export const newEvent = (event) => {
-  // console.log(event);
-  // return async (dispatch) => {
-  //   const res = await db
-  //     .collection("events")
-  //     .doc()
-  //     .set(event)
-  //     .then((data) => {
-  //       // console.log(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error adding event ", err);
-  //     });
-  // };
+export const newEvent = (formValues) => {
+  formValues.timestamp = Date.now();
+  console.log(formValues);
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .doc()
+      .set(formValues)
+      .then(() => {
+        console.log("Data succesfully written");
+        return { type: NEW_EVENT };
+      })
+      .catch((err) => {
+        console.log("Error adding event ", err);
+      });
+    dispatch(res);
+  };
 };
 
 export const showADay = (id) => {
