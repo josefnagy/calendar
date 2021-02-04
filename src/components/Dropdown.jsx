@@ -38,15 +38,19 @@ const Dropdown = ({ options }) => {
     );
   });
 
+  const renderLabel = () => {
+    let label = "dropdown__label";
+    if (open && selected === "") {
+      label += " animate-label";
+    } else if ((!open && selected !== "") || (open && selected !== "")) {
+      label += " test";
+    }
+    return label;
+  };
+
   return (
     <div className="dropdown" ref={ref}>
-      <label
-        className={`dropdown__label ${
-          open && selected === "" ? "animate-label" : ""
-        }`}
-      >
-        Event type...
-      </label>
+      <label className={renderLabel()}>Event type...</label>
       <div className="dropdown__first visible" onClick={() => setOpen(!open)}>
         {selected.name}
       </div>

@@ -23,6 +23,12 @@
     font-size: 1.5rem;
   }
 
+  .test {
+    transform: translateY(-25px);
+    font-size: 1.2rem;
+    color: $event-gray;
+  }
+
   .animate-label {
     transform: translateY(-25px);
     font-size: 1.2rem;
