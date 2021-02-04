@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import { showADay } from "../actions";
 import { Link } from "react-router-dom";
 
-const ShowDay = ({ showADay, match, events }) => {
+const ShowDay = ({ showADay, match, selectedEvents, load }) => {
   useEffect(() => {
-    showADay(match.params.id);
+    if (load) {
+      showADay(match.params.id);
+    }
   }, [showADay]);
 
   // console.log(events);
-  const renderEventList = events.map((event) => {
+  const renderEventList = selectedEvents.map((event) => {
     return (
       <li key={event.key} className="event-list__item">
         <span className="item__label">{event.label}</span>
@@ -33,7 +35,7 @@ const ShowDay = ({ showADay, match, events }) => {
   return (
     <div className="showday">
       <div className="showday__event-list">
-        {events.length > 0
+        {selectedEvents.length > 0
           ? renderEventList
           : "Sorry bro, no events today.... Try add some"}
         <div className="event-list__btn-container">
@@ -50,9 +52,20 @@ const ShowDay = ({ showADay, match, events }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   console.log(state);
-  return { events: state.selectedDay };
+  if (state.selectedDay.length === 0) {
+    const selectedEvnts = state.events.filter((event) => {
+      return event.id === ownProps.match.params.id;
+    });
+    if (state.events.length > 0) {
+      return { selectedEvents: selectedEvnts, load: false };
+    } else {
+      return { selectedEvents: selectedEvnts, load: true };
+    }
+  }
+  // console.log(state);
+  return { selectedEvents: state.selectedDay, load: true };
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);
