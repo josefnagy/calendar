@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 import InputBox from "./InputBox.jsx";
@@ -121,7 +122,9 @@ const EventForm = ({ onSubmit, id, eventId, event, edit }) => {
         />
         <InputBox label="Notes" value={notes} setValue={setNotes} />
         <div className="form__buttons">
-          <button className="btn__discard">Zahodit změny</button>
+          <Link className="btn__discard" to={`/day/${id}`}>
+            Zpět
+          </Link>
           <button className="btn__add" onClick={() => handleAddEvent()}>
             Uložit event
           </button>
