@@ -45,12 +45,22 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, editedEvent: action.payload };
 
     case NEW_EVENT:
+      if ("events" in state.selectedDay) {
+        return {
+          ...state,
+          allEvents: [...state.allEvents, action.payload],
+          selectedDay: {
+            ...state.selectedDay,
+            events: [...state.selectedDay.events, action.payload],
+          },
+        };
+      }
       return {
         ...state,
         allEvents: [...state.allEvents, action.payload],
         selectedDay: {
           ...state.selectedDay,
-          events: [...state.selectedDay.events, action.payload],
+          events: [...state.selectedDay, action.payload],
         },
       };
 
