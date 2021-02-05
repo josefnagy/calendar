@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
 import { fetchEvents } from "../actions";
 
-const Calendar = ({ date, fetchEvents, events }) => {
+const Calendar = ({ date, fetchEvents, events, selectedDay }) => {
+  console.log(selectedDay);
   useEffect(() => {
-    if (events.length === 0) {
+    if (events.length === 0 || "month" in selectedDay) {
       fetchEvents(date.calYear, date.calMonth);
     }
-  }, [fetchEvents]);
+  }, [fetchEvents, events]);
 
   const renderCal = date.calendar.map((day, index) => {
     if (
@@ -34,10 +35,19 @@ const Calendar = ({ date, fetchEvents, events }) => {
 };
 
 const mapStateToProps = (state) => {
-  if (state.events.length === 0) {
-    return { date: state.date, events: [] };
+  console.log(state);
+  if (state.events.allEvents.length === 0) {
+    return {
+      date: state.date,
+      events: [],
+      selectedDay: state.events.selectedDay,
+    };
   } else {
-    return { date: state.date, events: state.events.allEvents };
+    return {
+      date: state.date,
+      events: state.events.allEvents,
+      selectedDay: state.events.selectedDay,
+    };
   }
 };
 

@@ -73,22 +73,15 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(state.selectedDay);
+const mapStateToProps = (state) => {
   if (
-    (state.selectedDay.length === 0 || "day" in state.selectedDay) &&
-    state.events.allEvents.length > 0
+    !("events" in state.events.selectedDay) &&
+    state.events.allEvents.length === 0
   ) {
-    const selectedEvnts = state.events.allEvents.filter((event) => {
-      return event.id === ownProps.match.params.id;
-    });
-    return { selectedEvents: selectedEvnts, load: false };
-  } else {
-    return {
-      selectedEvents: state.selectedDay.events ? state.selectedDay.events : [],
-      load: true,
-    };
+    return { selectedEvents: [], load: true };
   }
+
+  return { selectedEvents: state.events.selectedDay.events, load: false };
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);

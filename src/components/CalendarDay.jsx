@@ -10,9 +10,10 @@ const CalendarDay = ({ day, events, setSelectedDay }) => {
   });
 
   const dayId = `${day.year}-${day.month}-${day.day}`;
+  const dayIdArr = [day.year, day.month, day.day];
 
   return (
-    <Link to={`/day/${dayId}`} onClick={() => setSelectedDay(day.day)}>
+    <Link to={`/day/${dayId}`} onClick={() => setSelectedDay(dayIdArr)}>
       <div
         className={`
         calendar__day

@@ -1,5 +1,6 @@
 import db from "../utils/firebaseConfig";
 import _ from "lodash";
+import { v4 as uuid } from "uuid";
 
 import {
   SET_CAL_DATE,
@@ -82,22 +83,23 @@ export const showEdit = (id) => {
       .catch((err) => {
         console.log("Error adding event ", err);
       });
-    res.key = id;
     dispatch({ type: SHOW_EDIT, payload: res });
   };
 };
 
 export const newEvent = (formValues) => {
-  formValues.timestamp = Date.now();
-  console.log(formValues);
+  const id = uuid();
+  formValues.createdAt = Date.now();
+  formValues.key = id;
+
   return async (dispatch) => {
     const res = await db
       .collection("events")
-      .doc()
+      .doc(id)
       .set(formValues)
       .then(() => {
         console.log("Data succesfully written");
-        return { type: NEW_EVENT };
+        return { type: NEW_EVENT, payload: formValues };
       })
       .catch((err) => {
         console.log("Error adding event ", err);
@@ -129,8 +131,7 @@ export const showADay = (id) => {
       year,
       events: res,
     };
-    // console.log(res);
-    // console.log(dayInfo);
+
     dispatch({ type: SHOW_A_DAY, payload: dayInfo });
   };
 };
@@ -170,15 +171,15 @@ export const fetchEvents = (year, month) => {
 // helper function
 const createEventsArray = (querySnapshot) => {
   const events = [];
-  const ids = [];
+  // const ids = [];
   querySnapshot.forEach((doc) => {
     // console.log(doc.id);
     events.push(doc.data());
-    ids.push(doc.id);
+    // ids.push(doc.id);
   });
-  for (let i = 0; i < events.length; i++) {
-    events[i].key = ids[i];
-  }
+  // for (let i = 0; i < events.length; i++) {
+  //   events[i].key = ids[i];
+  // }
   return events;
 };
 

@@ -8,6 +8,6 @@ import editedEventReducer from "./editedEventReducer";
 export default combineReducers({
   date: dateReducer,
   events: eventsReducer,
-  selectedDay: selectedDayReducer,
+  // selectedDay: selectedDayReducer,
   // editedEvent: editedEventReducer,
 });
