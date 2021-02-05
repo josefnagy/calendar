@@ -44,6 +44,12 @@
       border: 1px solid black;
     }
 
+    .item__delete {
+      @include button-reset;
+      height: 3rem;
+      border: 1px solid black;
+    }
+
     .item__edit:hover {
       background-color: $primary;
       color: black;

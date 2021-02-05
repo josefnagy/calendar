@@ -1,12 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { showADay } from "../actions";
 import { Link } from "react-router-dom";
 
-const ShowDay = ({ showADay, match, selectedEvents, load }) => {
+import { showADay } from "../actions";
+import DeletePortal from "./DeletePortal.jsx";
+
+const ShowDay = ({ showADay, match, selectedEvents, load, location }) => {
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     if (load) {
       showADay(match.params.id);
+    }
+    if (match.path.slice(-6) === "delete") {
+      setOpen(true);
     }
   }, [showADay]);
 
@@ -21,18 +28,24 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
           >
             e
           </Link>
-          {/* <Link
+
+          <Link
             to={{
-              pathname: "/day/" + event.id + "/event/" + event.key + "/edit/",
-              event,
+              pathname: `/day/${event.id}/event/${event.key}/delete/`,
+              deleteEvent: true,
             }}
-            className="item__edit"
+            className="item__delete"
           >
-            e
-          </Link> */}
-          <Link to="" className="item__delete">
             x
           </Link>
+          <DeletePortal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            id={match.params.id}
+            eventId={match.params.eventId}
+          >
+            Are you sure?
+          </DeletePortal>
         </span>
         <span className="item__location">{event.location}</span>
         <span className="item__notes">{event.notes}</span>

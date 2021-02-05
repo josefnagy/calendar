@@ -24,6 +24,11 @@ const App = () => {
             exact
             component={EventEdit}
           />
+          <Route
+            path="/day/:id/event/:eventId/delete"
+            exact
+            component={ShowDay}
+          />
           <Route path="/day/:id/event/new" exact component={EventAdd} />
         </main>
       </Router>
