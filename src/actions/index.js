@@ -8,6 +8,7 @@ import {
   NEW_EVENT,
   EDIT_EVENT,
   SHOW_EDIT,
+  DELETE_EVENT,
 } from "./types";
 
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -16,6 +17,23 @@ import history from "../history";
 export const setDate = (date) => {
   history.push("/");
   return { type: SET_CAL_DATE, payload: date };
+};
+
+export const deleteEvent = (id) => {
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Document succesfully deleted!");
+        return { type: DELETE_EVENT, payload: id };
+      })
+      .catch((error) => {
+        console.error("Error removing event: ", error);
+      });
+    dispatch(res);
+  };
 };
 
 export const editEvent = (eventId, updatedValues, id) => {
