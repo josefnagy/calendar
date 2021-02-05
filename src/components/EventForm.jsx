@@ -134,8 +134,8 @@ const EventForm = ({ onSubmit, id, eventId, event, edit }) => {
   );
 };
 const mapStateToProps = (state) => {
-  // console.log(state);
-  return { event: state.editedDay };
+  console.log(state);
+  return { event: state.events.editedEvent };
 };
 
 export default connect(mapStateToProps, {})(EventForm);

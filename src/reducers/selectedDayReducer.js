@@ -1,4 +1,4 @@
-import { SHOW_A_DAY, FETCH_EVENTS } from "../actions/types";
+import { SHOW_A_DAY, FETCH_EVENTS, CLEAR_SELECTED_DAY } from "../actions/types";
 
 const INITIAL_STATE = [];
 
@@ -7,7 +7,7 @@ export default (state = INITIAL_STATE, action) => {
     case SHOW_A_DAY:
       return action.payload;
 
-    case FETCH_EVENTS:
+    case CLEAR_SELECTED_DAY:
       return [];
 
     default:

@@ -8,7 +8,6 @@ export default (state = INITIAL_STATE, action) => {
       return action.payload;
 
     case EDIT_EVENT:
-      console.log("reducer");
       return state;
 
     case SET_CAL_DATE:

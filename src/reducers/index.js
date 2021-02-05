@@ -9,5 +9,5 @@ export default combineReducers({
   date: dateReducer,
   events: eventsReducer,
   selectedDay: selectedDayReducer,
-  editedDay: editedEventReducer,
+  // editedEvent: editedEventReducer,
 });

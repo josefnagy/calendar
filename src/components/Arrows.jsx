@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
-import { setDate, fetchEvents } from "../actions";
+import { setDate, fetchEvents, clearSelectedDay } from "../actions";
 
-const Arrows = ({ date, setDate, fetchEvents }) => {
+const Arrows = ({ date, setDate, fetchEvents, clearSelectedDay }) => {
   const month = date.calMonth;
   const year = date.calYear;
   const currMonth = date.currentMonth;
@@ -12,21 +12,27 @@ const Arrows = ({ date, setDate, fetchEvents }) => {
 
   const getCal = (year, month) => {
     setDate({ calYear: year, calMonth: month });
-    fetchEvents(year, month);
   };
 
   const onPrevButtonClick = (year, month) => {
     const [prevYear, prevMonth] = prevMonthDate(year, month);
     getCal(prevYear, prevMonth);
+    fetchEvents(prevYear, prevMonth);
   };
 
   const onNextButtonClick = (year, month) => {
     const [nextYear, nextMonth] = nextMonthDate(year, month);
     getCal(nextYear, nextMonth);
+    fetchEvents(nextYear, nextMonth);
   };
 
   const onTodayButtonClick = (year, month) => {
     getCal(year, month);
+
+    if (date.calMonth !== currMonth || date.calYear !== currYear) {
+      fetchEvents(year, month);
+    }
+    clearSelectedDay();
   };
 
   return (
@@ -73,4 +79,8 @@ const mapStateToProps = (state) => {
   return { date: state.date };
 };
 
-export default connect(mapStateToProps, { setDate, fetchEvents })(Arrows);
+export default connect(mapStateToProps, {
+  setDate,
+  fetchEvents,
+  clearSelectedDay,
+})(Arrows);

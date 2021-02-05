@@ -6,3 +6,4 @@ export const EDIT_EVENT = "EDIT_EVENT";
 export const SHOW_EDIT = "SHOW_EDIT";
 export const DELETE_EVENT = "DELETE_EVENT";
 export const SHOW_A_DAY = "SHOW_A_DAY";
+export const CLEAR_SELECTED_DAY = "CLEAR_SELECTED_DAY";

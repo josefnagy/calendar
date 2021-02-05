@@ -9,6 +9,7 @@ import {
   EDIT_EVENT,
   SHOW_EDIT,
   DELETE_EVENT,
+  CLEAR_SELECTED_DAY,
 } from "./types";
 
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -17,6 +18,10 @@ import history from "../history";
 export const setDate = (date) => {
   history.push("/");
   return { type: SET_CAL_DATE, payload: date };
+};
+
+export const clearSelectedDay = () => {
+  return { type: CLEAR_SELECTED_DAY, payload: "qq" };
 };
 
 export const deleteEvent = (id) => {
@@ -97,6 +102,8 @@ export const newEvent = (formValues) => {
 };
 
 export const showADay = (id) => {
+  console.log("--- FETCHED EVENTS FOR A SELECTED DAY ---");
+
   return async (dispatch) => {
     const res = await db
       .collection("events")
@@ -133,6 +140,8 @@ export const fetchEvents = (year, month) => {
   //get next month date
   const [nextYear, nextMonth] = nextMonthDate(year, month);
   const nextMonthDateId = `${nextYear}-${nextMonth}`;
+
+  console.log("--- FETCHED EVENTS ---");
 
   //DB FILLER
   // events.forEach((event) => {

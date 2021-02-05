@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { showADay } from "../actions";
 import DeletePortal from "./DeletePortal.jsx";
 
-const ShowDay = ({ showADay, match, selectedEvents, load, location }) => {
+const ShowDay = ({ showADay, match, selectedEvents, load }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -74,21 +74,17 @@ const ShowDay = ({ showADay, match, selectedEvents, load, location }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(state);
-  // if (state.selectedDay.length === 0) {
-  //   const selectedEvnts = state.events.filter((event) => {
-  //     return event.id === ownProps.match.params.id;
-  //   });
-  //   if (state.events.length > 0) {
-  //     return { selectedEvents: selectedEvnts, load: false };
-  //   } else {
-  //     return { selectedEvents: selectedEvnts, load: true };
-  //   }
-  // }
-  if (!state.selectedDay.events) {
-    return { selectedEvents: [], load: true };
+  if (state.selectedDay.length === 0 && state.events.allEvents.length > 0) {
+    const selectedEvnts = state.events.allEvents.filter((event) => {
+      return event.id === ownProps.match.params.id;
+    });
+    return { selectedEvents: selectedEvnts, load: false };
+  } else {
+    return {
+      selectedEvents: state.selectedDay.events ? state.selectedDay.events : [],
+      load: true,
+    };
   }
-  return { selectedEvents: state.selectedDay.events, load: true };
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);

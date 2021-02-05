@@ -6,7 +6,9 @@ import { fetchEvents } from "../actions";
 
 const Calendar = ({ date, fetchEvents, events }) => {
   useEffect(() => {
-    fetchEvents(date.calYear, date.calMonth);
+    if (events.length === 0) {
+      fetchEvents(date.calYear, date.calMonth);
+    }
   }, [fetchEvents]);
 
   const renderCal = date.calendar.map((day, index) => {
@@ -32,7 +34,11 @@ const Calendar = ({ date, fetchEvents, events }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { date: state.date, events: state.events };
+  if (state.events.length === 0) {
+    return { date: state.date, events: [] };
+  } else {
+    return { date: state.date, events: state.events.allEvents };
+  }
 };
 
 export default connect(mapStateToProps, { fetchEvents })(Calendar);
