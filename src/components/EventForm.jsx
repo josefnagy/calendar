@@ -64,8 +64,8 @@ const EventForm = ({ onSubmit, id, event }) => {
       dateId: year + "-" + month,
       label: selectedEvents.name,
       type: selectedEvents.type,
-      function: selectedFunctions.name,
-      location: selectedLocation.name,
+      function: selectedFunctions ? selectedFunctions.name : "",
+      location: selectedLocation ? selectedFunctions.name : "",
       notes,
     };
     onSubmit(formValues);
@@ -104,7 +104,7 @@ const EventForm = ({ onSubmit, id, event }) => {
   );
 };
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return { event: state.editedDay };
 };
 
