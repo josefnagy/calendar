@@ -19,7 +19,11 @@ const App = () => {
         <main className="main">
           <Route path="/" exact component={Calendar} />
           <Route path="/day/:id" exact component={ShowDay} />
-          <Route path="/day/:id/event/:id/edit" exact component={EventEdit} />
+          <Route
+            path="/day/:id/event/:eventId/edit"
+            exact
+            component={EventEdit}
+          />
           <Route path="/day/:id/event/new" exact component={EventAdd} />
         </main>
       </Router>

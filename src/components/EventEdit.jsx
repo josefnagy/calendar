@@ -6,15 +6,21 @@ import EventForm from "./EventForm.jsx";
 
 const EventEdit = ({ match, showEdit }) => {
   useEffect(() => {
-    showEdit(match.params.id);
+    showEdit(match.params.eventId);
   }, [showEdit]);
 
-  const onSubmit = (formValues) => {};
+  const onSubmit = (formValues) => {
+    console.log(formValues);
+  };
 
   return (
     <div>
       EventEditt
-      <EventForm onSubmit={onSubmit} id={match.params.id} />
+      <EventForm
+        onSubmit={onSubmit}
+        id={match.params.id}
+        eventId={match.params.eventId}
+      />
     </div>
   );
 };

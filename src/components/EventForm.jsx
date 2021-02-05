@@ -35,7 +35,7 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit, id, event }) => {
+const EventForm = ({ onSubmit, id, eventId, event }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -65,13 +65,15 @@ const EventForm = ({ onSubmit, id, event }) => {
       day,
       month,
       year,
+      key: eventId ? eventId : null,
       dateId: year + "-" + month,
       label: selectedEvents.name,
       type: selectedEvents.type,
       function: selectedFunctions ? selectedFunctions.name : "",
-      location: selectedLocation ? selectedFunctions.name : "",
+      location: selectedLocation ? selectedLocation.name : "",
       notes,
     };
+    // console.log(formValues);
     onSubmit(formValues);
   };
 
