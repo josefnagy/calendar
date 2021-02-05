@@ -10,6 +10,7 @@ import {
   SHOW_EDIT,
   DELETE_EVENT,
   CLEAR_SELECTED_DAY,
+  SET_SELECTED_DAY,
 } from "./types";
 
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -22,6 +23,11 @@ export const setDate = (date) => {
 
 export const clearSelectedDay = () => {
   return { type: CLEAR_SELECTED_DAY, payload: "qq" };
+};
+
+export const setSelectedDay = (day) => {
+  return { type: SET_SELECTED_DAY, payload: day };
+  // return { type: "fish" };
 };
 
 export const deleteEvent = (id) => {
@@ -142,22 +148,7 @@ export const fetchEvents = (year, month) => {
   const nextMonthDateId = `${nextYear}-${nextMonth}`;
 
   console.log("--- FETCHED EVENTS ---");
-
-  //DB FILLER
-  // events.forEach((event) => {
-  //   const evnts = {};
-  //   evnts[event.id] = event;
-
-  //   db.collection("events")
-  //     .doc()
-  //     .set(event)
-  //     .then(() => {
-  //       console.log("ok");
-  //     })
-  //     .catch(function (error) {
-  //       console.error("Error adding document: ", error);
-  //     });
-  // });
+  // dbFiller();
 
   return async (dispatch) => {
     const res = await db
@@ -189,6 +180,23 @@ const createEventsArray = (querySnapshot) => {
     events[i].key = ids[i];
   }
   return events;
+};
+
+const dbFiller = () => {
+  events.forEach((event) => {
+    const evnts = {};
+    evnts[event.id] = event;
+
+    db.collection("events")
+      .doc()
+      .set(event)
+      .then(() => {
+        console.log("ok");
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
+  });
 };
 
 const events = [

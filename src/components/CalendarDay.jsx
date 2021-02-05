@@ -1,7 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-const CalendarDay = ({ day, events }) => {
+import { setSelectedDay } from "../actions";
+
+const CalendarDay = ({ day, events, setSelectedDay }) => {
   const renderEvents = events.map((event) => {
     return <li key={event.type}>{event.label}</li>;
   });
@@ -9,7 +12,7 @@ const CalendarDay = ({ day, events }) => {
   const dayId = `${day.year}-${day.month}-${day.day}`;
 
   return (
-    <Link to={`/day/${dayId}`}>
+    <Link to={`/day/${dayId}`} onClick={() => setSelectedDay(day.day)}>
       <div
         className={`
         calendar__day
@@ -28,4 +31,4 @@ const CalendarDay = ({ day, events }) => {
   );
 };
 
-export default CalendarDay;
+export default connect(null, { setSelectedDay })(CalendarDay);

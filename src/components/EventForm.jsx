@@ -37,7 +37,7 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit, id, eventId, event, edit }) => {
+const EventForm = ({ onSubmit, id, eventId, event }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -134,7 +134,7 @@ const EventForm = ({ onSubmit, id, eventId, event, edit }) => {
   );
 };
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return { event: state.events.editedEvent };
 };
 
