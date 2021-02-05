@@ -44,8 +44,12 @@ const EventForm = ({ onSubmit, id, event }) => {
   useEffect(() => {
     if (event) {
       setSelectedEvents({ name: event.label, type: event.type });
-      setSelectedFunctions({ name: event.function });
-      setSelectedLocation({ name: event.location });
+      event.function !== ""
+        ? setSelectedFunctions({ name: event.function })
+        : "";
+      event.location !== ""
+        ? setSelectedLocation({ name: event.location })
+        : "";
       setNotes(event.notes);
     }
   }, [event]);
