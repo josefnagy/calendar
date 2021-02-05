@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import { showEdit } from "../actions/index";
+import { showEdit, editEvent } from "../actions/index";
 import EventForm from "./EventForm.jsx";
 
-const EventEdit = ({ match, showEdit }) => {
+const EventEdit = ({ match, showEdit, editEvent }) => {
   useEffect(() => {
     showEdit(match.params.eventId);
   }, [showEdit]);
 
-  const onSubmit = (formValues) => {
-    console.log(formValues);
+  const onSubmit = (updatedValues) => {
+    editEvent(match.params.eventId, updatedValues, match.params.id);
   };
 
   return (
@@ -20,6 +20,7 @@ const EventEdit = ({ match, showEdit }) => {
         onSubmit={onSubmit}
         id={match.params.id}
         eventId={match.params.eventId}
+        edit={true}
       />
     </div>
   );
@@ -30,4 +31,4 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-export default connect(mapStateToProps, { showEdit })(EventEdit);
+export default connect(mapStateToProps, { showEdit, editEvent })(EventEdit);

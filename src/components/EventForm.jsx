@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import InputBox from "./InputBox.jsx";
 import Dropdown from "./Dropdown.jsx";
@@ -35,7 +36,7 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit, id, eventId, event }) => {
+const EventForm = ({ onSubmit, id, eventId, event, edit }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -61,8 +62,8 @@ const EventForm = ({ onSubmit, id, eventId, event }) => {
 
   const handleAddEvent = () => {
     const formValues = {
-      id,
       day,
+      id,
       month,
       year,
       key: eventId ? eventId : null,
@@ -73,8 +74,28 @@ const EventForm = ({ onSubmit, id, eventId, event }) => {
       location: selectedLocation ? selectedLocation.name : "",
       notes,
     };
-    // console.log(formValues);
-    onSubmit(formValues);
+
+    if (event) {
+      const editedValues = difference(formValues, event);
+      onSubmit(editedValues);
+    } else {
+      onSubmit(formValues);
+    }
+  };
+
+  // function which compare old event and new edited event and returns changes
+  const difference = (object, base) => {
+    const changes = (object, base) => {
+      return _.transform(object, (result, value, key) => {
+        if (!_.isEqual(value, base[key])) {
+          result[key] =
+            _.isObject(value) && _.isObject(base[key])
+              ? changes(value, base[key])
+              : value;
+        }
+      });
+    };
+    return changes(object, base);
   };
 
   return (

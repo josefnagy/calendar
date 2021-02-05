@@ -18,6 +18,24 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
+export const editEvent = (eventId, updatedValues, id) => {
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .doc(eventId)
+      .update(updatedValues)
+      .then(() => {
+        console.log("Document succesfully updated");
+        return { type: EDIT_EVENT };
+      })
+      .catch((error) => {
+        console.log("Error updating document: ", error);
+      });
+    history.push(`/day/${id}`);
+    dispatch(res);
+  };
+};
+
 export const showEdit = (id) => {
   return async (dispatch) => {
     const res = await db
@@ -55,6 +73,7 @@ export const newEvent = (formValues) => {
       .catch((err) => {
         console.log("Error adding event ", err);
       });
+    history.push(`/day/${formValues.id}`);
     dispatch(res);
   };
 };
