@@ -21,7 +21,7 @@ export default (state = INITIAL_STATE, action) => {
     }
 
     case CLEAR_SELECTED_DAY:
-      return state;
+      return { ...state, selectedDay: { day: undefined } };
 
     case SET_SELECTED_DAY: {
       const filteredEvents = state.allEvents.filter((event) => {

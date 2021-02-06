@@ -5,7 +5,6 @@ import CalendarDay from "./CalendarDay.jsx";
 import { fetchEvents } from "../actions";
 
 const Calendar = ({ date, fetchEvents, events, selectedDay }) => {
-  console.log(selectedDay);
   useEffect(() => {
     if (events.length === 0 || "month" in selectedDay) {
       fetchEvents(date.calYear, date.calMonth);
@@ -35,7 +34,6 @@ const Calendar = ({ date, fetchEvents, events, selectedDay }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   if (state.events.allEvents.length === 0) {
     return {
       date: state.date,

@@ -61,14 +61,18 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
           : "Sorry bro, no events today.... Try add some"}
         <div className="event-list__btn-container">
           <Link
-            to={`/day/${match.params.id}/event/new`}
+            to={{
+              pathname: `/day/${match.params.id}/event/new`,
+              dayId: match.params.id,
+            }}
+            // to={`/day/${match.params.id}/event/new`}
             className="event-list__add-event-btn"
           >
             + Add Event +
           </Link>
         </div>
       </div>
-      <div className="showday__img">qq</div>
+      <div className="showday__img"></div>
     </div>
   );
 };

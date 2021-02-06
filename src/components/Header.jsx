@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import Arrows from "./Arrows.jsx";
 
-const Header = ({ date, day, year, month }) => {
+const Header = ({ date, month, year }) => {
+  const [day, setDay] = useState();
+
+  useEffect(() => {
+    if (window.location.pathname !== "/") {
+      const str = window.location.pathname.split("/");
+      const dayId = str[2] ? str[2].split("-") : 0;
+      setDay(dayId[2]);
+    } else {
+      setDay(undefined);
+    }
+  });
+
   return (
     <header className="header">
       <div className="header__date">{`${day ? day + "." : ""} ${
@@ -20,6 +32,7 @@ const Header = ({ date, day, year, month }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     date: state.date,
     day: state.events.selectedDay.day,
