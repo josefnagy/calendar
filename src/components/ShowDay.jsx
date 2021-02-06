@@ -78,14 +78,22 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
+
   if (
     !("events" in state.events.selectedDay) &&
-    state.events.allEvents.length === 0
+    Object.values(state.events.allEvents).length === 0
   ) {
+    // console.log("Refresh byl, loadujem z DB");
     return { selectedEvents: [], load: true };
-  }
+  } else {
+    // console.log("refresh nebyl, neni potreba loadovat z DB");
 
-  return { selectedEvents: state.events.selectedDay.events, load: false };
+    if ("events" in state.events.selectedDay) {
+      const events = Object.values(state.events.selectedDay.events);
+      return { selectedEvents: events, load: false };
+    }
+  }
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);

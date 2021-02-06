@@ -17,4 +17,10 @@ const EventAdd = ({ newEvent, match }) => {
   );
 };
 
-export default connect(null, { newEvent })(EventAdd);
+const mapStateToProps = (state) => {
+  console.log(state);
+
+  return {};
+};
+
+export default connect(mapStateToProps, { newEvent })(EventAdd);

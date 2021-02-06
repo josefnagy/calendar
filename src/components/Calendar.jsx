@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
 import { fetchEvents } from "../actions";
 
-const Calendar = ({ date, fetchEvents, events, selectedDay }) => {
+const Calendar = ({ date, fetchEvents, events }) => {
+  // tady diky tomu se to nejak zacykli. vyresit to linkama a ne ze se budou next a prev butonama vypalovat akce, to je hovadina
+
   useEffect(() => {
-    if (events.length === 0 || "month" in selectedDay) {
-      fetchEvents(date.calYear, date.calMonth);
-    }
-  }, [fetchEvents, events]);
+    fetchEvents(date.calYear, date.calMonth);
+  }, [fetchEvents]);
 
   const renderCal = date.calendar.map((day, index) => {
     if (
@@ -34,19 +34,11 @@ const Calendar = ({ date, fetchEvents, events, selectedDay }) => {
 };
 
 const mapStateToProps = (state) => {
-  if (state.events.allEvents.length === 0) {
-    return {
-      date: state.date,
-      events: [],
-      selectedDay: state.events.selectedDay,
-    };
-  } else {
-    return {
-      date: state.date,
-      events: state.events.allEvents,
-      selectedDay: state.events.selectedDay,
-    };
-  }
+  return {
+    date: state.date,
+    events: Object.values(state.events.allEvents),
+    selectedDay: state.events.selectedDay,
+  };
 };
 
 export default connect(mapStateToProps, { fetchEvents })(Calendar);

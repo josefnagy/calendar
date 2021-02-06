@@ -56,7 +56,7 @@ export const editEvent = (eventId, updatedValues, id) => {
       .update(updatedValues)
       .then(() => {
         console.log("Document succesfully updated");
-        return { type: EDIT_EVENT };
+        return { type: EDIT_EVENT, payload: [eventId, updatedValues] };
       })
       .catch((error) => {
         console.log("Error updating document: ", error);
@@ -121,6 +121,7 @@ export const showADay = (id) => {
         return createEventsArray(querySnapshot);
       });
     // res.unshift(id);
+    // z events udelat objekt
     const date = id.split("-");
     const year = date[0];
     const month = date[1];

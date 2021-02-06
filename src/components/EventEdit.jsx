@@ -27,7 +27,7 @@ const EventEdit = ({ match, showEdit, editEvent }) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   return {};
 };
 

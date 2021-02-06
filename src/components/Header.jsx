@@ -32,7 +32,6 @@ const Header = ({ date, month, year }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     date: state.date,
     day: state.events.selectedDay.day,
