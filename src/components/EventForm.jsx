@@ -37,24 +37,24 @@ const locationTypes = [
   { name: "Ostatní..", type: "other" },
 ];
 
-const EventForm = ({ onSubmit, id, eventId, event }) => {
+const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
-    if (event) {
-      setSelectedEvents({ name: event.label, type: event.type });
-      event.function !== ""
-        ? setSelectedFunctions({ name: event.function })
+    if (eventToEdit) {
+      setSelectedEvents({ name: eventToEdit.label, type: eventToEdit.type });
+      eventToEdit.function !== ""
+        ? setSelectedFunctions({ name: eventToEdit.function })
         : "";
-      event.location !== ""
-        ? setSelectedLocation({ name: event.location })
+      eventToEdit.location !== ""
+        ? setSelectedLocation({ name: eventToEdit.location })
         : "";
-      setNotes(event.notes);
+      setNotes(eventToEdit.notes);
     }
-  }, [event]);
+  }, [eventToEdit]);
 
   const date = id.split("-");
   const year = Number(date[0]);
@@ -76,8 +76,8 @@ const EventForm = ({ onSubmit, id, eventId, event }) => {
       notes,
     };
 
-    if (event) {
-      const editedValues = difference(formValues, event);
+    if (eventToEdit) {
+      const editedValues = difference(formValues, eventToEdit);
       onSubmit(editedValues);
     } else {
       onSubmit(formValues);

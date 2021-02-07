@@ -67,6 +67,7 @@ export const editEvent = (eventId, updatedValues, id) => {
 };
 
 export const showEdit = (id) => {
+  console.log("--- SHOW EDIT ... FETCHED FROM DB ---");
   return async (dispatch) => {
     const res = await db
       .collection("events")

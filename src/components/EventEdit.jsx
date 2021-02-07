@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { showEdit, editEvent } from "../actions/index";
 import EventForm from "./EventForm.jsx";
 
-const EventEdit = ({ match, showEdit, editEvent }) => {
+const EventEdit = ({ match, eventToEdit, editEvent }) => {
   useEffect(() => {
-    showEdit(match.params.eventId);
+    // showEdit(match.params.eventId);
   }, [showEdit]);
 
   const onSubmit = (updatedValues) => {
@@ -20,15 +20,17 @@ const EventEdit = ({ match, showEdit, editEvent }) => {
         onSubmit={onSubmit}
         id={match.params.id}
         eventId={match.params.eventId}
-        edit={true}
+        eventToEdit={eventToEdit}
       />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {};
+const mapStateToProps = (state, ownProps) => {
+  // console.log(state);
+  // console.log(ownProps);
+  // console.log(state.events.allEvents[ownProps.match.params.eventId]);
+  return { eventToEdit: state.events.allEvents[ownProps.match.params.eventId] };
 };
 
 export default connect(mapStateToProps, { showEdit, editEvent })(EventEdit);

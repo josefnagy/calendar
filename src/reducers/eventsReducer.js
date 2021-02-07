@@ -19,6 +19,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    // TODO tady nejak osefovat, at kdyz se resetne local store tak, at to nefacha vubec
     case "persist/REHYDRATE":
       return {
         ...state,
@@ -36,30 +37,25 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, editedEvent: action.payload };
 
     case EDIT_EVENT: {
-      // TODO: tady tohle musim vykutit, necchce to fachat neajk
-      // const nState = { ...state };
-      // console.log(action.payload);
-
       const eventToUpdate = state.selectedDay.events[action.payload[0]];
       const key = action.payload[0];
-      // console.log(eventToUpdate);
+
+      const e1 = { ...state.selectedDay.events };
+      const e2 = { ...state.allEvents };
 
       const updatedEvent = { ...eventToUpdate, ...action.payload[1] };
-      // console.log(updatedEvent);
-      // nState.selectedDay.events[action.payload[0]] = updatedEvent;
-      // console.log(nState);
+      e1[key] = updatedEvent;
+      e2[key] = updatedEvent;
 
       return {
         ...state,
         selectedDay: {
           ...state.selectedDay,
-          events: { ...state.selectedDay.events, key: updatedEvent },
+          events: { ...e1 },
         },
+        allEvents: { ...e2 },
       };
     }
-
-    // case CLEAR_SELECTED_DAY:
-    //   return { ...state, selectedDay: { day: undefined } };
 
     case SET_CAL_DATE:
       return { ...state, selectedDay: { day: undefined } };
