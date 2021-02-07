@@ -8,7 +8,10 @@ const Calendar = ({ date, fetchEvents, events }) => {
   // tady diky tomu se to nejak zacykli. vyresit to linkama a ne ze se budou next a prev butonama vypalovat akce, to je hovadina
 
   useEffect(() => {
-    fetchEvents(date.calYear, date.calMonth);
+    console.log(events);
+    if (events.length === 0) {
+      fetchEvents(date.calYear, date.calMonth);
+    }
   }, [fetchEvents]);
 
   const renderCal = date.calendar.map((day, index) => {
@@ -34,6 +37,7 @@ const Calendar = ({ date, fetchEvents, events }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     date: state.date,
     events: Object.values(state.events.allEvents),

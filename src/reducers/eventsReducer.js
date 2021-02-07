@@ -19,6 +19,21 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "persist/REHYDRATE":
+      console.log("------AAAA-----");
+      console.log(action.payload);
+      console.log(state);
+      console.log({
+        ...state,
+        allEvents: action.payload.events.allEvents,
+        selectedDay: action.payload.events.selectedDay,
+      });
+      return {
+        ...state,
+        allEvents: action.payload.events.allEvents,
+        selectedDay: action.payload.events.selectedDay,
+      };
+
     case FETCH_EVENTS: {
       // return { ...state, allEvents: [...action.payload], selectedDay: [] };
       const allEvents = _.mapKeys(action.payload, "key");
