@@ -130,7 +130,14 @@ export default (state = INITIAL_STATE, action) => {
       };
     }
     case DELETE_EVENT:
-      return state;
+      return {
+        ...state,
+        allEvents: _.omit(state.allEvents, action.payload),
+        selectedDay: {
+          ...state.selectedDay,
+          events: _.omit(state.selectedDay.events, action.payload),
+        },
+      };
 
     default:
       return state;
