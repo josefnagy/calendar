@@ -20,14 +20,6 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "persist/REHYDRATE":
-      console.log("------AAAA-----");
-      console.log(action.payload);
-      console.log(state);
-      console.log({
-        ...state,
-        allEvents: action.payload.events.allEvents,
-        selectedDay: action.payload.events.selectedDay,
-      });
       return {
         ...state,
         allEvents: action.payload.events.allEvents,
@@ -66,7 +58,10 @@ export default (state = INITIAL_STATE, action) => {
       };
     }
 
-    case CLEAR_SELECTED_DAY:
+    // case CLEAR_SELECTED_DAY:
+    //   return { ...state, selectedDay: { day: undefined } };
+
+    case SET_CAL_DATE:
       return { ...state, selectedDay: { day: undefined } };
 
     case SET_SELECTED_DAY: {

@@ -22,9 +22,9 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
-export const clearSelectedDay = () => {
-  return { type: CLEAR_SELECTED_DAY, payload: "qq" };
-};
+// export const clearSelectedDay = () => {
+//   return { type: CLEAR_SELECTED_DAY, payload: "qq" };
+// };
 
 export const setSelectedDay = (day) => {
   return { type: SET_SELECTED_DAY, payload: day };

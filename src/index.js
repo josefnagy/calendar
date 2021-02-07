@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import reduxThunk from "redux-thunk";
+import logger from "redux-logger";
 
 import "./js/vendor/grained";
 
@@ -35,7 +36,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = createStore(
   persistedReducer,
-  composeEnhancers(applyMiddleware(reduxThunk))
+  composeEnhancers(applyMiddleware(reduxThunk, logger))
 );
 
 const persistor = persistStore(store);

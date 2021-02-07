@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
-import { setDate, fetchEvents, clearSelectedDay } from "../actions";
+import { setDate, fetchEvents } from "../actions";
 
-const Arrows = ({ date, setDate, fetchEvents, clearSelectedDay }) => {
+const Arrows = ({ date, setDate, fetchEvents }) => {
   const month = date.calMonth;
   const year = date.calYear;
   const currMonth = date.currentMonth;
@@ -33,7 +33,7 @@ const Arrows = ({ date, setDate, fetchEvents, clearSelectedDay }) => {
     if (date.calMonth !== currMonth || date.calYear !== currYear) {
       fetchEvents(year, month);
     }
-    clearSelectedDay();
+    // clearSelectedDay();
   };
 
   return (
@@ -83,5 +83,4 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   setDate,
   fetchEvents,
-  clearSelectedDay,
 })(Arrows);

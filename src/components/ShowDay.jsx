@@ -79,7 +79,6 @@ const ShowDay = ({ showADay, match, selectedEvents, load }) => {
 
 const mapStateToProps = (state) => {
   console.log(state);
-
   if (
     !("events" in state.events.selectedDay) &&
     Object.values(state.events.allEvents).length === 0
