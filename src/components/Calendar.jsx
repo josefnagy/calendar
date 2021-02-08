@@ -2,14 +2,21 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import CalendarDay from "./CalendarDay.jsx";
-import { fetchEvents } from "../actions";
+import { fetchEvents, setDate, showMonth } from "../actions";
 
-const Calendar = ({ date, fetchEvents, events }) => {
+const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
+  const year = match.params.year ? match.params.year : date.currentYear;
+  const month = match.params.month ? match.params.month : date.currentMonth;
+
   useEffect(() => {
+    showMonth(year, month);
+    console.log(match);
+
+    // fetch events if there arent in localStorage
     if (events.length === 0) {
-      fetchEvents(date.calYear, date.calMonth);
+      // fetchEvents(date.calYear, date.calMonth);
     }
-  }, [fetchEvents]);
+  }, [fetchEvents, showMonth, year, month]);
 
   const renderCal = date.calendar.map((day, index) => {
     if (
@@ -41,4 +48,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchEvents })(Calendar);
+export default connect(mapStateToProps, { fetchEvents, setDate, showMonth })(
+  Calendar
+);

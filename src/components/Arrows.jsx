@@ -3,44 +3,46 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
-import { setDate, fetchEvents } from "../actions";
+import { setDate, fetchEvents, showMonth } from "../actions";
 
-const Arrows = ({ date, setDate, fetchEvents }) => {
-  const month = date.calMonth;
-  const year = date.calYear;
+const Arrows = ({ date, setDate, fetchEvents, showMonth }) => {
+  const month = Number(date.calMonth);
+  const year = Number(date.calYear);
   const currMonth = date.currentMonth;
   const currYear = date.currentYear;
+  const [prevYear, prevMonth] = prevMonthDate(year, month);
+  const [nextYear, nextMonth] = nextMonthDate(year, month);
 
   const getCal = (year, month) => {
-    setDate({ calYear: year, calMonth: month });
+    // showMonth({ calYear: year, calMonth: month });
   };
 
   const onPrevButtonClick = (year, month) => {
-    const [prevYear, prevMonth] = prevMonthDate(year, month);
-    getCal(prevYear, prevMonth);
-    fetchEvents(prevYear, prevMonth);
+    // const [prevYear, prevMonth] = prevMonthDate(year, month);
+    getCal(year, month);
+    // fetchEvents(year, month);
   };
 
   const onNextButtonClick = (year, month) => {
-    const [nextYear, nextMonth] = nextMonthDate(year, month);
-    getCal(nextYear, nextMonth);
-    fetchEvents(nextYear, nextMonth);
+    // const [nextYear, nextMonth] = nextMonthDate(year, month);
+    getCal(year, month);
+    // fetchEvents(year, month);
   };
 
   const onTodayButtonClick = (year, month) => {
     getCal(year, month);
 
     if (date.calMonth !== currMonth || date.calYear !== currYear) {
-      fetchEvents(year, month);
+      // fetchEvents(year, month);
     }
-    // clearSelectedDay();
   };
 
   return (
     <>
-      <button
+      <Link
+        to={`/month/${prevYear}/${prevMonth}`}
         className="arrows__button-left"
-        onClick={() => onPrevButtonClick(year, month)}
+        onClick={() => onPrevButtonClick(prevYear, prevMonth)}
       >
         <svg id="Capa_1" viewBox="0 0 490.667 490.667" xmlSpace="preserve">
           <path
@@ -51,16 +53,18 @@ const Arrows = ({ date, setDate, fetchEvents }) => {
 	l234.667-234.667c4.171-4.16,4.179-10.914,0.019-15.085C466.231,237.794,466.225,237.788,466.219,237.781z"
           />
         </svg>
-      </button>
-      <button
+      </Link>
+      <Link
+        to={"/"}
         className="button-today"
         onClick={() => onTodayButtonClick(currYear, currMonth)}
       >
         Today
-      </button>
-      <button
+      </Link>
+      <Link
+        to={`/month/${nextYear}/${nextMonth}`}
         className="arrows__button-right"
-        onClick={() => onNextButtonClick(year, month)}
+        onClick={() => onNextButtonClick(nextYear, nextMonth)}
       >
         <svg id="Capa_1" viewBox="0 0 490.667 490.667" xmlSpace="preserve">
           <path
@@ -71,7 +75,7 @@ const Arrows = ({ date, setDate, fetchEvents }) => {
 	l234.667-234.667c4.171-4.16,4.179-10.914,0.019-15.085C466.231,237.794,466.225,237.788,466.219,237.781z"
           />
         </svg>
-      </button>
+      </Link>
     </>
   );
 };
@@ -83,4 +87,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   setDate,
   fetchEvents,
+  showMonth,
 })(Arrows);

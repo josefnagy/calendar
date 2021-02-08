@@ -10,8 +10,8 @@ import {
   EDIT_EVENT,
   SHOW_EDIT,
   DELETE_EVENT,
-  CLEAR_SELECTED_DAY,
   SET_SELECTED_DAY,
+  SHOW_MONTH,
 } from "./types";
 
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -22,13 +22,12 @@ export const setDate = (date) => {
   return { type: SET_CAL_DATE, payload: date };
 };
 
-// export const clearSelectedDay = () => {
-//   return { type: CLEAR_SELECTED_DAY, payload: "qq" };
-// };
+export const showMonth = (calYear, calMonth) => {
+  return { type: SHOW_MONTH, payload: { calYear, calMonth } };
+};
 
 export const setSelectedDay = (day) => {
   return { type: SET_SELECTED_DAY, payload: day };
-  // return { type: "fish" };
 };
 
 export const deleteEvent = (id) => {
@@ -173,282 +172,9 @@ export const fetchEvents = (year, month) => {
 // helper function
 const createEventsArray = (querySnapshot) => {
   const events = [];
-  // const ids = [];
   querySnapshot.forEach((doc) => {
     // console.log(doc.id);
     events.push(doc.data());
-    // ids.push(doc.id);
   });
-  // for (let i = 0; i < events.length; i++) {
-  //   events[i].key = ids[i];
-  // }
   return events;
 };
-
-const dbFiller = () => {
-  events.forEach((event) => {
-    const evnts = {};
-    evnts[event.id] = event;
-
-    db.collection("events")
-      .doc()
-      .set(event)
-      .then(() => {
-        console.log("ok");
-      })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
-      });
-  });
-};
-
-const events = [
-  {
-    day: 5,
-    month: 1,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-    notes: "Vzit si ampuli na moč",
-    location: "Uhelná",
-  },
-  {
-    day: 5,
-    month: 1,
-    year: 2021,
-    type: "preventivka",
-    label: "Preventivka",
-    notes: "Nezapomenout nachcat do ampule",
-    location: "Hornická poliklinika",
-  },
-  {
-    day: 5,
-    month: 4,
-    year: 2021,
-    type: "preventivka",
-    label: "Preventivka",
-    notes: "",
-    location: "Hornická poliklinika",
-  },
-  {
-    day: 12,
-    month: 1,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 25,
-    month: 1,
-    year: 2021,
-    type: "nocni",
-    label: "Nocni",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 23,
-    month: 1,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpoledni",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 16,
-    month: 1,
-    year: 2021,
-    type: "preventivka",
-    label: "Preventivka",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 10,
-    month: 1,
-    year: 2021,
-    type: "nemocenska",
-    label: "Nemocenska",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 1,
-    month: 2,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 2,
-    month: 2,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpolední",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 3,
-    month: 2,
-    year: 2021,
-    type: "nv",
-    label: "Náhradní volno",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 6,
-    month: 2,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 7,
-    month: 2,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 8,
-    month: 2,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpolední",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 9,
-    month: 2,
-    year: 2021,
-    type: "nocni",
-    label: "Noční",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 12,
-    month: 2,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 13,
-    month: 2,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 14,
-    month: 2,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpolední",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 15,
-    month: 2,
-    year: 2021,
-    type: "nocni",
-    label: "Noční",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 18,
-    month: 2,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 19,
-    month: 2,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 20,
-    month: 2,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpolední",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 21,
-    month: 2,
-    year: 2021,
-    type: "nocni",
-    label: "Noční",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 24,
-    month: 2,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 25,
-    month: 2,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 26,
-    month: 2,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpolední",
-    notes: "",
-    location: "Uhelná",
-  },
-  {
-    day: 27,
-    month: 2,
-    year: 2021,
-    type: "nocni",
-    label: "Noční",
-    notes: "",
-    location: "Uhelná",
-  },
-];
-
-events.forEach((event) => {
-  event.id = `${event.year}-${event.month}-${event.day}`;
-  event.dateId = `${event.year}-${event.month}`;
-});

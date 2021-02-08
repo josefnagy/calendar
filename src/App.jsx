@@ -18,6 +18,7 @@ const App = () => {
         <Header />
         <main className="main">
           <Route path="/" exact component={Calendar} />
+          <Route path="/month/:year/:month" exact component={Calendar} />
           <Route path="/day/:id" exact component={ShowDay} />
           <Route
             path="/day/:id/event/:eventId/edit"

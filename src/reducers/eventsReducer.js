@@ -18,12 +18,10 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // TODO tady nejak osefovat, at kdyz se resetne local store tak, at to nefacha vubec
     // * TIMHLE SE RESETNE LOCAL STORAGE
     // * localStorage.clear('persist:persistedStore')
 
     case "persist/REHYDRATE":
-      console.log(action.payload);
       if (action.payload) {
         return {
           ...state,
@@ -34,7 +32,6 @@ export default (state = INITIAL_STATE, action) => {
       return state;
 
     case FETCH_EVENTS: {
-      // return { ...state, allEvents: [...action.payload], selectedDay: [] };
       const allEvents = _.mapKeys(action.payload, "key");
       return { ...state, allEvents, selectedDay: {} };
     }

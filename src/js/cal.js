@@ -67,77 +67,6 @@ const holidays = [
   },
 ];
 
-// const eventTypes = [
-//   { name: "Ranní", type: "ranni", value: 10 },
-//   { name: "Denní", type: "denni", value: 10 },
-//   { name: "Odpolední", type: "odpoledni", value: 8 },
-//   { name: "Noční", type: "nocni", value: 8 },
-//   { name: "Preventivka", type: "preventivka", value: 2 },
-//   { name: "Školení", type: "skoleni", value: 2 },
-//   { name: "Paragraf", type: "paragraf", value: 10 },
-//   { name: "Nemocenská", type: "nemocenska", value: 10 },
-//   { name: "Dovolená", type: "dovolena", value: 10 },
-// ];
-
-const events = [
-  {
-    day: 5,
-    month: 1,
-    year: 2021,
-    type: "ranni",
-    label: "Ranní",
-  },
-  {
-    day: 5,
-    month: 1,
-    year: 2021,
-    type: "preventivka",
-    label: "Preventivka",
-  },
-  {
-    day: 12,
-    month: 1,
-    year: 2021,
-    type: "denni",
-    label: "Denní",
-  },
-  {
-    day: 25,
-    month: 1,
-    year: 2021,
-    type: "nocni",
-    label: "Nocni",
-  },
-  {
-    day: 23,
-    month: 1,
-    year: 2021,
-    type: "odpoledni",
-    label: "Odpoledni",
-  },
-  {
-    day: 16,
-    month: 1,
-    year: 2021,
-    type: "preventivka",
-    label: "Preventivka",
-  },
-  {
-    day: 10,
-    month: 1,
-    year: 2021,
-    type: "nemocenska",
-    label: "Nemocenska",
-  },
-  {
-    day: 10,
-    month: 2,
-    year: 2021,
-    type: "paragraf",
-    label: "Paragraf",
-  },
-];
-
 const getEaster = (year) => {
   const f = Math.floor,
     // Golden Number - 1
@@ -172,9 +101,12 @@ const getEasterHolidays = (year, easterSunday) => {
   return easterFridayAndMonday;
 };
 
-export const prevMonthDate = (year, month) => {
+export const prevMonthDate = (yearStr, monthStr) => {
   let prevMonth = null;
   let prevMonthsYear = null;
+
+  const year = Number(yearStr);
+  const month = Number(monthStr);
 
   if (month === 1) {
     prevMonth = 12;
@@ -189,9 +121,12 @@ export const prevMonthDate = (year, month) => {
   return [prevMonthsYear, prevMonth, daysInPrevMonth];
 };
 
-export const nextMonthDate = (year, month) => {
+export const nextMonthDate = (yearStr, monthStr) => {
   let nextMonth = null;
   let nextMonthsYear = null;
+
+  const year = Number(yearStr);
+  const month = Number(monthStr);
 
   if (month === 12) {
     nextMonth = 1;
