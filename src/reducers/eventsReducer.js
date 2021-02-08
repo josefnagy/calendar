@@ -8,6 +8,7 @@ import {
   SHOW_A_DAY,
   EDIT_EVENT,
   SET_SELECTED_DAY,
+  SHOW_MONTH,
   SET_CAL_DATE,
 } from "../actions/types";
 
@@ -20,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // * TIMHLE SE RESETNE LOCAL STORAGE
     // * localStorage.clear('persist:persistedStore')
-
     case "persist/REHYDRATE":
       if (action.payload) {
         return {
@@ -29,6 +29,9 @@ export default (state = INITIAL_STATE, action) => {
           selectedDay: action.payload.events.selectedDay,
         };
       }
+      return state;
+
+    case SHOW_MONTH:
       return state;
 
     case FETCH_EVENTS: {

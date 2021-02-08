@@ -10,11 +10,10 @@ const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
 
   useEffect(() => {
     showMonth(year, month);
-    console.log(match);
 
     // fetch events if there arent in localStorage
     if (events.length === 0) {
-      // fetchEvents(date.calYear, date.calMonth);
+      fetchEvents(date.calYear, date.calMonth);
     }
   }, [fetchEvents, showMonth, year, month]);
 
@@ -27,13 +26,12 @@ const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
       day.today = true;
     }
 
+    const id = `${day.year}-${day.month}-${day.day}`;
+
     const eventsInDay = events.filter((event) => {
-      return (
-        day.year === event.year &&
-        day.month === event.month &&
-        day.day === event.day
-      );
+      return id === event.id;
     });
+
     return <CalendarDay key={index} day={day} events={eventsInDay} />;
   });
 
@@ -41,6 +39,7 @@ const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
 };
 
 const mapStateToProps = (state) => {
+  // const events = Object.values(state.events.allEvents);
   return {
     date: state.date,
     events: Object.values(state.events.allEvents),
