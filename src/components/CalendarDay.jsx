@@ -6,7 +6,7 @@ import { setSelectedDay } from "../actions";
 
 const CalendarDay = ({ day, events, setSelectedDay }) => {
   const renderEvents = events.map((event) => {
-    return <li key={event.type}>{event.label}</li>;
+    return <li key={event.key}>{event.label}</li>;
   });
 
   const dayId = `${day.year}-${day.month}-${day.day}`;
