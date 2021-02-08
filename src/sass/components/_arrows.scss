@@ -3,13 +3,12 @@
   justify-content: center;
   align-items: center;
 
-  & button:not(:last-of-type) {
+  & a:not(:last-of-type) {
     margin-right: 3rem;
   }
 }
 
 .arrows__button-left {
-  @include button-reset;
   width: 1.5rem;
   transform: rotate(180deg);
 
@@ -20,7 +19,6 @@
   }
 }
 .arrows__button-right {
-  @include button-reset;
   width: 1.5rem;
   margin-top: 5px;
 
@@ -32,7 +30,6 @@
 }
 
 .button-today {
-  @include button-reset;
   text-transform: uppercase;
   color: white;
   position: relative;
@@ -41,8 +38,8 @@
   &::before {
     position: absolute;
     content: "";
-    top: 2.3rem;
-    left: -1.4rem;
+    top: -0.9rem;
+    left: -1rem;
     width: 72px;
     height: 35px;
 
@@ -51,12 +48,11 @@
   }
 
   &:hover {
-    transition: all 5.9s;
     &::before {
       position: absolute;
       content: "";
-      top: 2.3rem;
-      left: -1.4rem;
+      top: -0.9rem;
+      left: -1rem;
       width: 72px;
       height: 35px;
       border: 1px solid $primary;
