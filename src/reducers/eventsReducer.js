@@ -7,7 +7,6 @@ import {
   SHOW_EDIT,
   SHOW_A_DAY,
   EDIT_EVENT,
-  CLEAR_SELECTED_DAY,
   SET_SELECTED_DAY,
   SET_CAL_DATE,
 } from "../actions/types";
@@ -20,12 +19,19 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // TODO tady nejak osefovat, at kdyz se resetne local store tak, at to nefacha vubec
+    // * TIMHLE SE RESETNE LOCAL STORAGE
+    // * localStorage.clear('persist:persistedStore')
+
     case "persist/REHYDRATE":
-      return {
-        ...state,
-        allEvents: action.payload.events.allEvents,
-        selectedDay: action.payload.events.selectedDay,
-      };
+      console.log(action.payload);
+      if (action.payload) {
+        return {
+          ...state,
+          allEvents: action.payload.events.allEvents,
+          selectedDay: action.payload.events.selectedDay,
+        };
+      }
+      return state;
 
     case FETCH_EVENTS: {
       // return { ...state, allEvents: [...action.payload], selectedDay: [] };
