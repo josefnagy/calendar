@@ -1,0 +1,15 @@
+.aside {
+  display: grid;
+  grid-template-rows: 2fr 8fr 2fr;
+  .user {
+    grid-row: 3;
+
+    align-self: end;
+  }
+
+  .user__icon {
+    fill: transparent;
+    stroke: $background-black;
+    margin-bottom: 2rem;
+  }
+}

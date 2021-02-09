@@ -5,14 +5,7 @@ import { connect } from "react-redux";
 
 import { deleteEvent } from "../actions";
 
-const DeletePortal = ({
-  isOpen,
-  onClose,
-  children,
-  id,
-  eventId,
-  deleteEvent,
-}) => {
+const DeletePortal = ({ isOpen, children, id, eventId, deleteEvent }) => {
   const handleDelete = () => {
     deleteEvent(eventId);
   };

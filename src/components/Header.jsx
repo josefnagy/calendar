@@ -16,7 +16,7 @@ const Header = ({ date, month, year }) => {
       setDay(undefined);
     }
 
-    if (window.location.pathname === "/signup") setHidden("hidden");
+    if (window.location.pathname === "/signup") setHidden("");
     else setHidden("");
   });
 

@@ -1,4 +1,4 @@
-import db from "../apis/firebase";
+import db, { auth } from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
@@ -12,10 +12,64 @@ import {
   DELETE_EVENT,
   SET_SELECTED_DAY,
   SHOW_MONTH,
+  CREATE_USER,
+  LOGIN,
+  LOGOUT,
+  SET_USER,
 } from "./types";
 
 import { nextMonthDate, prevMonthDate } from "../js/cal";
 import history from "../history";
+
+export const createUser = (email, password) => {
+  return async (dispatch) => {
+    const res = await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log("User Created");
+        return { type: CREATE_USER, payload: userCredential };
+      })
+      .catch((error) => {
+        console.log("Error creating user: ", error);
+        console.error("Error creating user: ", error);
+      });
+    history.push("/");
+    dispatch(res);
+  };
+};
+
+export const setUser = (user) => {
+  return { type: SET_USER, payload: user };
+};
+
+export const login = async (email, password) => {
+  auth
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      console.log("User logged IN");
+      return { type: LOGIN, payload: userCredential };
+    })
+    .catch((error) => {
+      console.error("Error loggin in user: ", error);
+    });
+
+  history.push("/");
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    const res = await auth
+      .signOut()
+      .then(() => {
+        console.log("User logged out");
+        return { type: LOGOUT };
+      })
+      .catch((error) => {
+        console.error("An Error happended", error);
+      });
+    dispatch(res);
+  };
+};
 
 export const setDate = (date) => {
   history.push("/");

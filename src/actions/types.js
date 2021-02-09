@@ -9,3 +9,9 @@ export const SHOW_A_DAY = "SHOW_A_DAY";
 export const CLEAR_SELECTED_DAY = "CLEAR_SELECTED_DAY";
 export const SET_SELECTED_DAY = "SET_SELECTED_DAY";
 export const SHOW_MONTH = "SHOW_MONTH";
+
+export const CREATE_USER = "SIGNUP";
+export const SET_USER = "SET_USER";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const RESET_PASSWORD = "RESET_PASSWORD";
