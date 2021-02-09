@@ -1,10 +1,10 @@
 import React from "react";
 
-const InputBox = ({ label, value, setValue }) => {
+const InputBox = ({ label, value, setValue, id }) => {
   return (
     <div className="input__container">
       <input
-        id="input"
+        id={id}
         className="input-box"
         type="text"
         required

@@ -1,0 +1,55 @@
+.signup {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  box-sizing: content-box;
+
+  h2 {
+    letter-spacing: 0.9px;
+    font-size: 3rem;
+  }
+
+  .input__container {
+    margin-top: 0;
+  }
+
+  .signup__container {
+    width: 45rem;
+  }
+
+  .signup__card {
+    border: 1px solid $background-black;
+    padding: 3rem 5rem;
+    text-align: center;
+  }
+
+  .signup__button {
+    @include button-reset;
+    @include button-primary;
+    transition: all 0.2s;
+    color: $primary;
+    margin-top: 4rem;
+  }
+
+  .signup__button:hover {
+    @include button-primary-hover;
+    font-weight: 300;
+  }
+
+  .signup__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .signup__link {
+    margin-left: 1rem;
+    color: $primary;
+    transition: border-bottom 0.2s;
+  }
+
+  .signup__link:hover {
+    text-decoration: none;
+    border-bottom: 1px solid $primary;
+  }
+}

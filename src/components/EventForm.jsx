@@ -120,7 +120,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
           setSelected={setSelectedLocation}
           label="Location"
         />
-        <InputBox label="Notes" value={notes} setValue={setNotes} />
+        <InputBox label="Notes" value={notes} setValue={setNotes} id={notes} />
         <div className="form__buttons">
           <Link className="btn__discard" to={`/day/${id}`}>
             Zpět

@@ -5,6 +5,7 @@ import Arrows from "./Arrows.jsx";
 
 const Header = ({ date, month, year }) => {
   const [day, setDay] = useState();
+  const [hidden, setHidden] = useState("");
 
   useEffect(() => {
     if (window.location.pathname !== "/") {
@@ -14,10 +15,13 @@ const Header = ({ date, month, year }) => {
     } else {
       setDay(undefined);
     }
+
+    if (window.location.pathname === "/signup") setHidden("hidden");
+    else setHidden("");
   });
 
   return (
-    <header className="header">
+    <header className={`header ${hidden}`}>
       <div className="header__date">{`${day ? day + "." : ""} ${
         month
           ? date.monthsNames[month - 1]

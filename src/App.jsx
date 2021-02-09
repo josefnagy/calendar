@@ -7,6 +7,7 @@ import Calendar from "./components/Calendar.jsx";
 import ShowDay from "./components/ShowDay.jsx";
 import EventAdd from "./components/EventAdd.jsx";
 import EventEdit from "./components/EventEdit.jsx";
+import Signup from "./components/Signup.jsx";
 
 import history from "./history";
 
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/" exact component={Calendar} />
           <Route path="/month/:year/:month" exact component={Calendar} />
           <Route path="/day/:id" exact component={ShowDay} />
+          <Route path="/signup" exact component={Signup} />
           <Route
             path="/day/:id/event/:eventId/edit"
             exact
