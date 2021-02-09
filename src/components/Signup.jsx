@@ -7,7 +7,6 @@ import InputBox from "./InputBox.jsx";
 
 const Signup = ({ createUser }) => {
   const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
@@ -23,13 +22,6 @@ const Signup = ({ createUser }) => {
             <div className="signup__title">
               <h2>Registrace</h2>
             </div>
-            <InputBox
-              label="Uživatelské jméno"
-              type="text"
-              value={userName}
-              setValue={setUserName}
-              id="email"
-            />
             <InputBox
               label="Email"
               type="email"

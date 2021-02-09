@@ -8,9 +8,7 @@ const AuthPortal = ({ isOpen, children, setOpen }) => {
 
   useEffect(() => {
     const onBodyClick = (e) => {
-      console.log(e.target);
       if (ref.current && ref.current.contains(e.target)) {
-        console.log("now");
         return;
       }
       setOpen(false);

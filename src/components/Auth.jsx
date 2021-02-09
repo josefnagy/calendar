@@ -6,7 +6,7 @@ import { auth } from "../apis/firebase";
 import AuthPortal from "./AuthPortal.jsx";
 import { login, logout, setUser } from "../actions";
 
-const Auth = ({ isSignedIn, logout, setUser }) => {
+const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
   const [open, setOpen] = useState(true);
   const ref = useRef();
 
@@ -29,9 +29,18 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
   const renderAuthList = () => {
     if (!isSignedIn) {
       return (
-        <li>
-          <Link to="/login">login</Link>
-        </li>
+        <>
+          <li className="auth__item">
+            <Link to="/login" onClick={() => setOpen(!open)}>
+              Přihlásit se
+            </Link>
+          </li>
+          <li className="auth__item">
+            <Link to="/signup" onClick={() => setOpen(!open)}>
+              Vytvořit účet
+            </Link>
+          </li>
+        </>
       );
     } else {
       return (
@@ -67,7 +76,7 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
         onClose={() => setOpen(false)}
         setOpen={setOpen}
       >
-        <h3>Hello boy</h3>
+        <h3>{userEmail ? userEmail : "Vítej soudruhu"}</h3>
         <ul ref={ref}>{renderAuthList()}</ul>
       </AuthPortal>
     </>
@@ -75,7 +84,10 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.isSignedIn };
+  return {
+    isSignedIn: state.auth.isSignedIn,
+    userEmail: state.auth.isSignedIn ? state.auth.user.email : "",
+  };
 };
 
 export default connect(mapStateToProps, { login, logout, setUser })(Auth);
