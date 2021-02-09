@@ -1,4 +1,4 @@
-import db from "../utils/firebaseConfig";
+import db from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
