@@ -7,7 +7,7 @@ import AuthPortal from "./AuthPortal.jsx";
 import { login, logout, setUser } from "../actions";
 
 const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const ref = useRef();
 
   useEffect(() => {

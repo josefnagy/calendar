@@ -9,9 +9,29 @@ const Signup = ({ createUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignup = () => {
-    createUser(email, password);
+    console.log(email);
+    if (validateEmail(email)) {
+      console.log("good");
+    } else {
+      console.log("baad");
+    }
+
+    // createUser(email, password);
+  };
+
+  const validateEmail = (userEmail) => {
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (userEmail.match(mailformat)) return true;
+    else return false;
+  };
+
+  const validatePassword = (password, passwordConfirm) => {
+    if (password.length < 6) {
+      // TODO ......
+    }
   };
 
   return (
@@ -24,7 +44,7 @@ const Signup = ({ createUser }) => {
             </div>
             <InputBox
               label="Email"
-              type="email"
+              type="text"
               value={email}
               setValue={setEmail}
               id="email"
