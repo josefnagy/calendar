@@ -7,7 +7,7 @@ import AuthPortal from "./AuthPortal.jsx";
 import { login, logout, setUser } from "../actions";
 
 const Auth = ({ isSignedIn, logout, setUser }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const ref = useRef();
 
   useEffect(() => {
@@ -16,20 +16,6 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
       else logout();
     });
     return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const onBodyClick = (e) => {
-      if (ref.current && ref.current.contains(e.target)) {
-        return;
-      }
-      setOpen(false);
-    };
-    document.body.addEventListener("click", onBodyClick, { capture: true });
-
-    return () => {
-      document.body.removeEventListener("click", onBodyClick);
-    };
   }, []);
 
   const handleAuth = () => {
@@ -45,9 +31,6 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
       return (
         <li>
           <Link to="/login">login</Link>
-          <button className="auth__logout-btn" onClick={handleLogout}>
-            Odhlásit se
-          </button>
         </li>
       );
     } else {
@@ -79,9 +62,13 @@ const Auth = ({ isSignedIn, logout, setUser }) => {
           />
         </svg>
       </span>
-      <AuthPortal isOpen={open} onClose={() => setOpen(false)}>
+      <AuthPortal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        setOpen={setOpen}
+      >
         <h3>Hello boy</h3>
-        <ul>{renderAuthList()}</ul>
+        <ul ref={ref}>{renderAuthList()}</ul>
       </AuthPortal>
     </>
   );

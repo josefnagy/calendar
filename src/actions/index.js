@@ -57,6 +57,7 @@ export const login = async (email, password) => {
 };
 
 export const logout = () => {
+  console.log("logout");
   return async (dispatch) => {
     const res = await auth
       .signOut()
