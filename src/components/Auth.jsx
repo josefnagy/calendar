@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -6,8 +6,9 @@ import { auth } from "../apis/firebase";
 import AuthPortal from "./AuthPortal.jsx";
 import { login, logout, setUser } from "../actions";
 
-const Auth = ({ isSignedIn, logout, login, setUser }) => {
+const Auth = ({ isSignedIn, logout, setUser }) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -15,6 +16,20 @@ const Auth = ({ isSignedIn, logout, login, setUser }) => {
       else logout();
     });
     return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const onBodyClick = (e) => {
+      if (ref.current && ref.current.contains(e.target)) {
+        return;
+      }
+      setOpen(false);
+    };
+    document.body.addEventListener("click", onBodyClick, { capture: true });
+
+    return () => {
+      document.body.removeEventListener("click", onBodyClick);
+    };
   }, []);
 
   const handleAuth = () => {
