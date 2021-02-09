@@ -1,12 +1,12 @@
 import React from "react";
 
-const InputBox = ({ label, value, setValue, id }) => {
+const InputBox = ({ type, label, value, setValue, id }) => {
   return (
     <div className="input__container">
       <input
         id={id}
         className="input-box"
-        type="text"
+        type={type}
         required
         value={value}
         onChange={(e) => setValue(e.target.value)}

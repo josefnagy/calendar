@@ -17,18 +17,21 @@ const Signup = () => {
             </div>
             <InputBox
               label="Email:"
+              type="text"
               value={email}
               setValue={setEmail}
               id="email"
             />
             <InputBox
               label="Heslo:"
+              type="password"
               value={password}
               setValue={setPassword}
               id="password"
             />
             <InputBox
               label="Potvrdit heslo:"
+              type="password"
               value={passwordConfirm}
               setValue={setPasswordConfirm}
               id="passwordConfirm"
