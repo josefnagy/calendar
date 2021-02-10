@@ -24,7 +24,7 @@ const CalendarDay = ({ day, events, setSelectedDay }) => {
         ${day.today ? "today" : ""}
       `}
       >
-        <div className="notices"></div>
+        <div className="notices">{day.holiday ? day.holiday : ""}</div>
         <div className="events">
           <ul>{renderEvents}</ul>
         </div>

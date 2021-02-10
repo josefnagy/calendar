@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Router, Route } from "react-router-dom";
 
 import Header from "./components/Header.jsx";
@@ -9,10 +10,14 @@ import EventAdd from "./components/EventAdd.jsx";
 import EventEdit from "./components/EventEdit.jsx";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
+import GuardedRoute from "./components/GuardedRoute.jsx";
 
 import history from "./history";
 
 const App = () => {
+  const isSignedIn = useSelector((state) => state.auth.isSignedIn);
+  console.log(isSignedIn);
+
   return (
     <div className="app-container">
       <Router history={history}>
@@ -24,15 +29,17 @@ const App = () => {
           <Route path="/day/:id" exact component={ShowDay} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
-          <Route
+          <GuardedRoute
             path="/day/:id/event/:eventId/edit"
             exact
             component={EventEdit}
+            auth={isSignedIn}
           />
-          <Route
+          <GuardedRoute
             path="/day/:id/event/:eventId/delete"
             exact
             component={ShowDay}
+            auth={isSignedIn}
           />
           <Route path="/day/:id/event/new" exact component={EventAdd} />
         </main>
