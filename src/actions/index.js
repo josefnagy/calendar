@@ -147,9 +147,7 @@ export const newEvent = (formValues) => {
   formValues.createdAt = Date.now();
   formValues.key = id;
 
-  return async (dispatch, getState) => {
-    const { userId } = getState();
-    console.log(userId);
+  return async (dispatch) => {
     await db
       .collection("events")
       .doc(id)

@@ -23,7 +23,7 @@ const ShowDay = ({
       setOpen(true);
     }
   }, [showADay]);
-  console.log("ww");
+
   const renderEventList = selectedEvents.map((event) => {
     if (event.userId === userId) {
       return (
@@ -77,19 +77,23 @@ const ShowDay = ({
     <div className="showday">
       <div className="showday__event-list">
         {renderEvents()}
-        <div className="event-list__btn-container">
-          <Link
-            to={{
-              pathname: `/day/${match.params.id}/event/new`,
-              dayId: match.params.id,
-            }}
-            // to={`/day/${match.params.id}/event/new`}
-            className="event-list__add-event-btn"
-          >
-            + Add Event +
-          </Link>
-        </div>
+        {isSignedIn ? (
+          <div className="event-list__btn-container">
+            <Link
+              to={{
+                pathname: `/day/${match.params.id}/event/new`,
+                dayId: match.params.id,
+              }}
+              className="event-list__add-event-btn"
+            >
+              + Add Event +
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
+
       <div className="showday__img"></div>
     </div>
   );

@@ -23,6 +23,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
   };
 
   const handleLogout = () => {
+    setOpen(!open);
     logout();
   };
 
