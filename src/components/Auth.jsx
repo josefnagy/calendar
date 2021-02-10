@@ -31,12 +31,20 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
       return (
         <>
           <li className="auth__item">
-            <Link to="/login" onClick={() => setOpen(!open)}>
+            <Link
+              to="/login"
+              onClick={() => setOpen(!open)}
+              className="auth__link"
+            >
               Přihlásit se
             </Link>
           </li>
           <li className="auth__item">
-            <Link to="/signup" onClick={() => setOpen(!open)}>
+            <Link
+              to="/signup"
+              onClick={() => setOpen(!open)}
+              className="auth__link"
+            >
               Vytvořit účet
             </Link>
           </li>
