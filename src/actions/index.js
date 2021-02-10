@@ -147,20 +147,23 @@ export const newEvent = (formValues) => {
   formValues.createdAt = Date.now();
   formValues.key = id;
 
-  return async (dispatch) => {
-    const res = await db
+  return async (dispatch, getState) => {
+    const { userId } = getState();
+    console.log(userId);
+    await db
       .collection("events")
       .doc(id)
       .set(formValues)
       .then(() => {
         console.log("Data succesfully written");
-        return { type: NEW_EVENT, payload: formValues };
+        // return { type: NEW_EVENT, payload: formValues };
       })
       .catch((err) => {
         console.log("Error adding event ", err);
       });
+    console.log("after");
+    dispatch({ type: NEW_EVENT, payload: formValues });
     history.push(`/day/${formValues.id}`);
-    dispatch(res);
   };
 };
 

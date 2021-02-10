@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import EventForm from "./EventForm.jsx";
 import { newEvent } from "../actions/index";
 
-const EventAdd = ({ newEvent, match }) => {
+const EventAdd = ({ newEvent, match, userId }) => {
   const onSubmit = (formValues) => {
     // console.log(formValues);
-    newEvent(formValues);
+    newEvent({ ...formValues, userId });
   };
 
   return (
@@ -20,7 +20,7 @@ const EventAdd = ({ newEvent, match }) => {
 const mapStateToProps = (state) => {
   console.log(state);
 
-  return {};
+  return { userId: state.auth.user.uid };
 };
 
 export default connect(mapStateToProps, { newEvent })(EventAdd);

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
 import { fetchEvents, setDate, showMonth } from "../actions";
 
-const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
+const Calendar = ({ date, fetchEvents, events, match, showMonth, userId }) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
 
@@ -29,7 +29,7 @@ const Calendar = ({ date, fetchEvents, events, match, showMonth }) => {
     const id = `${day.year}-${day.month}-${day.day}`;
 
     const eventsInDay = events.filter((event) => {
-      return id === event.id;
+      return id === event.id && event.userId === userId;
     });
 
     return <CalendarDay key={index} day={day} events={eventsInDay} />;
@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
     date: state.date,
     events: Object.values(state.events.allEvents),
     selectedDay: state.events.selectedDay,
+    userId: state.auth.user ? state.auth.user.uid : null,
   };
 };
 

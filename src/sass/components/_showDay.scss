@@ -8,6 +8,9 @@
 
 .showday__event-list {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .event-list__item {
     display: grid;
