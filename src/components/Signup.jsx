@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
 import { createUser } from "../actions";
 import { validateEmail, validatePassword } from "../js/validate";
-
 import InputBox from "./InputBox.jsx";
 
 const Signup = ({ createUser }) => {

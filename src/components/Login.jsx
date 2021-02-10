@@ -4,13 +4,21 @@ import { connect } from "react-redux";
 
 import InputBox from "./InputBox.jsx";
 import { login } from "../actions/index.js";
+import { validateEmail, validatePassword } from "../js/validate";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleLogin = () => {
-    login(email, password);
+    setEmailError(validateEmail);
+    setPasswordError(validatePassword(password));
+
+    if (!emailError && !passwordError && email && password) {
+      login(email, password);
+    }
   };
 
   return (
@@ -27,6 +35,7 @@ const Login = () => {
               value={email}
               setValue={setEmail}
               id="email"
+              error={emailError}
             />
             <InputBox
               label="Heslo"
@@ -34,6 +43,7 @@ const Login = () => {
               value={password}
               setValue={setPassword}
               id="password"
+              error={passwordError}
             />
             <button className="signup__button" onClick={() => handleLogin()}>
               Přihlásit
