@@ -13,7 +13,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) setUser(user);
-      else logout();
+      else if (isSignedIn) logout();
     });
     return unsubscribe;
   }, []);

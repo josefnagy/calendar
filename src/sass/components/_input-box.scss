@@ -31,6 +31,14 @@
   transition: all 0.4s;
 }
 
+.input__error {
+  position: absolute;
+  font-size: 1.5rem;
+  color: $danger;
+  right: 0;
+  transform: translateY(-50px);
+}
+
 .input__container {
   position: relative;
   width: 100%;

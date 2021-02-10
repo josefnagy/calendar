@@ -9,12 +9,15 @@ const Signup = ({ createUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
   const handleSignup = () => {
-    console.log(email);
     if (validateEmail(email)) {
-      console.log("good");
+      if (validatePassword(password, passwordConfirm)) {
+        console.log("good");
+      }
     } else {
       console.log("baad");
     }
@@ -24,13 +27,31 @@ const Signup = ({ createUser }) => {
 
   const validateEmail = (userEmail) => {
     const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (userEmail.match(mailformat)) return true;
-    else return false;
+    if (userEmail.match(mailformat)) {
+      setEmailError("");
+      return true;
+    } else {
+      setEmailError("Email je ve špatném formátu.");
+      return false;
+    }
   };
 
   const validatePassword = (password, passwordConfirm) => {
-    if (password.length < 6) {
-      // TODO ......
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    if (password.match(passwordRegex)) {
+      setPasswordError("");
+      if (password === passwordConfirm) {
+        setPasswordConfirmError("");
+        return true;
+      } else {
+        setPasswordConfirmError("Hesla se neshodují.");
+        return false;
+      }
+    } else {
+      setPasswordError(
+        "Heslo musí mít alspoň 6 znaků, jedno malé a velké písmeno a číslo."
+      );
+      return false;
     }
   };
 
@@ -48,6 +69,7 @@ const Signup = ({ createUser }) => {
               value={email}
               setValue={setEmail}
               id="email"
+              error={emailError}
             />
             <InputBox
               label="Heslo"
@@ -55,6 +77,7 @@ const Signup = ({ createUser }) => {
               value={password}
               setValue={setPassword}
               id="password"
+              error={passwordError}
             />
             <InputBox
               label="Potvrdit heslo"
@@ -62,6 +85,7 @@ const Signup = ({ createUser }) => {
               value={passwordConfirm}
               setValue={setPasswordConfirm}
               id="passwordConfirm"
+              error={passwordConfirmError}
             />
             <button className="signup__button" onClick={() => handleSignup()}>
               Zaregistrovat se
