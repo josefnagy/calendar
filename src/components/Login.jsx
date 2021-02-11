@@ -12,11 +12,14 @@ const Login = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = () => {
     setEmailError(validateEmail);
     setPasswordError(validatePassword(password));
 
-    if (!emailError && !passwordError && email && password) {
+    if (!emailError && !passwordError && email && password && !isLoading) {
+      setIsLoading(true);
       login(email, password);
     }
   };
