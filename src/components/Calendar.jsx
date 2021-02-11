@@ -4,9 +4,21 @@ import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
 import { fetchEvents, setDate, showMonth } from "../actions";
 
-const Calendar = ({ date, fetchEvents, events, match, showMonth, userId }) => {
+const Calendar = ({
+  date,
+  fetchEvents,
+  events,
+  match,
+  showMonth,
+  userId,
+  setDate,
+}) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
+
+  useEffect(() => {
+    setDate();
+  }, [setDate]);
 
   useEffect(() => {
     showMonth(year, month);

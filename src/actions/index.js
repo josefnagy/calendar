@@ -2,8 +2,10 @@ import db, { auth } from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
+import createCalendar, { nextMonthDate, prevMonthDate } from "../js/cal";
+
 import {
-  SET_CAL_DATE,
+  SET_DATE,
   FETCH_EVENTS,
   SHOW_A_DAY,
   NEW_EVENT,
@@ -18,7 +20,6 @@ import {
   SET_USER,
 } from "./types";
 
-import { nextMonthDate, prevMonthDate } from "../js/cal";
 import history from "../history";
 
 export const createUser = (email, password) => {
@@ -72,9 +73,16 @@ export const logout = () => {
   };
 };
 
-export const setDate = (date) => {
-  history.push("/");
-  return { type: SET_CAL_DATE, payload: date };
+export const setDate = () => {
+  const currentDate = new Date();
+  const currentDay = currentDate.getDate();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear();
+
+  return {
+    type: SET_DATE,
+    payload: { date: currentDate, currentDay, currentMonth, currentYear },
+  };
 };
 
 export const showMonth = (calYear, calMonth) => {

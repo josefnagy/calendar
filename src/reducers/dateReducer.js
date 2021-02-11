@@ -1,4 +1,4 @@
-import { SET_CAL_DATE, SHOW_MONTH } from "../actions/types";
+import { SET_DATE, SHOW_MONTH } from "../actions/types";
 import createCalendar from "../js/cal";
 
 const INITIAL_STATE = {
@@ -39,15 +39,13 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CAL_DATE:
+    case SET_DATE:
       return {
         ...state,
-        calMonth: action.payload.calMonth,
-        calYear: action.payload.calYear,
-        calendar: createCalendar(
-          action.payload.calYear,
-          action.payload.calMonth
-        ),
+        date: action.payload.date,
+        currentDay: action.payload.currentDay,
+        currentMonth: action.payload.currentMonth,
+        currentYear: action.payload.currentYear,
       };
 
     case SHOW_MONTH:

@@ -16,7 +16,6 @@ import history from "./history";
 
 const App = () => {
   const isSignedIn = useSelector((state) => state.auth.isSignedIn);
-  console.log(isSignedIn);
 
   return (
     <div className="app-container">
