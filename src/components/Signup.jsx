@@ -13,6 +13,7 @@ const Signup = ({ createUser }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = () => {
     setEmailError(validateEmail(email));
@@ -28,9 +29,12 @@ const Signup = ({ createUser }) => {
       !passwordConfirmError &&
       email &&
       password &&
-      passwordConfirm
-    )
+      passwordConfirm &&
+      !isLoading
+    ) {
+      setIsLoading(true);
       createUser(email, password);
+    }
   };
 
   return (
