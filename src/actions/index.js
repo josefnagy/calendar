@@ -212,7 +212,8 @@ export const showADay = (id) => {
   };
 };
 
-export const fetchEvents = (year, month) => {
+export const fetchEvents = (year, month, userId) => {
+  console.log(userId);
   // get previous month date (becouse you are showing events in calendar from previous and next month)
   // so you must get events from tree months
   const currentMonthDateId = `${year}-${month}`;
@@ -225,11 +226,11 @@ export const fetchEvents = (year, month) => {
   const nextMonthDateId = `${nextYear}-${nextMonth}`;
 
   console.log("--- FETCHED EVENTS ---");
-  // dbFiller();
 
   return async (dispatch) => {
     const res = await db
       .collection("events")
+      .where("userId", "==", userId)
       .where("dateId", "in", [
         currentMonthDateId,
         prevMonthDateId,

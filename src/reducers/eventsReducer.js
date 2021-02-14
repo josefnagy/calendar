@@ -10,6 +10,7 @@ import {
   SET_SELECTED_DAY,
   SHOW_MONTH,
   SET_CAL_DATE,
+  LOGOUT,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -30,6 +31,10 @@ export default (state = INITIAL_STATE, action) => {
         };
       }
       return state;
+
+    case LOGOUT: {
+      return { ...state, allEvents: {} };
+    }
 
     case SHOW_MONTH:
       return state;

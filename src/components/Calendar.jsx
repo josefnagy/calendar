@@ -12,6 +12,7 @@ const Calendar = ({
   showMonth,
   userId,
   setDate,
+  isSignedIn,
 }) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
@@ -23,11 +24,15 @@ const Calendar = ({
   useEffect(() => {
     showMonth(year, month);
 
-    // fetch events if there arent in localStorage
-    if (events.length === 0) {
-      fetchEvents(date.calYear, date.calMonth);
+    // check if is someone signedIn
+    if (userId) {
+      console.log(isSignedIn);
+      console.log(userId);
+      if (events.length === 0) {
+        fetchEvents(date.calYear, date.calMonth, userId);
+      }
     }
-  }, [fetchEvents, showMonth, year, month]);
+  }, [fetchEvents, showMonth, year, month, userId]);
 
   const renderCal = date.calendar.map((day, index) => {
     if (
@@ -52,11 +57,13 @@ const Calendar = ({
 
 const mapStateToProps = (state) => {
   // const events = Object.values(state.events.allEvents);
+  console.log(state);
   return {
     date: state.date,
     events: Object.values(state.events.allEvents),
     selectedDay: state.events.selectedDay,
     userId: state.auth.user ? state.auth.user.uid : null,
+    isSignedIn: state.auth.isSignedIn,
   };
 };
 
