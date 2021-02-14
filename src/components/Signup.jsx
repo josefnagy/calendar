@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 
-import { createUser } from "../actions";
+import { createUser, cleanError, setError } from "../actions";
 import { validateEmail, validatePassword } from "../js/validate";
 import InputBox from "./InputBox.jsx";
 
@@ -10,31 +10,32 @@ const Signup = ({ createUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignup = () => {
-    setEmailError(validateEmail(email));
-    setPasswordError(validatePassword(password));
+  const error = useSelector((state) => state.auth.error);
+  const dispatch = useDispatch();
 
-    if (password !== passwordConfirm)
-      setPasswordConfirmError("Hesla se musí shodovat");
-    else setPasswordConfirmError("");
-
-    if (
-      !emailError &&
-      !passwordError &&
-      !passwordConfirmError &&
-      email &&
-      password &&
-      passwordConfirm &&
-      !isLoading
-    ) {
+  const handleSignup = async () => {
+    try {
+      dispatch(cleanError());
       setIsLoading(true);
-      createUser(email, password);
+
+      const isEmailValid = validateEmail(email);
+      const isPasswordValid = validatePassword(password);
+
+      if (isEmailValid !== "") {
+        dispatch(setError(isEmailValid));
+      } else if (isPasswordValid !== "") {
+        dispatch(setError(isPasswordValid));
+      } else if (password !== passwordConfirm)
+        dispatch(setError("Hesla se musí shodovat"));
+      else if (!isLoading) {
+        await createUser(email, password);
+      }
+    } catch {
+      console.log("somethings wrong");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -45,13 +46,13 @@ const Signup = ({ createUser }) => {
             <div className="signup__title">
               <h2>Registrace</h2>
             </div>
+            <div className="div">{error}</div>
             <InputBox
               label="Email"
               type="text"
               value={email}
               setValue={setEmail}
               id="email"
-              error={emailError}
             />
             <InputBox
               label="Heslo"
@@ -59,7 +60,6 @@ const Signup = ({ createUser }) => {
               value={password}
               setValue={setPassword}
               id="password"
-              error={passwordError}
             />
             <InputBox
               label="Potvrdit heslo"
@@ -67,7 +67,6 @@ const Signup = ({ createUser }) => {
               value={passwordConfirm}
               setValue={setPasswordConfirm}
               id="passwordConfirm"
-              error={passwordConfirmError}
             />
             <button className="signup__button" onClick={() => handleSignup()}>
               Zaregistrovat se

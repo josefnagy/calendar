@@ -18,25 +18,34 @@ import {
   LOGIN,
   LOGOUT,
   SET_USER,
+  CLEAN_ERROR,
+  SET_ERROR,
 } from "./types";
 
 import history from "../history";
 
 export const createUser = (email, password) => {
   return async (dispatch) => {
-    const res = await auth
+    await auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log("User Created");
-        return { type: CREATE_USER, payload: userCredential };
+        dispatch({ type: CREATE_USER, payload: userCredential });
+        history.push("/");
       })
       .catch((error) => {
-        console.log("Error creating user: ", error);
         console.error("Error creating user: ", error);
+        dispatch({ type: CREATE_USER, payload: error });
       });
-    history.push("/");
-    dispatch(res);
   };
+};
+
+export const setError = (error) => {
+  return { type: SET_ERROR, payload: error };
+};
+
+export const cleanError = () => {
+  return { type: CLEAN_ERROR };
 };
 
 export const setUser = (user) => {

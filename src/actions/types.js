@@ -10,6 +10,8 @@ export const CLEAR_SELECTED_DAY = "CLEAR_SELECTED_DAY";
 export const SET_SELECTED_DAY = "SET_SELECTED_DAY";
 export const SHOW_MONTH = "SHOW_MONTH";
 export const SET_DATE = "SET_DATE";
+export const SET_ERROR = "SET_ERROR";
+export const CLEAN_ERROR = "CLEAN_ERROR";
 
 export const CREATE_USER = "SIGNUP";
 export const SET_USER = "SET_USER";
