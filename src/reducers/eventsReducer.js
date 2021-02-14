@@ -11,6 +11,7 @@ import {
   SHOW_MONTH,
   SET_CAL_DATE,
   LOGOUT,
+  FETCH_EVENTS_FOR_MONTH,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -28,20 +29,36 @@ export default (state = INITIAL_STATE, action) => {
           ...state,
           allEvents: action.payload.events.allEvents,
           selectedDay: action.payload.events.selectedDay,
+          fetchedMonths: action.payload.events.fetchedMonths,
         };
       }
       return state;
 
     case LOGOUT: {
-      return { ...state, allEvents: {} };
+      return { ...state, allEvents: {}, fetchedMonths: [] };
     }
 
     case SHOW_MONTH:
       return state;
 
     case FETCH_EVENTS: {
-      const allEvents = _.mapKeys(action.payload, "key");
-      return { ...state, allEvents, selectedDay: {} };
+      const allEvents = _.mapKeys(action.payload.res, "key");
+      return {
+        ...state,
+        allEvents,
+        selectedDay: {},
+        fetchedMonths: action.payload.fetchedMonths,
+      };
+    }
+
+    case FETCH_EVENTS_FOR_MONTH: {
+      const eventsForMonth = _.mapKeys(action.payload.res, "key");
+      return {
+        ...state,
+        allEvents: { ...state.allEvents, ...eventsForMonth },
+        selectedDay: {},
+        fetchedMonths: [...state.fetchedMonths, action.payload.fetchedMonth],
+      };
     }
 
     case SHOW_EDIT:

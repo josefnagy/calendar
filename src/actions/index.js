@@ -7,6 +7,7 @@ import createCalendar, { nextMonthDate, prevMonthDate } from "../js/cal";
 import {
   SET_DATE,
   FETCH_EVENTS,
+  FETCH_EVENTS_FOR_MONTH,
   SHOW_A_DAY,
   NEW_EVENT,
   EDIT_EVENT,
@@ -212,8 +213,32 @@ export const showADay = (id) => {
   };
 };
 
+export const fetchEventsForMonth = (year, month, userId) => {
+  const currentMonthDateId = `${year}-${month}`;
+
+  console.log("--- FETCHED EVENTS FOR ONE MONTH ---");
+
+  return async (dispatch) => {
+    const res = await db
+      .collection("events")
+      .where("userId", "==", userId)
+      .where("dateId", "==", currentMonthDateId)
+      .get()
+      .then((querySnapshot) => {
+        return createEventsArray(querySnapshot);
+      });
+
+    dispatch({
+      type: FETCH_EVENTS_FOR_MONTH,
+      payload: {
+        res,
+        fetchedMonth: currentMonthDateId,
+      },
+    });
+  };
+};
+
 export const fetchEvents = (year, month, userId) => {
-  console.log(userId);
   // get previous month date (becouse you are showing events in calendar from previous and next month)
   // so you must get events from tree months
   const currentMonthDateId = `${year}-${month}`;
@@ -241,7 +266,13 @@ export const fetchEvents = (year, month, userId) => {
         return createEventsArray(querySnapshot);
       });
 
-    dispatch({ type: FETCH_EVENTS, payload: res });
+    dispatch({
+      type: FETCH_EVENTS,
+      payload: {
+        res,
+        fetchedMonths: [prevMonthDateId, currentMonthDateId, nextMonthDateId],
+      },
+    });
   };
 };
 

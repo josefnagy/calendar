@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import CalendarDay from "./CalendarDay.jsx";
-import { fetchEvents, setDate, showMonth } from "../actions";
+import {
+  fetchEvents,
+  setDate,
+  showMonth,
+  fetchEventsForMonth,
+} from "../actions";
+import { nextMonthDate, prevMonthDate } from "../js/cal";
 
 const Calendar = ({
   date,
@@ -12,6 +18,8 @@ const Calendar = ({
   showMonth,
   userId,
   setDate,
+  fetchedMonths,
+  fetchEventsForMonth,
 }) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
@@ -21,6 +29,27 @@ const Calendar = ({
   }, [setDate]);
 
   useEffect(() => {
+    //look at params month, and check if there was events fetched for surrounding months
+
+    if (match.params.year && match.params.month) {
+      const currentMonthDateId = `${year}-${month}`;
+
+      const [prevYear, prevMonth] = prevMonthDate(year, month);
+      const prevMonthDateId = `${prevYear}-${prevMonth}`;
+
+      const [nextYear, nextMonth] = nextMonthDate(year, month);
+      const nextMonthDateId = `${nextYear}-${nextMonth}`;
+
+      const prevFetched = fetchedMonths.indexOf(prevMonthDateId);
+      const nextFetched = fetchedMonths.indexOf(nextMonthDateId);
+
+      if (prevFetched === -1 && userId) {
+        fetchEventsForMonth(prevYear, prevMonth, userId);
+      }
+      if (nextFetched === -1 && userId) {
+        fetchEventsForMonth(nextYear, nextMonth, userId);
+      }
+    }
     showMonth(year, month);
 
     // check if is someone signedIn
@@ -59,9 +88,13 @@ const mapStateToProps = (state) => {
     selectedDay: state.events.selectedDay,
     userId: state.auth.user ? state.auth.user.uid : null,
     isSignedIn: state.auth.isSignedIn,
+    fetchedMonths: state.events.fetchedMonths,
   };
 };
 
-export default connect(mapStateToProps, { fetchEvents, setDate, showMonth })(
-  Calendar
-);
+export default connect(mapStateToProps, {
+  fetchEvents,
+  setDate,
+  showMonth,
+  fetchEventsForMonth,
+})(Calendar);
