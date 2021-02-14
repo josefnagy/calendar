@@ -33,7 +33,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
         <>
           <li className="auth__item">
             <Link
-              to="/login"
+              to="/auth/login"
               onClick={() => setOpen(!open)}
               className="auth__link"
             >
@@ -42,7 +42,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
           </li>
           <li className="auth__item">
             <Link
-              to="/signup"
+              to="/auth/signup"
               onClick={() => setOpen(!open)}
               className="auth__link"
             >

@@ -12,7 +12,6 @@ const Calendar = ({
   showMonth,
   userId,
   setDate,
-  isSignedIn,
 }) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
@@ -26,8 +25,6 @@ const Calendar = ({
 
     // check if is someone signedIn
     if (userId) {
-      console.log(isSignedIn);
-      console.log(userId);
       if (events.length === 0) {
         fetchEvents(date.calYear, date.calMonth, userId);
       }
@@ -56,8 +53,6 @@ const Calendar = ({
 };
 
 const mapStateToProps = (state) => {
-  // const events = Object.values(state.events.allEvents);
-  console.log(state);
   return {
     date: state.date,
     events: Object.values(state.events.allEvents),

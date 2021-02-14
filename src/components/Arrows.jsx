@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
-import { setDate, fetchEvents, showMonth } from "../actions";
 
 const Arrows = ({ date }) => {
   const month = Number(date.calMonth);
@@ -52,8 +51,4 @@ const mapStateToProps = (state) => {
   return { date: state.date };
 };
 
-export default connect(mapStateToProps, {
-  setDate,
-  fetchEvents,
-  showMonth,
-})(Arrows);
+export default connect(mapStateToProps, {})(Arrows);

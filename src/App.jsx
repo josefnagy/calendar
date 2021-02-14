@@ -26,8 +26,8 @@ const App = () => {
           <Route path="/" exact component={Calendar} />
           <Route path="/month/:year/:month" exact component={Calendar} />
           <Route path="/day/:id" exact component={ShowDay} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/signup" exact component={Signup} />
+          <Route path="/auth/login" exact component={Login} />
+          <Route path="/auth/signup" exact component={Signup} />
           <GuardedRoute
             path="/day/:id/event/:eventId/edit"
             exact
