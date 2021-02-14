@@ -1,4 +1,4 @@
-import { holidays } from "./calConfig.js";
+import { holidays, daysInWeek } from "./calConfig.js";
 
 let calendar = [];
 
@@ -124,32 +124,21 @@ const createCalendar = (setYear, setMonth) => {
     year,
     month
   );
-  // console.log(prevMonthsYear + " + " + prevMonth + " " + daysInPrevMonth);
-  // console.log(nextMonthsYear + " + " + nextMonth + " " + daysInNextMonth);
-
-  // console.log("month: ", month);
-  // console.log("year: ", year);
 
   //zjistit co je konrektne za den 1. v mesici
   // 0 = je pondeli a 6 je nedele
   const firstDayInMonth = new Date(year, month - 1, 0).getDay();
 
-  // console.log("First day in month is ", firstDayInMonth);
-  // console.log("First day in month is ", daysInWeek[firstDayInMonth]);
-
   //zjistit kolik zobrazit dni z predesleho mesice
   // --- po delsi uvaze je to jasne... proste firstDayInMonth je takove cislo ktere presne rekne kolik dni se musi predtim zobrazit
   const prevMonthDaysToShow = firstDayInMonth;
-  // console.log("prevMonthDaysToShow ", prevMonthDaysToShow);
 
   //zjistit konkretni datumy od predesleho mesice co se maji zobrazit
   const startCalendarFromDate =
     prevMonthDaysToShow === 0 ? 0 : daysInPrevMonth - prevMonthDaysToShow + 1;
-  // console.log("startCalendarFromDate ", startCalendarFromDate);
 
   //zjistit kolik zobrazit dni z nasledujiciho mesice
   const nextMonthDaysToShow = 42 - (firstDayInMonth + daysInMonth);
-  // console.log("nextMonthDaysToShow ", nextMonthDaysToShow);
 
   if (prevMonthDaysToShow !== 0) {
     for (let i = startCalendarFromDate; i <= daysInPrevMonth; i++) {
@@ -168,19 +157,24 @@ const createCalendar = (setYear, setMonth) => {
       calendar.push(day);
     }
   }
+  let dayInWeek = firstDayInMonth;
+
   for (let i = 1; i <= daysInMonth; i++) {
     const holiday = holidays.find((holiday) => {
       return holiday.day === i && holiday.month === month;
     });
 
+    if (dayInWeek > 6) dayInWeek = 0;
+
     const day = {
       day: i,
       month,
       year,
+      dayInWeek,
       when: "current",
       holiday: holiday ? holiday.name : "",
     };
-
+    dayInWeek++;
     calendar.push(day);
   }
   for (let i = 1; i <= nextMonthDaysToShow; i++) {

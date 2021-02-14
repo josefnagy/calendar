@@ -1,4 +1,4 @@
-const daysInWeek = [
+export const daysInWeek = [
   "Pondělí",
   "Úterý",
   "Středa",

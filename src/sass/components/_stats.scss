@@ -1,0 +1,34 @@
+.stats {
+  padding: $main-section-padding;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5rem;
+  place-items: center;
+  height: 100%;
+
+  .stats__card {
+    background-color: $background-gray;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 2rem;
+  }
+
+  .stat-card__title {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    text-transform: uppercase;
+    font-size: 5rem;
+    color: $event-gray;
+  }
+
+  .stat-name {
+    text-transform: uppercase;
+  }
+  .stat-value {
+    margin-left: 2rem;
+    color: green;
+  }
+}
