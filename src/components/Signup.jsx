@@ -46,7 +46,7 @@ const Signup = ({ createUser }) => {
             <div className="signup__title">
               <h2>Registrace</h2>
             </div>
-            <div className="div">{error}</div>
+            <div className="signup__error-msg">{error}</div>
             <InputBox
               label="Email"
               type="text"

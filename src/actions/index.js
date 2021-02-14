@@ -52,18 +52,20 @@ export const setUser = (user) => {
   return { type: SET_USER, payload: user };
 };
 
-export const login = async (email, password) => {
-  auth
-    .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      console.log("User logged IN");
-      return { type: LOGIN, payload: userCredential };
-    })
-    .catch((error) => {
-      console.error("Error loggin in user: ", error);
-    });
-
-  history.push("/");
+export const login = (email, password) => {
+  return async (dispatch) => {
+    await auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log("User logged IN");
+        dispatch({ type: LOGIN, payload: userCredential });
+        history.push("/");
+      })
+      .catch((error) => {
+        console.error("Error loggin in user: ", error);
+        dispatch({ type: LOGIN, payload: error });
+      });
+  };
 };
 
 export const logout = () => {

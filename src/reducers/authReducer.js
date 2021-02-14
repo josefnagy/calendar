@@ -58,6 +58,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, user: action.payload, isSignedIn: true };
 
     case LOGIN:
+      console.log(action.payload);
+      if (action.payload.code)
+        return {
+          ...state,
+          isSignedIn: false,
+          user: null,
+          error: action.payload.code,
+        };
       return { ...state, isSignedIn: true, user: action.payload };
 
     case LOGOUT:
