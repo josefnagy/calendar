@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import Arrows from "./Arrows.jsx";
 
@@ -27,6 +28,14 @@ const Header = ({ date, month, year }) => {
           ? date.monthsNames[month - 1]
           : date.monthsNames[date.calMonth - 1]
       } ${year ? year : date.calYear}`}</div>
+      <div className="header__links">
+        <Link
+          to={`/stats/${date.calYear}/${date.calMonth}`}
+          className="header__link"
+        >
+          show Stats
+        </Link>
+      </div>
 
       <div className="header__arrows">
         <Arrows />

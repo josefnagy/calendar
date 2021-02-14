@@ -10,6 +10,7 @@ import EventAdd from "./components/EventAdd.jsx";
 import EventEdit from "./components/EventEdit.jsx";
 import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
+import Stats from "./components/Stats.jsx";
 import GuardedRoute from "./components/GuardedRoute.jsx";
 
 import history from "./history";
@@ -38,6 +39,12 @@ const App = () => {
             path="/day/:id/event/:eventId/delete"
             exact
             component={ShowDay}
+            auth={isSignedIn}
+          />
+          <GuardedRoute
+            path="/stats/:year/:month"
+            exact
+            component={Stats}
             auth={isSignedIn}
           />
           <Route path="/day/:id/event/new" exact component={EventAdd} />
