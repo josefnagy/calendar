@@ -13,4 +13,28 @@
     margin-bottom: 2rem;
     cursor: pointer;
   }
+
+  .calendar-link {
+    grid-row: 2;
+    padding: 5px;
+    align-self: start;
+    transition: all 0.4s;
+
+    &:hover {
+      background-color: $background-black;
+    }
+
+    &:hover .calendar-link__path {
+      stroke: white;
+    }
+  }
+
+  .calendar-link__svg {
+    fill: none;
+  }
+
+  .calendar-link__path {
+    stroke: $background-black;
+    stroke-width: 1px;
+  }
 }
