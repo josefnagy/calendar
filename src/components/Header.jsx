@@ -23,11 +23,14 @@ const Header = ({ date, month, year }) => {
 
   return (
     <header className={`header ${hidden}`}>
-      <div className="header__date">{`${day ? day + "." : ""} ${
+      <Link
+        to={`/month/${date.calYear}/${date.calMonth}`}
+        className="header__date"
+      >{`${day ? day + "." : ""} ${
         month
           ? date.monthsNames[month - 1]
           : date.monthsNames[date.calMonth - 1]
-      } ${year ? year : date.calYear}`}</div>
+      } ${year ? year : date.calYear}`}</Link>
       <div className="header__links">
         <Link
           to={`/stats/${date.calYear}/${date.calMonth}`}
