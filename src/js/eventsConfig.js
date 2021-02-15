@@ -1,14 +1,64 @@
 export const eventTypes = [
-  { name: "Ranní", type: "ranni", defaultWorkingHours: 7.5 },
-  { name: "Denní", type: "denni", defaultWorkingHours: 11 },
-  { name: "Odpolední", type: "odpoledni", defaultWorkingHours: 7.5 },
-  { name: "Noční", type: "nocni", defaultWorkingHours: 11 },
-  { name: "Preventivka", type: "preventivka", defaultWorkingHours: 3 },
-  { name: "Školení", type: "skoleni", defaultWorkingHours: 4 },
-  { name: "Paragraf", type: "paragraf", defaultWorkingHours: 7.5 },
-  { name: "Nemocenská", type: "nemocenska", defaultWorkingHours: 7.5 },
-  { name: "Dovolená", type: "dovolena", defaultWorkingHours: 11 },
-  { name: "Náhradní volno", type: "nv", defaultWorkingHours: 11 },
+  {
+    name: "Ranní",
+    type: "ranni",
+    defaultWorkingHours: 7.5,
+    workingHoursType: "work",
+  },
+  {
+    name: "Denní",
+    type: "denni",
+    defaultWorkingHours: 11,
+    workingHoursType: "work",
+  },
+  {
+    name: "Odpolední",
+    type: "odpoledni",
+    defaultWorkingHours: 7.5,
+    workingHoursType: "work",
+  },
+  {
+    name: "Noční",
+    type: "nocni",
+    defaultWorkingHours: 11,
+    workingHoursType: "work",
+  },
+  {
+    name: "Preventivka",
+    type: "preventivka",
+    defaultWorkingHours: 3,
+    workingHoursType: "holidayAverage",
+  },
+  {
+    name: "Školení",
+    type: "skoleni",
+    defaultWorkingHours: 4,
+    workingHoursType: "holidayAverage",
+  },
+  {
+    name: "Paragraf",
+    type: "paragraf",
+    defaultWorkingHours: 11,
+    workingHoursType: "obstacleInWork",
+  },
+  {
+    name: "Nemocenská",
+    type: "nemocenska",
+    defaultWorkingHours: 7.5,
+    workingHoursType: "sickLeaveAverage",
+  },
+  {
+    name: "Dovolená",
+    type: "dovolena",
+    defaultWorkingHours: 11,
+    workingHoursType: "holidayAverage",
+  },
+  {
+    name: "Náhradní volno",
+    type: "nv",
+    defaultWorkingHours: 11,
+    workingHoursType: "nv",
+  },
 ];
 
 export const functionTypes = [

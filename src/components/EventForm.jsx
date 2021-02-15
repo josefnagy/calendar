@@ -54,6 +54,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       function: selectedFunctions ? selectedFunctions.name : "",
       location: selectedLocation ? selectedLocation.name : "",
       workingHours: workingHours ? workingHours : null,
+      workingHoursType: selectedEvents.workingHoursType,
       notes,
     };
 
