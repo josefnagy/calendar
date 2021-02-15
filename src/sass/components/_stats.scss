@@ -7,6 +7,10 @@
   place-items: center;
   height: 100%;
 
+  .stat:not(:last-of-type) {
+    margin-bottom: 1rem;
+  }
+
   .stats__card {
     background-color: $background-gray;
     width: 100%;

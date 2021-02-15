@@ -6,7 +6,6 @@ import { newEvent } from "../actions/index";
 
 const EventAdd = ({ newEvent, match, userId }) => {
   const onSubmit = (formValues) => {
-    // console.log(formValues);
     newEvent({ ...formValues, userId });
   };
 

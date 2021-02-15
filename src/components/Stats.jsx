@@ -3,14 +3,42 @@ import { useSelector } from "react-redux";
 
 const Stats = () => {
   const calendar = useSelector((state) => state.date.calendar);
+  const events = Object.values(useSelector((state) => state.events.allEvents));
+  const month = Number(useSelector((state) => state.date.calMonth));
+  const year = Number(useSelector((state) => state.date.calYear));
 
-  const countDays = (stored, current) => {
-    if (current.dayInWeek < 5) return stored + 1;
-    else return stored;
-  };
+  // const countDays = (stored, current) => {
+  //   if (current.dayInWeek < 5) return stored + 1;
+  //   else return stored;
+  // };
 
-  const workingDays = calendar.reduce(countDays, 0);
+  // const workingDays = calendar.reduce(countDays, 0);
+  // const workingHoursPerDay = 7.5;
+  // const workingHoursForMonth = workingDays * workingHoursPerDay;
+
+  // const eventsForMonth = events.reduce((acc, cur) => {
+  //   console.log(`${cur.year} - ${cur.month}`);
+
+  //   if (cur.month === month && cur.year === year) return acc + 1;
+  //   else return acc;
+  // }, 0);
+
+  let workingDays = 0;
   const workingHoursPerDay = 7.5;
+  let workingEventsForMonth = 0;
+
+  for (let i = 0; i < calendar.length; i++) {
+    // check if its current month
+    if (calendar[i].month !== month && calendar[i].year !== year) continue;
+    // count how many working days in month
+    else if (calendar[i].dayInWeek < 5) workingDays += 1;
+  }
+
+  for (let x = 0; x < events.length; x++) {
+    if (events[x].month !== month || events[x].year !== year) continue;
+    else workingEventsForMonth++;
+  }
+
   const workingHoursForMonth = workingDays * workingHoursPerDay;
 
   return (
@@ -20,6 +48,10 @@ const Stats = () => {
         <div className="stat">
           <span className="stat-name">norma:</span>
           <span className="stat-value">{workingHoursForMonth}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-name">Počet směn:</span>
+          <span className="stat-value">{workingEventsForMonth}</span>
         </div>
       </div>
       <div className="stats__card">

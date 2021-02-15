@@ -3,44 +3,16 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
+import { eventTypes, functionTypes, locationTypes } from "../js/eventsConfig";
 import InputBox from "./InputBox.jsx";
 import Dropdown from "./Dropdown.jsx";
-
-const eventTypes = [
-  { name: "Ranní", type: "ranni" },
-  { name: "Denní", type: "denni" },
-  { name: "Odpolední", type: "odpoledni" },
-  { name: "Noční", type: "nocni" },
-  { name: "Preventivka", type: "preventivka" },
-  { name: "Školení", type: "skoleni" },
-  { name: "Paragraf", type: "paragraf" },
-  { name: "Nemocenská", type: "nemocenska" },
-  { name: "Dovolená", type: "dovolena" },
-];
-
-const functionTypes = [
-  { name: "Strojvedoucí", type: "str" },
-  { name: "Vlakvedoucí", type: "vv" },
-  { name: "Vedoucí posunu", type: "vp" },
-  { name: "posunovač", type: "p" },
-  { name: "Staniční dozorce", type: "std" },
-  { name: "Civilista", type: "cv" },
-  { name: "Ostatní..", type: "other" },
-];
-
-const locationTypes = [
-  { name: "Uhelná služba", type: "usl" },
-  { name: "Základní závod", type: "zz" },
-  { name: "Heřmanice", type: "her" },
-  { name: "Muglinov", type: "mug" },
-  { name: "Hornická poliklinika", type: "hp" },
-  { name: "Ostatní..", type: "other" },
-];
 
 const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
   const [selectedFunctions, setSelectedFunctions] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [showWorkingHoursInput, setShowWorkingHoursInput] = useState(false);
+  const [workingHours, setWorkingHours] = useState(null);
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
@@ -55,6 +27,14 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       setNotes(eventToEdit.notes);
     }
   }, [eventToEdit]);
+
+  useEffect(() => {
+    if (selectedEvents.type !== "custom" && selectedEvents.type) {
+      setShowWorkingHoursInput(true);
+      // console.log(selectedEvents.defau);
+      setWorkingHours(selectedEvents.defaultWorkingHours);
+    }
+  }, [selectedEvents]);
 
   const date = id.split("-");
   const year = Number(date[0]);
@@ -73,6 +53,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       type: selectedEvents.type,
       function: selectedFunctions ? selectedFunctions.name : "",
       location: selectedLocation ? selectedLocation.name : "",
+      workingHours: workingHours ? workingHours : null,
       notes,
     };
 
@@ -102,12 +83,26 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   return (
     <div className="center">
       <div className="form">
-        <Dropdown
-          options={eventTypes}
-          selected={selectedEvents}
-          setSelected={setSelectedEvents}
-          label="Event Type"
-        />
+        <div className="event-types__wrapper">
+          <Dropdown
+            options={eventTypes}
+            selected={selectedEvents}
+            setSelected={setSelectedEvents}
+            label="Event Type"
+          />
+          {showWorkingHoursInput ? (
+            <InputBox
+              label=""
+              value={workingHours}
+              type="text"
+              setValue={setWorkingHours}
+              id="workingHours"
+            />
+          ) : (
+            ""
+          )}
+        </div>
+
         <Dropdown
           options={functionTypes}
           selected={selectedFunctions}
@@ -125,7 +120,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
           value={notes}
           type="text"
           setValue={setNotes}
-          id={notes}
+          id="notes"
         />
         <div className="form__buttons">
           <Link className="btn__discard" to={`/day/${id}`}>

@@ -28,3 +28,22 @@
     @include button-danger-hover;
   }
 }
+
+// .event-types__wrapper {
+//   display: grid;
+//   grid-gap: 1rem;
+//   grid-template-columns: auto 10%;
+// }
+
+.event-types__wrapper {
+  display: flex;
+
+  .input__container {
+    width: 15%;
+  }
+}
+
+input#workingHours.input-box {
+  text-align: center;
+  padding-bottom: 1rem;
+}
