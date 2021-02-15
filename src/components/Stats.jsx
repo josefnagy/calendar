@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import StatsCard from "./StatsCard.jsx";
 
 const Stats = () => {
   const calendar = useSelector((state) => state.date.calendar);
@@ -73,67 +74,53 @@ const Stats = () => {
   }
 
   const workingHoursForMonth = workingDays * workingHoursPerDay;
+  const totalWorkedHours = workedHours + paymentInHolidayAverage;
   const overtime =
-    workingHoursForMonth < workedHours ? workedHours - workingHoursForMonth : 0;
+    workingHoursForMonth < totalWorkedHours
+      ? totalWorkedHours - workingHoursForMonth
+      : 0;
+
+  const shifts = [
+    {
+      label: "Fond Pracovní doby",
+      value: workingHoursForMonth,
+    },
+    {
+      label: "Počet směn",
+      value: workingEventsForMonth,
+    },
+    {
+      label: "Odpracovaných hodin",
+      value: workedHours,
+    },
+    {
+      label: "Platba Průměrem",
+      value: paymentInHolidayAverage,
+    },
+    {
+      label: "Překážka v práci",
+      value: obstacleInWork,
+    },
+    {
+      label: "Nemocenská",
+      value: sickLeaveDays,
+    },
+    {
+      label: "Náhradní volno",
+      value: nv,
+    },
+    {
+      label: "Přesčasů",
+      value: overtime,
+    },
+  ];
 
   return (
     <div className="stats">
-      <div className="stats__card">
-        <h2 className="stat-card__title">Směny</h2>
-        <div className="stat">
-          <span className="stat-name">norma:</span>
-          <span className="stat-value">{workingHoursForMonth}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Počet směn:</span>
-          <span className="stat-value">{workingEventsForMonth}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Odpracovaných hodin:</span>
-          <span className="stat-value">{workedHours}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Platba Průměrem:</span>
-          <span className="stat-value">{paymentInHolidayAverage}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Překážka v práci:</span>
-          <span className="stat-value">{obstacleInWork}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Nemocenská:</span>
-          <span className="stat-value">{sickLeaveDays}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Náhradní volno:</span>
-          <span className="stat-value">{nv}</span>
-        </div>
-        <div className="stat">
-          <span className="stat-name">Přesčasů:</span>
-          <span className="stat-value">{overtime}</span>
-        </div>
-      </div>
-      <div className="stats__card">
-        <h2 className="stat-card__title">Příplatky</h2>
-        <div className="stat">
-          <span className="stat-name">norma:</span>
-          <span className="stat-value">{workingHoursForMonth}</span>
-        </div>
-      </div>
-      <div className="stats__card">
-        <h2 className="stat-card__title">Mzda</h2>
-        <div className="stat">
-          <span className="stat-name">norma:</span>
-          <span className="stat-value">{workingHoursForMonth}</span>
-        </div>
-      </div>
-      <div className="stats__card">
-        <h2 className="stat-card__title">Ostatní</h2>
-        <div className="stat">
-          <span className="stat-name">norma:</span>
-          <span className="stat-value">{workingHoursForMonth}</span>
-        </div>
-      </div>
+      <StatsCard title="Směny" stats={shifts} />
+      <StatsCard title="Příplatky" stats={shifts} />
+      <StatsCard title="Mzda" stats={shifts} />
+      <StatsCard title="Ostatní" stats={shifts} />
     </div>
   );
 };
