@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import _ from "lodash";
+
 import StatsCard from "./StatsCard.jsx";
 
 const Stats = () => {
@@ -25,9 +27,46 @@ const Stats = () => {
     else if (calendar[i].dayInWeek < 5) workingDays += 1;
   }
 
+  const calWithKeys = _.mapKeys(calendar, "dateId");
+  let weekendShiftBonus = 0;
+  let nightShiftBonus = 0;
+  let afternoonShiftBonus = 0;
+
+  // TODO musim jeste osetrit kdyz budu mit nocni posledniho v mesici :-]
+
   for (let x = 0; x < events.length; x++) {
+    // check if its selected month
     if (events[x].month !== month || events[x].year !== year) continue;
     else {
+      if (events[x].type === "nocni") {
+        nightShiftBonus += 7.5;
+        afternoonShiftBonus += 3.5;
+      }
+      if (events[x].type === "odpoledni") afternoonShiftBonus += 7.5;
+      if (events[x].type === "denni") {
+        afternoonShiftBonus += 3.5;
+      }
+      if (
+        calWithKeys[events[x].id].dayInWeek === 4 &&
+        events[x].type === "nocni"
+      )
+        weekendShiftBonus += Number(events[x].workingHours / 2);
+      if (calWithKeys[events[x].id].dayInWeek === 5)
+        weekendShiftBonus += Number(events[x].workingHours);
+      if (
+        calWithKeys[events[x].id].dayInWeek === 6 &&
+        events[x].type === "nocni"
+      )
+        weekendShiftBonus += Number(events[x].workingHours / 2);
+      if (
+        calWithKeys[events[x].id].dayInWeek === 6 &&
+        events[x].type !== "nocni"
+      )
+        weekendShiftBonus += Number(events[x].workingHours);
+
+      if (calWithKeys[events[x].id].holiday !== "")
+        weekendShiftBonus += Number(events[x].workingHours);
+
       switch (events[x].workingHoursType) {
         case "work":
           workingEventsForMonth++;
@@ -99,10 +138,25 @@ const Stats = () => {
     },
   ];
 
+  const extras = [
+    {
+      label: "Sobota / Neděle",
+      value: weekendShiftBonus,
+    },
+    {
+      label: "noční (25 Kč)",
+      value: nightShiftBonus,
+    },
+    {
+      label: "Odpolední (3 Kč)",
+      value: afternoonShiftBonus,
+    },
+  ];
+
   return (
     <div className="stats">
       <StatsCard title="Směny" stats={shifts} />
-      <StatsCard title="Příplatky" stats={shifts} />
+      <StatsCard title="Příplatky" stats={extras} />
       <StatsCard title="Mzda" stats={shifts} />
       <StatsCard title="Ostatní" stats={shifts} />
     </div>
