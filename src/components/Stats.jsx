@@ -8,22 +8,6 @@ const Stats = () => {
   const month = Number(useSelector((state) => state.date.calMonth));
   const year = Number(useSelector((state) => state.date.calYear));
 
-  // const countDays = (stored, current) => {
-  //   if (current.dayInWeek < 5) return stored + 1;
-  //   else return stored;
-  // };
-
-  // const workingDays = calendar.reduce(countDays, 0);
-  // const workingHoursPerDay = 7.5;
-  // const workingHoursForMonth = workingDays * workingHoursPerDay;
-
-  // const eventsForMonth = events.reduce((acc, cur) => {
-  //   console.log(`${cur.year} - ${cur.month}`);
-
-  //   if (cur.month === month && cur.year === year) return acc + 1;
-  //   else return acc;
-  // }, 0);
-
   let workingDays = 0;
   const workingHoursPerDay = 7.5;
   let workingEventsForMonth = 0;

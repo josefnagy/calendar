@@ -170,6 +170,7 @@ const createCalendar = (setYear, setMonth) => {
       day: i,
       month,
       year,
+      dateId: `${year}-${month}-${i}`,
       dayInWeek,
       when: "current",
       holiday: holiday ? holiday.name : "",
