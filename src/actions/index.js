@@ -167,22 +167,38 @@ export const newEvent = (formValues) => {
   formValues.createdAt = Date.now();
   formValues.key = id;
 
-  return async (dispatch) => {
-    await db
-      .collection("events")
-      .doc(id)
-      .set(formValues)
-      .then(() => {
-        console.log("Data succesfully written");
-        // return { type: NEW_EVENT, payload: formValues };
-      })
-      .catch((err) => {
-        console.log("Error adding event ", err);
-      });
-    console.log("after");
-    dispatch({ type: NEW_EVENT, payload: formValues });
-    history.push(`/day/${formValues.id}`);
-  };
+  switch (formValues.type) {
+    case "odpoledni":
+      formValues.afternoonBonus = 7.5;
+      break;
+
+    case "nocni":
+      formValues.afternoonBonus = 3.5;
+      formValues.nightBonus = 7.5;
+      break;
+
+    default:
+      break;
+  }
+
+  console.log(formValues.type);
+  return { type: NEW_EVENT, payload: formValues };
+
+  // return async (dispatch) => {
+  //   await db
+  //     .collection("events")
+  //     .doc(id)
+  //     .set(formValues)
+  //     .then(() => {
+  //       console.log("Data succesfully written");
+  //       // return { type: NEW_EVENT, payload: formValues };
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error adding event ", err);
+  //     });
+  //   dispatch({ type: NEW_EVENT, payload: formValues });
+  //   history.push(`/day/${formValues.id}`);
+  // };
 };
 
 export const showADay = (id) => {

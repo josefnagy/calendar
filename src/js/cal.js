@@ -76,11 +76,26 @@ export const nextMonthDate = (yearStr, monthStr) => {
   return [nextMonthsYear, nextMonth, daysInNextMonth];
 };
 
-const getDaysInMonth = (year, month) => {
+export const getDaysInMonth = (year, month) => {
   const date = new Date(year, month, 0);
   return date.getDate();
 };
 
+const yesterday = (year, month, day) => {
+  const date = new Date(year, month, day);
+  date.setDate(--day);
+
+  let whatDay = date.getDay();
+  whatDay === 0 ? (whatDay = 6) : whatDay--;
+  console.log(whatDay);
+  console.log(date.getDate());
+  console.log(date.getMonth());
+  console.log(date.getFullYear());
+
+  // return whatDay;
+};
+
+yesterday(2021, 1, 1);
 const updateHolidays = (year) => {
   const easterSunday = getEaster(year);
   const easterHolidays = getEasterHolidays(year, easterSunday);
