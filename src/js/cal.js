@@ -82,7 +82,7 @@ export const getDaysInMonth = (year, month) => {
 };
 
 const isHoliday = (month, day) => {
-  console.log(month, day);
+  // console.log(month, day);
   const holiday = holidays.find((holiday) => {
     return holiday.day === day && holiday.month === month + 1;
   });
@@ -90,14 +90,14 @@ const isHoliday = (month, day) => {
 };
 
 export const whatADay = (year, month, day, when = "today") => {
-  console.log(year, month, day);
+  // console.log(year, month, day);
   const date = new Date(year, month - 1, day);
   if (when === "prev") date.setDate(--day);
   else if (when === "next") date.setDate(++day);
   else if (when === "today") date.setDate(day);
 
   const daysInMonth = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
-  console.log(daysInMonth);
+  // console.log(daysInMonth);
   const last = date.getDate() === daysInMonth;
 
   let whatDay = date.getDay();

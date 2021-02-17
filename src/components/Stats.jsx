@@ -56,6 +56,28 @@ const Stats = () => {
   // TODO musim jeste osetrit kdyz budu mit nocni posledniho v mesici :-]
 
   for (let x = 0; x < events.length; x++) {
+    if (prevYear === events[x].year && prevMonth === events[x].month) {
+      const isLastDayEvent = whatADay(prevYear, prevMonth, events[x].day);
+      const firstDayEvent = whatADay(
+        prevYear,
+        prevMonth,
+        events[x].day,
+        "next"
+      );
+      nightShiftBonus += 5.5;
+      if (firstDayEvent.day > 4) weekendShiftBonus += 5.5;
+      if (firstDayEvent.holiday) holidayShiftBonus += 5.5;
+
+      if (isLastDayEvent.last && events[x].type === "nocni") {
+        if (
+          events[x].function === "Strojvedoucí" &&
+          (events[x].location === "Uhelná služba" ||
+            events[x].location === "Zárubecký")
+        )
+          workedHoursIn7 += 5.5;
+        else workedHoursIn6 += 5.5;
+      }
+    }
     // check if its selected month
     if (events[x].month !== month || events[x].year !== year) continue;
     else {
