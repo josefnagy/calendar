@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 
 import Arrows from "./Arrows.jsx";
 
-const Header = ({ date, month, year }) => {
+const Header = ({ date }) => {
   const [day, setDay] = useState();
+  const [month, setMonth] = useState();
+  const [year, setYear] = useState();
   const [hidden, setHidden] = useState("");
 
   useEffect(() => {
@@ -13,6 +15,8 @@ const Header = ({ date, month, year }) => {
       const str = window.location.pathname.split("/");
       const dayId = str[2] ? str[2].split("-") : 0;
       setDay(dayId[2]);
+      setMonth(dayId[1]);
+      setYear(dayId[0]);
     } else {
       setDay(undefined);
     }
