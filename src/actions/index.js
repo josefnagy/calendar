@@ -2,7 +2,7 @@ import db, { auth } from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
-import createCalendar, { nextMonthDate, prevMonthDate } from "../js/cal";
+import { nextMonthDate, prevMonthDate, whatADay } from "../js/cal";
 
 import {
   SET_DATE,
@@ -166,13 +166,58 @@ export const newEvent = (formValues) => {
   const id = uuid();
   formValues.createdAt = Date.now();
   formValues.key = id;
+  const { year, month, day, workingHours } = formValues;
+  formValues.holidayBonus = 0;
+  formValues.weekendBonus = 0;
+
+  const currDayInfo = whatADay(year, month, day);
+  // console.log(currDayInfo);
+  const prevDayInfo = whatADay(year, month, day, "prev");
+  // console.log(prevDayInfo);
+  const nextDayInfo = whatADay(year, month, day, "next");
+  // console.log(nextDayInfo);
 
   switch (formValues.type) {
+    case "ranni":
+      if (currDayInfo.holiday) {
+        formValues.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
+      break;
+
+    case "denni":
+      if (currDayInfo.holiday) {
+        formValues.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
+      formValues.afternoonBonus = 3.5;
+      break;
+
     case "odpoledni":
-      formValues.afternoonBonus = 7.5;
+      if (currDayInfo.holiday) {
+        formValues.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
+      formValues.afternoonBonus = workingHours;
       break;
 
     case "nocni":
+      if (currDayInfo.day === 4) formValues.weekendBonus += 5.5;
+      if (currDayInfo.day === 5) formValues.weekendBonus = workingHours;
+      if (currDayInfo.day === 6) formValues.weekendBonus += 5.5;
+
+      if (currDayInfo.holiday) formValues.weekendBonus += 5.5;
+      if (nextDayInfo.holiday) formValues.weekendBonus += 5.5;
+
+      formValues.weekendBonus =
+        formValues.weekendBonus > 11 ? 11 : formValues.weekendBonus;
+
+      if (currDayInfo.holiday) formValues.holidayBonus += 5.5;
+      if (nextDayInfo.holiday) formValues.holidayBonus += 5.5;
+
       formValues.afternoonBonus = 3.5;
       formValues.nightBonus = 7.5;
       break;

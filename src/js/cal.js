@@ -81,21 +81,37 @@ export const getDaysInMonth = (year, month) => {
   return date.getDate();
 };
 
-const yesterday = (year, month, day) => {
-  const date = new Date(year, month, day);
-  date.setDate(--day);
-
-  let whatDay = date.getDay();
-  whatDay === 0 ? (whatDay = 6) : whatDay--;
-  console.log(whatDay);
-  console.log(date.getDate());
-  console.log(date.getMonth());
-  console.log(date.getFullYear());
-
-  // return whatDay;
+const isHoliday = (month, day) => {
+  console.log(month, day);
+  const holiday = holidays.find((holiday) => {
+    return holiday.day === day && holiday.month === month + 1;
+  });
+  return holiday;
 };
 
-yesterday(2021, 1, 1);
+export const whatADay = (year, month, day, when = "today") => {
+  console.log(year, month, day);
+  const date = new Date(year, month - 1, day);
+  if (when === "prev") date.setDate(--day);
+  else if (when === "next") date.setDate(++day);
+  else if (when === "today") date.setDate(day);
+
+  const daysInMonth = getDaysInMonth(date.getFullYear(), date.getMonth());
+  console.log(daysInMonth);
+
+  let whatDay = date.getDay();
+
+  // whatDay === 0 ? (whatDay = 6) : whatDay--;
+  whatDay = whatDay === 0 ? 6 : --whatDay;
+
+  return {
+    day: whatDay,
+    holiday: isHoliday(date.getMonth(), date.getDate()),
+  };
+};
+
+// console.log(whatADay(2021, 0, 2, "prev"));
+
 const updateHolidays = (year) => {
   const easterSunday = getEaster(year);
   const easterHolidays = getEasterHolidays(year, easterSunday);
