@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
     selectedDay: state.events.selectedDay,
     userId: state.auth.user ? state.auth.user.uid : null,
     isSignedIn: state.auth.isSignedIn,
-    fetchedMonths: state.events.fetchedMonths,
+    fetchedMonths: state.events.fetchedMonths ? state.events.fetchedMonths : [],
   };
 };
 

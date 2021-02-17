@@ -96,8 +96,9 @@ export const whatADay = (year, month, day, when = "today") => {
   else if (when === "next") date.setDate(++day);
   else if (when === "today") date.setDate(day);
 
-  const daysInMonth = getDaysInMonth(date.getFullYear(), date.getMonth());
+  const daysInMonth = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
   console.log(daysInMonth);
+  const last = date.getDate() === daysInMonth;
 
   let whatDay = date.getDay();
 
@@ -107,6 +108,7 @@ export const whatADay = (year, month, day, when = "today") => {
   return {
     day: whatDay,
     holiday: isHoliday(date.getMonth(), date.getDate()),
+    last,
   };
 };
 

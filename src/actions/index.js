@@ -169,13 +169,15 @@ export const newEvent = (formValues) => {
   const { year, month, day, workingHours } = formValues;
   formValues.holidayBonus = 0;
   formValues.weekendBonus = 0;
+  formValues.afternoonBonus = 0;
+  formValues.nightBonus = 0;
 
   const currDayInfo = whatADay(year, month, day);
-  // console.log(currDayInfo);
+  console.log(currDayInfo);
   const prevDayInfo = whatADay(year, month, day, "prev");
-  // console.log(prevDayInfo);
+  console.log(prevDayInfo);
   const nextDayInfo = whatADay(year, month, day, "next");
-  // console.log(nextDayInfo);
+  console.log(nextDayInfo);
 
   switch (formValues.type) {
     case "ranni":
@@ -220,30 +222,41 @@ export const newEvent = (formValues) => {
 
       formValues.afternoonBonus = 3.5;
       formValues.nightBonus = 7.5;
+
       break;
 
     default:
       break;
   }
 
-  console.log(formValues.type);
-  return { type: NEW_EVENT, payload: formValues };
+  if (currDayInfo.last && formValues.type === "nocni") {
+    if (currDayInfo.day === 4) formValues.weekendBonus = 0;
+    if (currDayInfo.day === 5) formValues.weekendBonus = 5.5;
+    if (currDayInfo.day === 6) formValues.weekendBonus = 5.5;
 
-  // return async (dispatch) => {
-  //   await db
-  //     .collection("events")
-  //     .doc(id)
-  //     .set(formValues)
-  //     .then(() => {
-  //       console.log("Data succesfully written");
-  //       // return { type: NEW_EVENT, payload: formValues };
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error adding event ", err);
-  //     });
-  //   dispatch({ type: NEW_EVENT, payload: formValues });
-  //   history.push(`/day/${formValues.id}`);
-  // };
+    if (currDayInfo.holiday) formValues.weekendBonus = 5.5;
+
+    if (currDayInfo.holiday) formValues.holidayBonus = 5.5;
+    formValues.nightBonus = 2;
+  }
+
+  // return { type: "qq", payload: formValues };
+
+  return async (dispatch) => {
+    await db
+      .collection("events")
+      .doc(id)
+      .set(formValues)
+      .then(() => {
+        console.log("Data succesfully written");
+        // return { type: NEW_EVENT, payload: formValues };
+      })
+      .catch((err) => {
+        console.log("Error adding event ", err);
+      });
+    dispatch({ type: NEW_EVENT, payload: formValues });
+    history.push(`/day/${formValues.id}`);
+  };
 };
 
 export const showADay = (id) => {

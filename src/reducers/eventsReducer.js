@@ -17,6 +17,7 @@ import {
 const INITIAL_STATE = {
   allEvents: {},
   selectedDay: {},
+  fetchedMonths: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
