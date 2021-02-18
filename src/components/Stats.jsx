@@ -1,14 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import _ from "lodash";
 
 import StatsCard from "./StatsCard.jsx";
-import {
-  getDaysInMonth,
-  nextMonthDate,
-  prevMonthDate,
-  whatADay,
-} from "../js/cal";
+import { nextMonthDate, prevMonthDate, whatADay } from "../js/cal";
 
 const Stats = () => {
   const calendar = useSelector((state) => state.date.calendar);
@@ -17,16 +11,6 @@ const Stats = () => {
   const year = Number(useSelector((state) => state.date.calYear));
   const [prevYear, prevMonth] = prevMonthDate(year, month);
   const [nextYear, nextMonth] = nextMonthDate(year, month);
-  const daysInPrevMonth = getDaysInMonth(prevYear, prevMonth);
-  const daysInNextMonth = getDaysInMonth(nextYear, nextMonth);
-
-  const getDay = (year, month, day) => {
-    // const date = new Date(year, month, day);
-    const date = new Date(year, month - 1, day);
-    let whatDay = date.getDay();
-    whatDay === 0 ? 6 : whatDay--;
-    return whatDay;
-  };
 
   let workingDays = 0;
   const workingHoursPerDay = 7.5;
@@ -39,7 +23,7 @@ const Stats = () => {
   let sickLeaveDays = 0;
   let nv = 0;
 
-  console.log(events);
+  // console.log(events);
 
   for (let i = 0; i < calendar.length; i++) {
     // check if its current month
@@ -52,8 +36,6 @@ const Stats = () => {
   let nightShiftBonus = 0;
   let afternoonShiftBonus = 0;
   let holidayShiftBonus = 0;
-
-  // TODO musim jeste osetrit kdyz budu mit nocni posledniho v mesici :-]
 
   for (let x = 0; x < events.length; x++) {
     if (prevYear === events[x].year && prevMonth === events[x].month) {
@@ -136,10 +118,70 @@ const Stats = () => {
   const workingHoursForMonth = workingDays * workingHoursPerDay;
   const totalWorkedHours =
     workedHoursIn6 + workedHoursIn7 + paymentInHolidayAverage;
-  const overtime =
+  const overtimeHours =
     workingHoursForMonth < totalWorkedHours
       ? totalWorkedHours - workingHoursForMonth
       : 0;
+
+  const tarif6 = 133;
+  const tarif7 = 151.3;
+  const bonusHerPerHour = 23.4;
+  const bonusUslPerHour = 21;
+
+  const average = 227.12;
+  const overtimeBonusRate = 35;
+  const overtimeBonusPerHour = (average / 100) * overtimeBonusRate;
+  const holidayBonusRate = 100;
+  const holidayBonusPerHour = (average / 100) * holidayBonusRate;
+  const weekendBonusRate = 25;
+  const weekendBonusPerHour = (average / 100) * weekendBonusRate;
+  const nightBonusPerHour = 25;
+  const afternoonBonusPerHour = 3;
+
+  const wageFor6 = Math.round(workedHoursIn6 * tarif6);
+  const wageFor7 = Math.round(workedHoursIn7 * tarif7);
+  const averagePayment = Math.round(paymentInHolidayAverage * average);
+  const overtimeBonus = Math.round(overtimeBonusPerHour * overtimeHours);
+  const holidayBonus = Math.round(holidayShiftBonus * holidayBonusPerHour);
+  const weekendBonus = Math.round(weekendBonusPerHour * weekendShiftBonus);
+  const nightBonus = Math.round(nightShiftBonus * nightBonusPerHour);
+  const afternoonBonus = Math.round(
+    afternoonBonusPerHour * afternoonShiftBonus
+  );
+
+  // tady to nejak doladit v budoucnu
+  const bonusHer = Math.round(workedHoursIn6 * bonusHerPerHour);
+  const bonusUsl = Math.round(workedHoursIn7 * bonusUslPerHour);
+
+  const wageBeforeTax =
+    wageFor6 +
+    wageFor7 +
+    averagePayment +
+    overtimeBonus +
+    holidayBonus +
+    weekendBonus +
+    nightBonus +
+    afternoonBonus +
+    bonusHer +
+    bonusUsl;
+
+  const taxRate = 15;
+  const tax = Math.round((wageBeforeTax / 100) * taxRate);
+  const taxRounded = Math.ceil(tax / 10) * 10;
+
+  const healthInsuranceRate = 4.5;
+  const socialInsuranceRate = 6.5;
+  const healthInsurance = Math.round(
+    (wageBeforeTax / 100) * healthInsuranceRate
+  );
+
+  const socialInsurance = Math.round(
+    (wageBeforeTax / 100) * socialInsuranceRate
+  );
+  const taxBonus = 2320;
+
+  const wageAfterTax =
+    wageBeforeTax - taxRounded - healthInsurance - socialInsurance + taxBonus;
 
   const shifts = [
     {
@@ -176,7 +218,7 @@ const Stats = () => {
     },
     {
       label: "Přesčasů",
-      value: overtime,
+      value: overtimeHours,
     },
   ];
 
@@ -199,11 +241,62 @@ const Stats = () => {
     },
   ];
 
+  const wage = [
+    {
+      label: "Hodinová mzda v 6. třídě",
+      value: wageFor6,
+    },
+    {
+      label: "Hodinová mzda v 7. třídě",
+      value: wageFor7,
+    },
+    {
+      label: "Platba Průměrem",
+      value: averagePayment,
+    },
+    {
+      label: "Přesčas",
+      value: overtimeBonus,
+    },
+    {
+      label: "Svátek",
+      value: holidayBonus,
+    },
+    {
+      label: "Sobota / Neděle",
+      value: weekendBonus,
+    },
+    {
+      label: "Noční",
+      value: nightBonus,
+    },
+    {
+      label: "Odpolední",
+      value: afternoonBonus,
+    },
+    {
+      label: "Prémie za Heřmanice",
+      value: bonusHer,
+    },
+    {
+      label: "Prémie za Uhelnou službu",
+      value: bonusUsl,
+    },
+    {
+      label: "Hrubá mzda",
+      value: wageBeforeTax,
+    },
+    {
+      label: "Čistá mzda",
+      value: wageAfterTax,
+    },
+  ];
+
   return (
     <div className="stats">
       <StatsCard title="Směny" stats={shifts} />
       <StatsCard title="Příplatky" stats={extras} />
-      <StatsCard title="Mzda" stats={shifts} />
+      <StatsCard title="Mzda" stats={wage} />
       <StatsCard title="Ostatní" stats={shifts} />
     </div>
   );
