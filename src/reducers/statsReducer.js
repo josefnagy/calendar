@@ -1,5 +1,7 @@
-import { NEW_EVENT } from "../actions/types";
 import _ from "lodash";
+
+import { NEW_EVENT } from "../actions/types";
+import { getWorkingDaysInMonth } from "../js/cal";
 
 const INITIAL_STATE = {};
 
@@ -9,13 +11,15 @@ export default (state = INITIAL_STATE, action) => {
       console.log(action.payload);
       const event = action.payload;
       const newStats = { ...state };
+
       if (typeof newStats[event.dateId] === "undefined") {
         newStats[event.dateId] = {
           shifts: {
-            workingEventsForMonth: 1,
+            workingEvents: 1,
+            workingDays: getWorkingDaysInMonth(event.year, event.month),
           },
         };
-      } else newStats[event.dateId].shifts.workingEventsForMonth++;
+      } else newStats[event.dateId].shifts.workingEvents++;
 
       console.log(newStats);
 

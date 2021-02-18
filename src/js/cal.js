@@ -81,6 +81,22 @@ export const getDaysInMonth = (year, month) => {
   return date.getDate();
 };
 
+export const getWorkingDaysInMonth = (year, month) => {
+  const date = new Date(year, month, 0);
+  const daysInMonth = date.getDate();
+  let workingDaysInMonth = 0;
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    date.setDate(i);
+    if (date.getDay() === 0 || date.getDay() === 6) continue;
+    ++workingDaysInMonth;
+  }
+
+  return workingDaysInMonth;
+};
+
+console.log(getWorkingDaysInMonth(2019, 1));
+
 const isHoliday = (month, day) => {
   // console.log(month, day);
   const holiday = holidays.find((holiday) => {
