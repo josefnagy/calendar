@@ -1,15 +1,20 @@
 import _ from "lodash";
 
-import { NEW_EVENT, UPDATE_STATS } from "../actions/types";
+import { DELETE_STATS, ADD_STATS } from "../actions/types";
 
 const INITIAL_STATE = {};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UPDATE_STATS:
+    case ADD_STATS:
       console.log(action.payload);
       return {
         ...state,
+        ...action.payload,
+      };
+    case DELETE_STATS:
+      console.log(action.payload);
+      return {
         ...action.payload,
       };
 

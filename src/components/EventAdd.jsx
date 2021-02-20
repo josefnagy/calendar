@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import EventForm from "./EventForm.jsx";
-import { newEvent, updateStats } from "../actions/index";
+import { newEvent, addStats } from "../actions/index";
 
-const EventAdd = ({ newEvent, match, userId, updateStats }) => {
+const EventAdd = ({ newEvent, match, userId, addStats }) => {
   useEffect(() => {
     const events = [
       {
@@ -292,19 +292,64 @@ const EventAdd = ({ newEvent, match, userId, updateStats }) => {
         workingHoursType: "work",
         year: 2021,
       },
+      {
+        dateId: "2021-1",
+        day: 13,
+        function: "Vlakvedoucí",
+        id: "2021-1-13",
+        key: null,
+        label: "Školení",
+        location: "Muglinov",
+        month: 1,
+        notes: "",
+        type: "skoleni",
+        workingHours: "3.5",
+        workingHoursType: "holidayAverage",
+        year: 2021,
+      },
+      {
+        dateId: "2021-1",
+        day: 18,
+        function: "Staniční dozorce",
+        id: "2021-1-18",
+        key: null,
+        label: "Školení",
+        location: "Muglinov",
+        month: 1,
+        notes: "",
+        type: "skoleni",
+        workingHours: "4",
+        workingHoursType: "holidayAverage",
+        year: 2021,
+      },
+      {
+        dateId: "2021-1",
+        day: 28,
+        function: "Strojvedoucí",
+        id: "2021-1-28",
+        key: null,
+        label: "Školení",
+        location: "Muglinov",
+        month: 1,
+        notes: "",
+        type: "skoleni",
+        workingHours: "4",
+        workingHoursType: "holidayAverage",
+        year: 2021,
+      },
     ];
     console.log("woot");
     // events.forEach((event) => {
     //   const userId = "qJ8kMeeqFVN2rPk6zPsRXydlSXn1";
     //   newEvent({ ...event, userId });
-    //   updateStats({ ...event, userId });
+    //   addStats({ ...event, userId });
     // });
   }, []);
 
   const onSubmit = (formValues) => {
     console.log(formValues);
     newEvent({ ...formValues, userId });
-    updateStats({ ...formValues, userId });
+    addStats({ ...formValues, userId });
   };
 
   return (
@@ -318,4 +363,4 @@ const mapStateToProps = (state) => {
   return { userId: state.auth.user.uid };
 };
 
-export default connect(mapStateToProps, { newEvent, updateStats })(EventAdd);
+export default connect(mapStateToProps, { newEvent, addStats })(EventAdd);

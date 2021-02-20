@@ -3,11 +3,19 @@ import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { deleteEvent } from "../actions";
+import { deleteEvent, deleteStats } from "../actions";
 
-const DeletePortal = ({ isOpen, children, id, eventId, deleteEvent }) => {
+const DeletePortal = ({
+  isOpen,
+  children,
+  id,
+  eventId,
+  deleteEvent,
+  deleteStats,
+}) => {
   const handleDelete = () => {
     deleteEvent(eventId);
+    deleteStats(eventId);
   };
 
   if (!isOpen) return null;
@@ -28,4 +36,4 @@ const DeletePortal = ({ isOpen, children, id, eventId, deleteEvent }) => {
   );
 };
 
-export default connect(null, { deleteEvent })(DeletePortal);
+export default connect(null, { deleteEvent, deleteStats })(DeletePortal);

@@ -14,6 +14,8 @@ export const SET_DATE = "SET_DATE";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAN_ERROR = "CLEAN_ERROR";
 
+export const ADD_STATS = "ADD_STATS";
+export const DELETE_STATS = "DELETE_STATS";
 export const UPDATE_STATS = "UPDATE_STATS";
 
 export const CREATE_USER = "SIGNUP";
