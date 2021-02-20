@@ -29,7 +29,7 @@ const EventEdit = ({ match, eventToEdit, editEvent }) => {
 const mapStateToProps = (state, ownProps) => {
   // console.log(state);
   // console.log(ownProps);
-  // console.log(state.events.allEvents[ownProps.match.params.eventId]);
+  console.log(state.events.allEvents[ownProps.match.params.eventId]);
   return { eventToEdit: state.events.allEvents[ownProps.match.params.eventId] };
 };
 

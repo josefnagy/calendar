@@ -24,6 +24,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       eventToEdit.location !== ""
         ? setSelectedLocation({ name: eventToEdit.location })
         : "";
+      setWorkingHours(eventToEdit.workingHours);
       setNotes(eventToEdit.notes);
     }
   }, [eventToEdit]);
@@ -31,8 +32,10 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   useEffect(() => {
     if (selectedEvents.type !== "custom" && selectedEvents.type) {
       setShowWorkingHoursInput(true);
-      // console.log(selectedEvents.defau);
-      setWorkingHours(selectedEvents.defaultWorkingHours);
+
+      if (!eventToEdit) {
+        setWorkingHours(selectedEvents.defaultWorkingHours);
+      }
     }
   }, [selectedEvents]);
 
@@ -135,9 +138,5 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  // console.log(state);
-  return { event: state.events.editedEvent };
-};
 
-export default connect(mapStateToProps, {})(EventForm);
+export default connect(null, {})(EventForm);
