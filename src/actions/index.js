@@ -2,7 +2,12 @@ import db, { auth } from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
-import { nextMonthDate, prevMonthDate, whatADay } from "../js/cal";
+import {
+  nextMonthDate,
+  prevMonthDate,
+  whatADay,
+  getWorkingDaysInMonth,
+} from "../js/cal";
 
 import {
   SET_DATE,
@@ -21,6 +26,7 @@ import {
   SET_USER,
   CLEAN_ERROR,
   SET_ERROR,
+  UPDATE_STATS,
 } from "./types";
 
 import history from "../history";
@@ -162,101 +168,120 @@ export const showEdit = (id) => {
   };
 };
 
-export const newEvent = (formValues) => {
+export const updateStats = (ev) => {
+  return (dispatch, getState) => {
+    const event = createEvent(ev);
+    const today = whatADay(event.year, event.month, event.day);
+
+    const stats = getState().stats;
+    const newStats = { ...stats };
+
+    if (!(event.dateId in stats)) {
+      newStats[event.dateId] = {
+        shifts: {
+          workingEvents: 0,
+          workingDays: getWorkingDaysInMonth(event.year, event.month),
+          workingHoursPerDay: 7.5,
+          workedHoursIn6: 0,
+          workedHoursIn7: 0,
+          paymentInHolidayAverage: 0,
+          obstacleInWork: 0,
+          sickLeave: 0,
+          sickLeaveDays: 0,
+          nv: 0,
+          get workingHoursForMonth() {
+            return this.workingDays * this.workingHoursPerDay;
+          },
+        },
+        extras: {
+          weekendShiftBonus: 0,
+          nightShiftBonus: 0,
+          afternoonShiftBonus: 0,
+          holidayShiftBonus: 0,
+        },
+      };
+    }
+
+    newStats[event.dateId].extras.afternoonShiftBonus += event.afternoonBonus;
+    newStats[event.dateId].extras.nightShiftBonus += event.nightBonus;
+    newStats[event.dateId].extras.weekendShiftBonus += event.weekendBonus;
+    newStats[event.dateId].extras.holidayShiftBonus += event.holidayBonus;
+
+    switch (event.workingHoursType) {
+      case "work":
+        newStats[event.dateId].shifts.workingEvents++;
+        if (
+          event.function === "Strojvedoucí" &&
+          (event.location === "Uhelná služba" || event.location === "Zárubecký")
+        ) {
+          if (today.last && event.type === "nocni")
+            newStats[event.dateId].shifts.workedHoursIn7 += 5.5;
+          else
+            newStats[event.dateId].shifts.workedHoursIn7 += Number(
+              event.workingHours
+            );
+        } else {
+          if (today.last && event.type === "nocni")
+            newStats[event.dateId].shifts.workedHoursIn6 += 5.5;
+          else
+            newStats[event.dateId].shifts.workedHoursIn6 += Number(
+              event.workingHours
+            );
+        }
+        break;
+
+      case "holidayAverage":
+        newStats[event.dateId].shifts.paymentInHolidayAverage += Number(
+          event.workingHours
+        );
+        break;
+
+      case "obstacleInWork":
+        newStats[event.dateId].shifts.obstacleInWork += Number(
+          event.workingHours
+        );
+        break;
+
+      case "sickLeaveAverage":
+        newStats[event.dateId].shifts.sickLeaveDays += 1;
+        newStats[event.dateId].shifts.sickLeave += Number(event.workingHours);
+        break;
+
+      case "nv":
+        newStats[event.dateId].shifts.nv += Number(event.workingHours);
+        break;
+
+      default:
+        break;
+    }
+    dispatch({ type: UPDATE_STATS, payload: { ...newStats } });
+  };
+};
+
+export const newEvent = (event) => {
   const id = uuid();
-  formValues.createdAt = Date.now();
-  formValues.key = id;
-  const { year, month, day, workingHours } = formValues;
-  formValues.holidayBonus = 0;
-  formValues.weekendBonus = 0;
-  formValues.afternoonBonus = 0;
-  formValues.nightBonus = 0;
+  event.createdAt = Date.now();
+  event.key = id;
 
-  const currDayInfo = whatADay(year, month, day);
-  // console.log(currDayInfo);
-  const prevDayInfo = whatADay(year, month, day, "prev");
-  // console.log(prevDayInfo);
-  const nextDayInfo = whatADay(year, month, day, "next");
-  // console.log(nextDayInfo);
+  const eventWithCalculatedValues = createEvent(event);
 
-  switch (formValues.type) {
-    case "ranni":
-      if (currDayInfo.holiday) {
-        formValues.holidayBonus = workingHours;
-        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
-      }
-      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
-      break;
+  // return { type: NEW_EVENT, payload: eventWithCalculatedValues };
 
-    case "denni":
-      if (currDayInfo.holiday) {
-        formValues.holidayBonus = workingHours;
-        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
-      }
-      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
-      formValues.afternoonBonus = 3.5;
-      break;
-
-    case "odpoledni":
-      if (currDayInfo.holiday) {
-        formValues.holidayBonus = workingHours;
-        if (currDayInfo.day < 5) formValues.weekendBonus = workingHours;
-      }
-      if (currDayInfo.day > 4) formValues.weekendBonus = workingHours;
-      formValues.afternoonBonus = workingHours;
-      break;
-
-    case "nocni":
-      if (currDayInfo.day === 4) formValues.weekendBonus += 5.5;
-      if (currDayInfo.day === 5) formValues.weekendBonus = workingHours;
-      if (currDayInfo.day === 6) formValues.weekendBonus += 5.5;
-
-      if (currDayInfo.holiday) formValues.weekendBonus += 5.5;
-      if (nextDayInfo.holiday) formValues.weekendBonus += 5.5;
-
-      formValues.weekendBonus =
-        formValues.weekendBonus > 11 ? 11 : formValues.weekendBonus;
-
-      if (currDayInfo.holiday) formValues.holidayBonus += 5.5;
-      if (nextDayInfo.holiday) formValues.holidayBonus += 5.5;
-
-      formValues.afternoonBonus = 3.5;
-      formValues.nightBonus = 7.5;
-
-      break;
-
-    default:
-      break;
-  }
-
-  if (currDayInfo.last && formValues.type === "nocni") {
-    if (currDayInfo.day === 4) formValues.weekendBonus = 0;
-    if (currDayInfo.day === 5) formValues.weekendBonus = 5.5;
-    if (currDayInfo.day === 6) formValues.weekendBonus = 5.5;
-
-    if (currDayInfo.holiday) formValues.weekendBonus = 5.5;
-
-    if (currDayInfo.holiday) formValues.holidayBonus = 5.5;
-    formValues.nightBonus = 2;
-  }
-
-  return { type: NEW_EVENT, payload: formValues };
-
-  // return async (dispatch) => {
-  //   await db
-  //     .collection("events")
-  //     .doc(id)
-  //     .set(formValues)
-  //     .then(() => {
-  //       console.log("Data succesfully written");
-  //       // return { type: NEW_EVENT, payload: formValues };
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error adding event ", err);
-  //     });
-  //   dispatch({ type: NEW_EVENT, payload: formValues });
-  //   history.push(`/day/${formValues.id}`);
-  // };
+  return async (dispatch) => {
+    await db
+      .collection("events")
+      .doc(id)
+      .set(eventWithCalculatedValues)
+      .then(() => {
+        console.log("Data succesfully written");
+        // return { type: NEW_EVENT, payload: formValues };
+      })
+      .catch((err) => {
+        console.log("Error adding event ", err);
+      });
+    dispatch({ type: NEW_EVENT, payload: eventWithCalculatedValues });
+    history.push(`/day/${eventWithCalculatedValues.id}`);
+  };
 };
 
 export const showADay = (id) => {
@@ -358,4 +383,81 @@ const createEventsArray = (querySnapshot) => {
     events.push(doc.data());
   });
   return events;
+};
+
+const createEvent = (event) => {
+  const { year, month, day, workingHours } = event;
+  event.holidayBonus = 0;
+  event.weekendBonus = 0;
+  event.afternoonBonus = 0;
+  event.nightBonus = 0;
+
+  const currDayInfo = whatADay(year, month, day);
+  // console.log(currDayInfo);
+  const prevDayInfo = whatADay(year, month, day, "prev");
+  // console.log(prevDayInfo);
+  const nextDayInfo = whatADay(year, month, day, "next");
+  // console.log(nextDayInfo);
+
+  switch (event.type) {
+    case "ranni":
+      if (currDayInfo.holiday) {
+        event.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) event.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) event.weekendBonus = workingHours;
+      break;
+
+    case "denni":
+      if (currDayInfo.holiday) {
+        event.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) event.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) event.weekendBonus = workingHours;
+      event.afternoonBonus = 3.5;
+      break;
+
+    case "odpoledni":
+      if (currDayInfo.holiday) {
+        event.holidayBonus = workingHours;
+        if (currDayInfo.day < 5) event.weekendBonus = workingHours;
+      }
+      if (currDayInfo.day > 4) event.weekendBonus = workingHours;
+      event.afternoonBonus = workingHours;
+      break;
+
+    case "nocni":
+      if (currDayInfo.day === 4) event.weekendBonus += 5.5;
+      if (currDayInfo.day === 5) event.weekendBonus = workingHours;
+      if (currDayInfo.day === 6) event.weekendBonus += 5.5;
+
+      if (currDayInfo.holiday) event.weekendBonus += 5.5;
+      if (nextDayInfo.holiday) event.weekendBonus += 5.5;
+
+      event.weekendBonus = event.weekendBonus > 11 ? 11 : event.weekendBonus;
+
+      if (currDayInfo.holiday) event.holidayBonus += 5.5;
+      if (nextDayInfo.holiday) event.holidayBonus += 5.5;
+
+      event.afternoonBonus = 3.5;
+      event.nightBonus = 7.5;
+
+      break;
+
+    default:
+      break;
+  }
+
+  if (currDayInfo.last && event.type === "nocni") {
+    if (currDayInfo.day === 4) event.weekendBonus = 0;
+    if (currDayInfo.day === 5) event.weekendBonus = 5.5;
+    if (currDayInfo.day === 6) event.weekendBonus = 5.5;
+
+    if (currDayInfo.holiday) event.weekendBonus = 5.5;
+
+    if (currDayInfo.holiday) event.holidayBonus = 5.5;
+    event.nightBonus = 2;
+  }
+
+  return event;
 };

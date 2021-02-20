@@ -60,54 +60,55 @@ const Stats = () => {
         else workedHoursIn6 += 5.5;
       }
     }
+
     // check if its selected month
     if (events[x].month !== month || events[x].year !== year) continue;
     else {
       const today = whatADay(events[x].year, events[x].month, events[x].day);
 
-      afternoonShiftBonus += events[x].afternoonBonus;
+      // afternoonShiftBonus += events[x].afternoonBonus;
 
-      nightShiftBonus += events[x].nightBonus;
+      // nightShiftBonus += events[x].nightBonus;
 
-      weekendShiftBonus += events[x].weekendBonus;
-      holidayShiftBonus += events[x].holidayBonus;
+      // weekendShiftBonus += events[x].weekendBonus;
+      // holidayShiftBonus += events[x].holidayBonus;
 
-      switch (events[x].workingHoursType) {
-        case "work":
-          workingEventsForMonth++;
-          if (
-            events[x].function === "Strojvedoucí" &&
-            (events[x].location === "Uhelná služba" ||
-              events[x].location === "Zárubecký")
-          ) {
-            if (today.last && events[x].type === "nocni") workedHoursIn7 += 5.5;
-            else workedHoursIn7 += Number(events[x].workingHours);
-          } else {
-            if (today.last && events[x].type === "nocni") workedHoursIn6 += 5.5;
-            else workedHoursIn6 += Number(events[x].workingHours);
-          }
-          break;
+      // switch (events[x].workingHoursType) {
+      //   case "work":
+      //     workingEventsForMonth++;
+      //     if (
+      //       events[x].function === "Strojvedoucí" &&
+      //       (events[x].location === "Uhelná služba" ||
+      //         events[x].location === "Zárubecký")
+      //     ) {
+      //       if (today.last && events[x].type === "nocni") workedHoursIn7 += 5.5;
+      //       else workedHoursIn7 += Number(events[x].workingHours);
+      //     } else {
+      //       if (today.last && events[x].type === "nocni") workedHoursIn6 += 5.5;
+      //       else workedHoursIn6 += Number(events[x].workingHours);
+      //     }
+      //     break;
 
-        case "holidayAverage":
-          paymentInHolidayAverage += Number(events[x].workingHours);
-          break;
+      //   case "holidayAverage":
+      //     paymentInHolidayAverage += Number(events[x].workingHours);
+      //     break;
 
-        case "obstacleInWork":
-          obstacleInWork += Number(events[x].workingHours);
-          break;
+      //   case "obstacleInWork":
+      //     obstacleInWork += Number(events[x].workingHours);
+      //     break;
 
-        case "sickLeaveAverage":
-          sickLeaveDays += 1;
-          sickLeave += Number(events[x].workingHours);
-          break;
+      //   case "sickLeaveAverage":
+      //     sickLeaveDays += 1;
+      //     sickLeave += Number(events[x].workingHours);
+      //     break;
 
-        case "nv":
-          nv += Number(events[x].workingHours);
-          break;
+      //   case "nv":
+      //     nv += Number(events[x].workingHours);
+      //     break;
 
-        default:
-          break;
-      }
+      //   default:
+      //     break;
+      // }
 
       if (today.last && events[x].type === "nocni") {
         console.log("nocni v posledni den mesici");
