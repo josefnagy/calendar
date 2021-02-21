@@ -17,7 +17,12 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
 
   useEffect(() => {
     if (eventToEdit) {
-      setSelectedEvents({ name: eventToEdit.label, type: eventToEdit.type });
+      setSelectedEvents({
+        name: eventToEdit.label,
+        type: eventToEdit.type,
+        defaultWorkingHours: eventToEdit.defaultWorkingHours,
+        workingHoursType: eventToEdit.workingHoursType,
+      });
       eventToEdit.function !== ""
         ? setSelectedFunctions({ name: eventToEdit.function })
         : "";

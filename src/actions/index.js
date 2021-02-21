@@ -28,6 +28,7 @@ import {
   SET_ERROR,
   ADD_STATS,
   DELETE_STATS,
+  UPDATE_STATS,
 } from "./types";
 
 import history from "../history";
@@ -167,6 +168,11 @@ export const showEdit = (id) => {
       });
     dispatch({ type: SHOW_EDIT, payload: res });
   };
+};
+
+export const editStats = (updatedValues) => {
+  console.log(updatedValues);
+  return { type: UPDATE_STATS };
 };
 
 export const deleteStats = (eventId) => {
