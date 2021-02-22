@@ -2,365 +2,41 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import EventForm from "./EventForm.jsx";
-import { newEvent, addStats } from "../actions/index";
+import { newEvent, updateStats } from "../actions/index";
+import { events } from "../js/januaryEvents";
+import calcEventStats from "../js/calcEventStats";
 
-const EventAdd = ({ newEvent, match, userId, addStats }) => {
-  useEffect(() => {
-    const events = [
-      {
-        dateId: "2021-1",
-        day: 1,
-        function: "Strojvedoucí",
-        id: "2021-1-1",
-        key: null,
-        label: "Ranní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "ranni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 2,
-        function: "Strojvedoucí",
-        id: "2021-1-2",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 3,
-        function: "Strojvedoucí",
-        id: "2021-1-3",
-        key: null,
-        label: "Odpolední",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "odpoledni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 4,
-        function: "Strojvedoucí",
-        id: "2021-1-4",
-        key: null,
-        label: "Noční",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "nocni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 7,
-        function: "Strojvedoucí",
-        id: "2021-1-7",
-        key: null,
-        label: "Ranní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "ranni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 8,
-        function: "Strojvedoucí",
-        id: "2021-1-8",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 9,
-        function: "Strojvedoucí",
-        id: "2021-1-9",
-        key: null,
-        label: "Odpolední",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "odpoledni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 10,
-        function: "Strojvedoucí",
-        id: "2021-1-10",
-        key: null,
-        label: "Noční",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "nocni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 14,
-        function: "Strojvedoucí",
-        id: "2021-1-14",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 15,
-        function: "Strojvedoucí",
-        id: "2021-1-15",
-        key: null,
-        label: "Odpolední",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "odpoledni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 16,
-        function: "Strojvedoucí",
-        id: "2021-1-16",
-        key: null,
-        label: "Noční",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "nocni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 19,
-        function: "Strojvedoucí",
-        id: "2021-1-19",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 20,
-        function: "Strojvedoucí",
-        id: "2021-1-20",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 21,
-        function: "Strojvedoucí",
-        id: "2021-1-21",
-        key: null,
-        label: "Odpolední",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "odpoledni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 25,
-        function: "Staniční dozorce",
-        id: "2021-1-25",
-        key: null,
-        label: "Denní",
-        location: "Heřmanice",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 26,
-        function: "Strojvedoucí",
-        id: "2021-1-26",
-        key: null,
-        label: "Denní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "denni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 27,
-        function: "Strojvedoucí",
-        id: "2021-1-27",
-        key: null,
-        label: "Odpolední",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "odpoledni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 28,
-        function: "Strojvedoucí",
-        id: "2021-1-28",
-        key: null,
-        label: "Noční",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "nocni",
-        workingHours: 11,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 31,
-        function: "Strojvedoucí",
-        id: "2021-1-31",
-        key: null,
-        label: "Ranní",
-        location: "Uhelná služba",
-        month: 1,
-        notes: "",
-        type: "ranni",
-        workingHours: 7.5,
-        workingHoursType: "work",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 13,
-        function: "Vlakvedoucí",
-        id: "2021-1-13",
-        key: null,
-        label: "Školení",
-        location: "Muglinov",
-        month: 1,
-        notes: "",
-        type: "skoleni",
-        workingHours: "3.5",
-        workingHoursType: "holidayAverage",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 18,
-        function: "Staniční dozorce",
-        id: "2021-1-18",
-        key: null,
-        label: "Školení",
-        location: "Muglinov",
-        month: 1,
-        notes: "",
-        type: "skoleni",
-        workingHours: "4",
-        workingHoursType: "holidayAverage",
-        year: 2021,
-      },
-      {
-        dateId: "2021-1",
-        day: 28,
-        function: "Strojvedoucí",
-        id: "2021-1-28",
-        key: null,
-        label: "Školení",
-        location: "Muglinov",
-        month: 1,
-        notes: "",
-        type: "skoleni",
-        workingHours: "4",
-        workingHoursType: "holidayAverage",
-        year: 2021,
-      },
-    ];
-    console.log("woot");
-    // events.forEach((event) => {
-    //   const userId = "qJ8kMeeqFVN2rPk6zPsRXydlSXn1";
-    //   newEvent({ ...event, userId });
-    //   addStats({ ...event, userId });
-    // });
-  }, []);
+const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
+  useEffect(() => {}, []);
+
+  const onFillDb = () => {
+    let newStats = {};
+    events.forEach((event) => {
+      const userId = "qJ8kMeeqFVN2rPk6zPsRXydlSXn1";
+      newStats = calcEventStats(event, newStats, userId);
+      newEvent({ ...event, userId });
+      updateStats({ ...newStats }, userId);
+    });
+  };
 
   const onSubmit = (formValues) => {
-    console.log(formValues);
+    const newStats = calcEventStats(formValues, stats, userId);
     newEvent({ ...formValues, userId });
-    addStats({ ...formValues, userId });
+    // console.log(newStats);
+    updateStats({ ...newStats }, userId);
   };
 
   return (
     <div className="add-event">
+      <button onClick={onFillDb}>fillDB</button>
       <EventForm onSubmit={onSubmit} id={match.params.id} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { userId: state.auth.user.uid };
+  console.log(state);
+  return { userId: state.auth.user.uid, stats: state.stats };
 };
 
-export default connect(mapStateToProps, { newEvent, addStats })(EventAdd);
+export default connect(mapStateToProps, { newEvent, updateStats })(EventAdd);
