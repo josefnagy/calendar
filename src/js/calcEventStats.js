@@ -1,11 +1,6 @@
 import _ from "lodash";
 
-import {
-  nextMonthDate,
-  prevMonthDate,
-  whatADay,
-  getWorkingDaysInMonth,
-} from "./cal";
+import { nextMonthDate, whatADay, getWorkingDaysInMonth } from "./cal";
 
 export const deleteEventStats = (eventId, state) => {
   const wholeState = state;
@@ -85,7 +80,7 @@ export const deleteEventStats = (eventId, state) => {
   return stats;
 };
 
-export const calcEventStats = (ev, stats, userId) => {
+export const calcEventStats = (ev, stats) => {
   //its a new event so just add to stats
   const [event, nextDay] = createEvent(ev);
   const today = whatADay(event.year, event.month, event.day);
@@ -94,12 +89,22 @@ export const calcEventStats = (ev, stats, userId) => {
 
   const newStats = { ...stats };
 
+  const lastDayNightShift = () => {
+    return today.last && event.type === "nocni";
+  };
+
+  const is7Tarif = () => {
+    return (
+      event.function === "Strojvedoucí" &&
+      (event.location === "Uhelná služba" || event.location === "Zárubecký")
+    );
+  };
+
   // check if its first stat in month, if yes then initialize new stats for selected month
   if (!(event.dateId in stats)) {
     newStats[event.dateId] = createDefaultStats(event);
   }
-  if (!(nextMonthDateId in stats) && today.last && event.type === "nocni") {
-    console.log(event);
+  if (!(nextMonthDateId in stats) && lastDayNightShift()) {
     newStats[nextMonthDateId] = createDefaultStats(event);
   }
 
@@ -111,12 +116,9 @@ export const calcEventStats = (ev, stats, userId) => {
   switch (event.workingHoursType) {
     case "work":
       newStats[event.dateId].shifts.workingEvents++;
-      if (
-        event.function === "Strojvedoucí" &&
-        (event.location === "Uhelná služba" || event.location === "Zárubecký")
-      ) {
+      if (is7Tarif()) {
         //check if its last day in month
-        if (today.last && event.type === "nocni") {
+        if (lastDayNightShift()) {
           newStats[event.dateId].shifts.workedHoursIn7 += 5.5;
           newStats[nextMonthDateId].shifts.workedHoursIn7 += 5.5;
           newStats[nextMonthDateId].extras.nightShiftBonus +=
@@ -131,7 +133,7 @@ export const calcEventStats = (ev, stats, userId) => {
           );
       } else {
         //check if its last day in month
-        if (today.last && event.type === "nocni") {
+        if (lastDayNightShift()) {
           newStats[event.dateId].shifts.workedHoursIn6 += 5.5;
           newStats[nextMonthDateId].shifts.workedHoursIn6 += 5.5;
           newStats[nextMonthDateId].extras.nightShiftBonus +=
@@ -189,8 +191,6 @@ const createEvent = (event) => {
 
   const currDayInfo = whatADay(year, month, day);
   // console.log(currDayInfo);
-  const prevDayInfo = whatADay(year, month, day, "prev");
-  // console.log(prevDayInfo);
   const nextDayInfo = whatADay(year, month, day, "next");
   // console.log(nextDayInfo);
 

@@ -40,6 +40,9 @@ const Stats = () => {
       const averagePayment = Math.round(
         stats.shifts.paymentInHolidayAverage * average
       );
+      const obstacleInWorkBonus = Math.round(
+        stats.shifts.obstacleInWork * average
+      );
       const overtimeBonus = Math.round(overtimeBonusPerHour * overtimeHours);
       const holidayBonus = Math.round(
         stats.extras.holidayShiftBonus * holidayBonusPerHour
@@ -64,6 +67,7 @@ const Stats = () => {
         wageFor6 +
         wageFor7 +
         averagePayment +
+        obstacleInWorkBonus +
         overtimeBonus +
         holidayBonus +
         weekendBonus +
@@ -94,12 +98,20 @@ const Stats = () => {
         socialInsurance +
         taxBonus;
 
-      // // tady to nejak doladit v budoucnu
+      const formateHours = (value) => `${value} hodin`;
+      const formateMoney = (value) => {
+        const money = value.toString();
+        if (money.length >= 3) {
+          const hundreds = money.slice(-3, 10);
+          const thousands = money.slice(0, -3);
+          return `${thousands} ${hundreds} Kč`;
+        } else return `${money} Kč`;
+      };
 
       const shifts = [
         {
           label: "Fond Pracovní doby",
-          value: stats.shifts.workingHoursForMonth,
+          value: formateHours(stats.shifts.workingHoursForMonth),
         },
         {
           label: "Počet směn",
@@ -107,101 +119,101 @@ const Stats = () => {
         },
         {
           label: "Hodinová mzda v 6",
-          value: stats.shifts.workedHoursIn6,
+          value: formateHours(stats.shifts.workedHoursIn6),
         },
         {
           label: "Hodinová mzda v 7",
-          value: stats.shifts.workedHoursIn7,
+          value: formateHours(stats.shifts.workedHoursIn7),
         },
         {
           label: "Platba Průměrem",
-          value: stats.shifts.paymentInHolidayAverage,
+          value: formateHours(stats.shifts.paymentInHolidayAverage),
         },
         {
           label: "Překážka v práci",
-          value: stats.shifts.obstacleInWork,
+          value: formateHours(stats.shifts.obstacleInWork),
         },
         {
           label: "Nemocenská",
-          value: stats.shifts.sickLeaveDays,
+          value: formateHours(stats.shifts.sickLeaveDays),
         },
         {
           label: "Náhradní volno",
-          value: stats.shifts.nv,
+          value: formateHours(stats.shifts.nv),
         },
         {
           label: "Přesčasů",
-          value: overtimeHours,
+          value: formateHours(overtimeHours),
         },
       ];
 
       const extras = [
         {
           label: "Sobota / Neděle",
-          value: stats.extras.weekendShiftBonus,
+          value: formateHours(stats.extras.weekendShiftBonus),
         },
         {
           label: "noční (25 Kč)",
-          value: stats.extras.nightShiftBonus,
+          value: formateHours(stats.extras.nightShiftBonus),
         },
         {
           label: "Odpolední (3 Kč)",
-          value: stats.extras.afternoonShiftBonus,
+          value: formateHours(stats.extras.afternoonShiftBonus),
         },
         {
           label: "Svátek",
-          value: stats.extras.holidayShiftBonus,
+          value: formateHours(stats.extras.holidayShiftBonus),
         },
       ];
 
       const wage = [
         {
           label: "Hodinová mzda v 6. třídě",
-          value: wageFor6,
+          value: formateMoney(wageFor6),
         },
         {
           label: "Hodinová mzda v 7. třídě",
-          value: wageFor7,
+          value: formateMoney(wageFor7),
         },
         {
           label: "Platba Průměrem",
-          value: averagePayment,
+          value: formateMoney(averagePayment),
         },
         {
           label: "Přesčas",
-          value: overtimeBonus,
+          value: formateMoney(overtimeBonus),
         },
         {
           label: "Svátek",
-          value: holidayBonus,
+          value: formateMoney(holidayBonus),
         },
         {
           label: "Sobota / Neděle",
-          value: weekendBonus,
+          value: formateMoney(weekendBonus),
         },
         {
           label: "Noční",
-          value: nightBonus,
+          value: formateMoney(nightBonus),
         },
         {
           label: "Odpolední",
-          value: afternoonBonus,
+          value: formateMoney(afternoonBonus),
         },
         {
           label: "Prémie za Heřmanice",
-          value: bonusHer,
+          value: formateMoney(bonusHer),
         },
         {
           label: "Prémie za Uhelnou službu",
-          value: bonusUsl,
+          value: formateMoney(bonusUsl),
         },
         {
           label: "Hrubá mzda",
-          value: wageBeforeTax,
+          value: formateMoney(wageBeforeTax),
         },
         {
           label: "Čistá mzda",
-          value: wageAfterTax,
+          value: formateMoney(wageAfterTax),
         },
       ];
 

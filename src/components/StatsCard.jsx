@@ -2,12 +2,17 @@ import React from "react";
 
 const StatsCard = ({ title, stats }) => {
   const renderStats = stats.map((stat) => {
-    return (
-      <div className="stat" key={stat.label}>
-        <span className="stat-name">{stat.label}</span>
-        <span className="stat-value">{stat.value}</span>
-      </div>
-    );
+    console.log(stat.value === "0 hodin");
+    if (stat.value === "0 hodin" || stat.value === "0 Kč") {
+      return "";
+    } else {
+      return (
+        <div className="stat" key={stat.label}>
+          <span className="stat-name">{stat.label}</span>
+          <span className="stat-value">{stat.value}</span>
+        </div>
+      );
+    }
   });
 
   return (

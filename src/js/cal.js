@@ -1,4 +1,4 @@
-import { holidays, daysInWeek } from "./calConfig.js";
+import { holidays } from "./calConfig.js";
 
 let calendar = [];
 
