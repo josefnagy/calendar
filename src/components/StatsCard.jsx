@@ -2,7 +2,6 @@ import React from "react";
 
 const StatsCard = ({ title, stats }) => {
   const renderStats = stats.map((stat) => {
-    console.log(stat.value === "0 hodin");
     if (stat.value === "0 hodin" || stat.value === "0 Kč") {
       return "";
     } else {
