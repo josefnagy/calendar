@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { auth } from "../apis/firebase";
 import AuthPortal from "./AuthPortal.jsx";
-import { login, logout, setUser } from "../actions";
+import { login, logout, setUser, cleanStats } from "../actions";
 
 const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
   const [open, setOpen] = useState(false);

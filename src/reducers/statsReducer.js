@@ -1,6 +1,4 @@
-import _ from "lodash";
-
-import { UPDATE_STATS, FETCH_STATS } from "../actions/types";
+import { UPDATE_STATS, FETCH_STATS, LOGOUT } from "../actions/types";
 
 const INITIAL_STATE = {};
 
@@ -14,9 +12,11 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_STATS:
       console.log(action.payload);
       return {
-        ...state,
         ...action.payload,
       };
+
+    case LOGOUT:
+      return {};
 
     default:
       return state;

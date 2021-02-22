@@ -95,8 +95,6 @@ export const getWorkingDaysInMonth = (year, month) => {
   return workingDaysInMonth;
 };
 
-console.log(getWorkingDaysInMonth(2019, 1));
-
 const isHoliday = (month, day) => {
   // console.log(month, day);
   const holiday = holidays.find((holiday) => {

@@ -26,7 +26,6 @@ import {
   SET_USER,
   CLEAN_ERROR,
   SET_ERROR,
-  DELETE_STATS,
   UPDATE_STATS,
   FETCH_STATS,
 } from "./types";
@@ -171,6 +170,7 @@ export const showEdit = (id) => {
 };
 
 export const fetchStats = (userId) => {
+  console.log(userId);
   return async (dispatch) => {
     await db
       .collection("stats")
@@ -190,6 +190,7 @@ export const fetchStats = (userId) => {
 };
 
 export const updateStats = (newStats, userId) => {
+  console.log(newStats);
   return async (dispatch) => {
     await db
       .collection("stats")
