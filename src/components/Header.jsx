@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { auth } from "../apis/firebase.js";
 
 import Arrows from "./Arrows.jsx";
 
@@ -9,6 +10,7 @@ const Header = ({ date }) => {
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
   const [hidden, setHidden] = useState("");
+  const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
   useEffect(() => {
     if (window.location.pathname !== "/") {
@@ -36,12 +38,16 @@ const Header = ({ date }) => {
           : date.monthsNames[date.calMonth - 1]
       } ${year ? year : date.calYear}`}</Link>
       <div className="header__links">
-        <Link
-          to={`/stats/${date.calYear}/${date.calMonth}`}
-          className="header__link"
-        >
-          show Stats
-        </Link>
+        {isSignedIn ? (
+          <Link
+            to={`/stats/${date.calYear}/${date.calMonth}`}
+            className="header__link"
+          >
+            show Stats
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="header__arrows">
