@@ -1,9 +1,10 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
-import { deleteEvent, deleteStats } from "../actions";
+import { deleteEvent, updateStats } from "../actions";
+import { deleteEventStats } from "../js/calcEventStats";
 
 const DeletePortal = ({
   isOpen,
@@ -11,11 +12,17 @@ const DeletePortal = ({
   id,
   eventId,
   deleteEvent,
-  deleteStats,
+  updateStats,
 }) => {
+  const state = useSelector((state) => state);
+  const userId = useSelector((state) => state.auth.user.uid);
+
   const handleDelete = () => {
+    const newStats = deleteEventStats(eventId, state);
     deleteEvent(eventId);
-    deleteStats(eventId);
+    console.log(newStats);
+
+    updateStats({ ...newStats }, userId);
   };
 
   if (!isOpen) return null;
@@ -36,4 +43,4 @@ const DeletePortal = ({
   );
 };
 
-export default connect(null, { deleteEvent, deleteStats })(DeletePortal);
+export default connect(null, { deleteEvent, updateStats })(DeletePortal);

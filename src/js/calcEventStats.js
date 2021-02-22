@@ -7,7 +7,56 @@ import {
   getWorkingDaysInMonth,
 } from "./cal";
 
-export default (ev, stats, userId, oldEvent = {}) => {
+export const deleteEventStats = (eventId, state) => {
+  const wholeState = state;
+  const ev = wholeState.events.allEvents[eventId];
+  const event = createEvent(ev);
+  const stat = wholeState.stats;
+  const stats = { ...stat };
+
+  stats[event.dateId].extras.afternoonShiftBonus -= event.afternoonBonus;
+  stats[event.dateId].extras.holidayShiftBonus -= event.holidayBonus;
+  stats[event.dateId].extras.nightShiftBonus -= event.nightBonus;
+  stats[event.dateId].extras.weekendShiftBonus -= event.weekendBonus;
+
+  switch (event.workingHoursType) {
+    case "work":
+      stats[event.dateId].shifts.workingEvents--;
+      if (
+        event.function === "Strojvedoucí" &&
+        (event.location === "Uhelná služba" || event.location === "Zárubecký")
+      ) {
+        stats[event.dateId].shifts.workedHoursIn7 -= Number(event.workingHours);
+      } else {
+        stats[event.dateId].shifts.workedHoursIn6 -= Number(event.workingHours);
+      }
+      break;
+
+    case "holidayAverage":
+      stats[event.dateId].shifts.paymentInHolidayAverage -= Number(
+        event.workingHours
+      );
+      break;
+
+    case "obstacleInWork":
+      stats[event.dateId].shifts.obstacleInWork -= Number(event.workingHours);
+      break;
+
+    case "sickLeaveAverage":
+      stats[event.dateId].shifts.sickLeave -= Number(event.workingHours);
+      break;
+
+    case "nv":
+      stats[event.dateId].shifts.nv -= Number(event.workingHours);
+      break;
+
+    default:
+      break;
+  }
+  return stats;
+};
+
+export const calcEventStats = (ev, stats, userId, oldEvent = {}) => {
   // console.log(ev);
   // console.log(stats);
   // console.log(userId);

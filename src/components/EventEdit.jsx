@@ -11,7 +11,7 @@ const EventEdit = ({ match, eventToEdit, editEvent, editStats }) => {
 
   const onSubmit = (updatedValues) => {
     editEvent(match.params.eventId, updatedValues, match.params.id);
-    editStats(updatedValues);
+    // editStats(updatedValues);
   };
 
   return (

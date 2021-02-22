@@ -4,11 +4,9 @@ import { connect } from "react-redux";
 import EventForm from "./EventForm.jsx";
 import { newEvent, updateStats } from "../actions/index";
 import { events } from "../js/januaryEvents";
-import calcEventStats from "../js/calcEventStats";
+import { calcEventStats } from "../js/calcEventStats";
 
 const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
-  useEffect(() => {}, []);
-
   const onFillDb = () => {
     let newStats = {};
     events.forEach((event) => {
@@ -22,7 +20,6 @@ const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
   const onSubmit = (formValues) => {
     const newStats = calcEventStats(formValues, stats, userId);
     newEvent({ ...formValues, userId });
-    // console.log(newStats);
     updateStats({ ...newStats }, userId);
   };
 
