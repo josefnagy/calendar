@@ -182,8 +182,6 @@ export const newEvent = (event) => {
 
   const eventWithCalculatedValues = createEvent(event);
 
-  // return { type: NEW_EVENT, payload: eventWithCalculatedValues };
-
   return async (dispatch) => {
     await db
       .collection("events")
