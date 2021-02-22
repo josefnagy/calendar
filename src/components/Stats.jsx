@@ -8,8 +8,9 @@ const Stats = () => {
     const date = useSelector((state) => state.date);
     const dateId = `${date.calYear}-${date.calMonth}`;
     const stats = useSelector((state) => state.stats[dateId]);
+    const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
-    if (typeof stats !== "undefined") {
+    if (typeof stats !== "undefined" && isSignedIn) {
       const workingHoursForMonth = stats.shifts.workingHoursForMonth;
       const totalWorkedHours =
         stats.shifts.workedHoursIn6 +

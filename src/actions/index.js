@@ -28,6 +28,7 @@ import {
   SET_ERROR,
   DELETE_STATS,
   UPDATE_STATS,
+  FETCH_STATS,
 } from "./types";
 
 import history from "../history";
@@ -169,8 +170,37 @@ export const showEdit = (id) => {
   };
 };
 
+export const fetchStats = (userId) => {
+  return async (dispatch) => {
+    await db
+      .collection("stats")
+      .doc(userId)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          dispatch({ type: FETCH_STATS, payload: doc.data() });
+        } else {
+          console.log("no stats in DB");
+        }
+      })
+      .catch((err) => {
+        console.log("error getting stats", err);
+      });
+  };
+};
+
 export const updateStats = (newStats, userId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
+    await db
+      .collection("stats")
+      .doc(userId)
+      .set(newStats)
+      .then(() => {
+        console.log("Stats succesfully written");
+      })
+      .catch((err) => {
+        console.log("error adding stats", err);
+      });
     dispatch({ type: UPDATE_STATS, payload: { ...newStats } });
   };
 };

@@ -39,7 +39,7 @@ export const deleteEventStats = (eventId, state) => {
           stats[nextMonthDateId].extras.holidayShiftBonus -=
             nextDay.holidayBonus;
         } else {
-          stats[nextMonthDateId].shifts.workedHoursIn7 -= Number(
+          stats[event.dateId].shifts.workedHoursIn7 -= Number(
             event.workingHours
           );
         }

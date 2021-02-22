@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import CalendarDay from "./CalendarDay.jsx";
 import {
   fetchEvents,
+  fetchStats,
   setDate,
   showMonth,
   fetchEventsForMonth,
@@ -13,6 +14,7 @@ import { nextMonthDate, prevMonthDate } from "../js/cal";
 const Calendar = ({
   date,
   fetchEvents,
+  fetchStats,
   events,
   match,
   showMonth,
@@ -56,6 +58,7 @@ const Calendar = ({
     if (userId) {
       if (events.length === 0) {
         fetchEvents(date.calYear, date.calMonth, userId);
+        fetchStats(userId);
       }
     }
   }, [fetchEvents, showMonth, year, month, userId]);
@@ -94,6 +97,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchEvents,
+  fetchStats,
   setDate,
   showMonth,
   fetchEventsForMonth,
