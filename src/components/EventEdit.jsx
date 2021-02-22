@@ -1,17 +1,28 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import { showEdit, editEvent, editStats } from "../actions/index";
+import { showEdit, editEvent, updateStats } from "../actions/index";
 import EventForm from "./EventForm.jsx";
+import { calcEventStats, deleteEventStats } from "../js/calcEventStats";
 
-const EventEdit = ({ match, eventToEdit, editEvent, editStats }) => {
+const EventEdit = ({
+  match,
+  eventToEdit,
+  editEvent,
+  updateStats,
+  state,
+  userId,
+}) => {
   useEffect(() => {
     // showEdit(match.params.eventId);
   }, [showEdit]);
 
-  const onSubmit = (updatedValues) => {
+  const onSubmit = (updatedValues, formValues) => {
+    const newStats = deleteEventStats(eventToEdit.key, state);
+    const updatedSt = calcEventStats(formValues, newStats, userId);
     editEvent(match.params.eventId, updatedValues, match.params.id);
-    // editStats(updatedValues);
+
+    updateStats({ ...updatedSt }, userId);
   };
 
   return (
@@ -30,9 +41,14 @@ const EventEdit = ({ match, eventToEdit, editEvent, editStats }) => {
 const mapStateToProps = (state, ownProps) => {
   // console.log(state);
   // console.log(ownProps);
-  return { eventToEdit: state.events.allEvents[ownProps.match.params.eventId] };
+  return {
+    eventToEdit: state.events.allEvents[ownProps.match.params.eventId],
+    stats: state.stats,
+    userId: state.auth.user.uid,
+    state,
+  };
 };
 
-export default connect(mapStateToProps, { showEdit, editEvent, editStats })(
+export default connect(mapStateToProps, { showEdit, editEvent, updateStats })(
   EventEdit
 );

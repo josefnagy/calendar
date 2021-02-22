@@ -169,66 +169,6 @@ export const showEdit = (id) => {
   };
 };
 
-export const editStats = (updatedValues) => {
-  console.log(updatedValues);
-  return { type: UPDATE_STATS };
-};
-
-export const deleteStats = (eventId) => {
-  return (dispatch, getState) => {
-    const wholeState = getState();
-    const ev = wholeState.events.allEvents[eventId];
-    const event = createEvent(ev);
-    const stat = wholeState.stats;
-    const stats = { ...stat };
-
-    stats[event.dateId].extras.afternoonShiftBonus -= event.afternoonBonus;
-    stats[event.dateId].extras.holidayShiftBonus -= event.holidayBonus;
-    stats[event.dateId].extras.nightShiftBonus -= event.nightBonus;
-    stats[event.dateId].extras.weekendShiftBonus -= event.weekendBonus;
-
-    switch (event.workingHoursType) {
-      case "work":
-        stats[event.dateId].shifts.workingEvents--;
-        if (
-          event.function === "Strojvedoucí" &&
-          (event.location === "Uhelná služba" || event.location === "Zárubecký")
-        ) {
-          stats[event.dateId].shifts.workedHoursIn7 -= Number(
-            event.workingHours
-          );
-        } else {
-          stats[event.dateId].shifts.workedHoursIn6 -= Number(
-            event.workingHours
-          );
-        }
-        break;
-
-      case "holidayAverage":
-        stats[event.dateId].shifts.paymentInHolidayAverage -= Number(
-          event.workingHours
-        );
-        break;
-
-      case "obstacleInWork":
-        stats[event.dateId].shifts.obstacleInWork -= Number(event.workingHours);
-        break;
-
-      case "sickLeaveAverage":
-        stats[event.dateId].shifts.sickLeave -= Number(event.workingHours);
-        break;
-
-      case "nv":
-        stats[event.dateId].shifts.nv -= Number(event.workingHours);
-        break;
-
-      default:
-        break;
-    }
-    dispatch({ type: DELETE_STATS, payload: stats });
-  };
-};
-
 export const updateStats = (newStats, userId) => {
   return (dispatch) => {
     dispatch({ type: UPDATE_STATS, payload: { ...newStats } });

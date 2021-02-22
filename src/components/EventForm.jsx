@@ -61,14 +61,14 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       type: selectedEvents.type,
       function: selectedFunctions ? selectedFunctions.name : "",
       location: selectedLocation ? selectedLocation.name : "",
-      workingHours: workingHours ? workingHours : null,
+      workingHours: workingHours ? Number(workingHours) : null,
       workingHoursType: selectedEvents.workingHoursType,
       notes,
     };
 
     if (eventToEdit) {
       const editedValues = difference(formValues, eventToEdit);
-      onSubmit(editedValues);
+      onSubmit(editedValues, formValues);
     } else {
       onSubmit(formValues);
     }

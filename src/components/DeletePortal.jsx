@@ -20,8 +20,6 @@ const DeletePortal = ({
   const handleDelete = () => {
     const newStats = deleteEventStats(eventId, state);
     deleteEvent(eventId);
-    console.log(newStats);
-
     updateStats({ ...newStats }, userId);
   };
 

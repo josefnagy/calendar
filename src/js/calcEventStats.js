@@ -56,101 +56,93 @@ export const deleteEventStats = (eventId, state) => {
   return stats;
 };
 
-export const calcEventStats = (ev, stats, userId, oldEvent = {}) => {
-  // console.log(ev);
-  // console.log(stats);
-  // console.log(userId);
+export const calcEventStats = (ev, stats, userId) => {
+  //its a new event so just add to stats
+  const event = createEvent(ev);
+  const today = whatADay(event.year, event.month, event.day);
 
-  if (_.isEmpty(oldEvent)) {
-    //its a new event so just add to stats
-    const event = createEvent(ev);
-    const today = whatADay(event.year, event.month, event.day);
+  const newStats = { ...stats };
 
-    const newStats = { ...stats };
-
-    if (!(event.dateId in stats)) {
-      newStats[event.dateId] = {
-        shifts: {
-          workingEvents: 0,
-          workingDays: getWorkingDaysInMonth(event.year, event.month),
-          workingHoursPerDay: 7.5,
-          workedHoursIn6: 0,
-          workedHoursIn7: 0,
-          paymentInHolidayAverage: 0,
-          obstacleInWork: 0,
-          sickLeave: 0,
-          sickLeaveDays: 0,
-          nv: 0,
-          get workingHoursForMonth() {
-            return this.workingDays * this.workingHoursPerDay;
-          },
+  if (!(event.dateId in stats)) {
+    newStats[event.dateId] = {
+      shifts: {
+        workingEvents: 0,
+        workingDays: getWorkingDaysInMonth(event.year, event.month),
+        workingHoursPerDay: 7.5,
+        workedHoursIn6: 0,
+        workedHoursIn7: 0,
+        paymentInHolidayAverage: 0,
+        obstacleInWork: 0,
+        sickLeave: 0,
+        sickLeaveDays: 0,
+        nv: 0,
+        get workingHoursForMonth() {
+          return this.workingDays * this.workingHoursPerDay;
         },
-        extras: {
-          weekendShiftBonus: 0,
-          nightShiftBonus: 0,
-          afternoonShiftBonus: 0,
-          holidayShiftBonus: 0,
-        },
-      };
-    }
-
-    newStats[event.dateId].extras.afternoonShiftBonus += event.afternoonBonus;
-    newStats[event.dateId].extras.nightShiftBonus += event.nightBonus;
-    newStats[event.dateId].extras.weekendShiftBonus += event.weekendBonus;
-    newStats[event.dateId].extras.holidayShiftBonus += event.holidayBonus;
-
-    switch (event.workingHoursType) {
-      case "work":
-        newStats[event.dateId].shifts.workingEvents++;
-        if (
-          event.function === "Strojvedoucí" &&
-          (event.location === "Uhelná služba" || event.location === "Zárubecký")
-        ) {
-          if (today.last && event.type === "nocni")
-            newStats[event.dateId].shifts.workedHoursIn7 += 5.5;
-          else
-            newStats[event.dateId].shifts.workedHoursIn7 += Number(
-              event.workingHours
-            );
-        } else {
-          if (today.last && event.type === "nocni")
-            newStats[event.dateId].shifts.workedHoursIn6 += 5.5;
-          else
-            newStats[event.dateId].shifts.workedHoursIn6 += Number(
-              event.workingHours
-            );
-        }
-        break;
-
-      case "holidayAverage":
-        newStats[event.dateId].shifts.paymentInHolidayAverage += Number(
-          event.workingHours
-        );
-        break;
-
-      case "obstacleInWork":
-        newStats[event.dateId].shifts.obstacleInWork += Number(
-          event.workingHours
-        );
-        break;
-
-      case "sickLeaveAverage":
-        newStats[event.dateId].shifts.sickLeaveDays += 1;
-        newStats[event.dateId].shifts.sickLeave += Number(event.workingHours);
-        break;
-
-      case "nv":
-        newStats[event.dateId].shifts.nv += Number(event.workingHours);
-        break;
-
-      default:
-        break;
-    }
-
-    return newStats;
-  } else {
-    //its not empty, so you have to update stats instead of add
+      },
+      extras: {
+        weekendShiftBonus: 0,
+        nightShiftBonus: 0,
+        afternoonShiftBonus: 0,
+        holidayShiftBonus: 0,
+      },
+    };
   }
+
+  newStats[event.dateId].extras.afternoonShiftBonus += event.afternoonBonus;
+  newStats[event.dateId].extras.nightShiftBonus += event.nightBonus;
+  newStats[event.dateId].extras.weekendShiftBonus += event.weekendBonus;
+  newStats[event.dateId].extras.holidayShiftBonus += event.holidayBonus;
+
+  switch (event.workingHoursType) {
+    case "work":
+      newStats[event.dateId].shifts.workingEvents++;
+      if (
+        event.function === "Strojvedoucí" &&
+        (event.location === "Uhelná služba" || event.location === "Zárubecký")
+      ) {
+        if (today.last && event.type === "nocni")
+          newStats[event.dateId].shifts.workedHoursIn7 += 5.5;
+        else
+          newStats[event.dateId].shifts.workedHoursIn7 += Number(
+            event.workingHours
+          );
+      } else {
+        if (today.last && event.type === "nocni")
+          newStats[event.dateId].shifts.workedHoursIn6 += 5.5;
+        else
+          newStats[event.dateId].shifts.workedHoursIn6 += Number(
+            event.workingHours
+          );
+      }
+      break;
+
+    case "holidayAverage":
+      newStats[event.dateId].shifts.paymentInHolidayAverage += Number(
+        event.workingHours
+      );
+      break;
+
+    case "obstacleInWork":
+      newStats[event.dateId].shifts.obstacleInWork += Number(
+        event.workingHours
+      );
+      break;
+
+    case "sickLeaveAverage":
+      newStats[event.dateId].shifts.sickLeaveDays += 1;
+      newStats[event.dateId].shifts.sickLeave += Number(event.workingHours);
+      break;
+
+    case "nv":
+      newStats[event.dateId].shifts.nv += Number(event.workingHours);
+      break;
+
+    default:
+      break;
+  }
+
+  return newStats;
 };
 
 const createEvent = (event) => {
