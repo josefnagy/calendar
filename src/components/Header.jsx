@@ -21,6 +21,8 @@ const Header = ({ date }) => {
       setYear(dayId[0]);
     } else {
       setDay(undefined);
+      setMonth(date.calMonth);
+      setYear(date.calYear);
     }
 
     if (window.location.pathname === "/signup") setHidden("");
