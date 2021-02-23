@@ -5,6 +5,7 @@ import _ from "lodash";
 
 import { eventTypes, functionTypes, locationTypes } from "../js/eventsConfig";
 import InputBox from "./InputBox.jsx";
+import CheckBox from "./CheckBox.jsx";
 import Dropdown from "./Dropdown.jsx";
 
 const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
@@ -14,6 +15,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   const [showWorkingHoursInput, setShowWorkingHoursInput] = useState(false);
   const [workingHours, setWorkingHours] = useState(null);
   const [notes, setNotes] = useState("");
+  const [unscheduled, setUnscheduled] = useState(false);
 
   useEffect(() => {
     if (eventToEdit) {
@@ -63,6 +65,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
       location: selectedLocation ? selectedLocation.name : "",
       workingHours: workingHours ? Number(workingHours) : null,
       workingHoursType: selectedEvents.workingHoursType,
+      unscheduled,
       notes,
     };
 
@@ -131,6 +134,13 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
           setValue={setNotes}
           id="notes"
         />
+        <div className="check__container">
+          <CheckBox
+            label="Avízo"
+            value={unscheduled}
+            setValue={setUnscheduled}
+          />
+        </div>
         <div className="form__buttons">
           <Link className="btn__discard" to={`/day/${id}`}>
             Zpět
