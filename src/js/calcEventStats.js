@@ -57,9 +57,14 @@ export const deleteEventStats = (eventId, state) => {
       break;
 
     case "holidayAverage":
-      stats[event.dateId].shifts.paymentInHolidayAverage -= Number(
+      stats[event.dateId].shifts.paymentIntoAverage -= Number(
         event.workingHours
       );
+      break;
+
+    case "vacation":
+      stats.vacation[event.year].usedVacation -= Number(event.workingHours);
+      stats[event.dateId].shifts.vacation -= Number(event.workingHours);
       break;
 
     case "obstacleInWork":
@@ -103,6 +108,11 @@ export const calcEventStats = (ev, stats) => {
   // check if its first stat in month, if yes then initialize new stats for selected month
   if (!(event.dateId in stats)) {
     newStats[event.dateId] = createDefaultStats(event);
+  }
+  console.log(stats);
+  if (!("vacation" in stats)) {
+    newStats.vacation = {};
+    newStats.vacation[event.year] = { totalVacation: 188, usedVacation: 0 };
   }
   if (!(nextMonthDateId in stats) && lastDayNightShift()) {
     newStats[nextMonthDateId] = createDefaultStats(event);
@@ -150,9 +160,14 @@ export const calcEventStats = (ev, stats) => {
       break;
 
     case "holidayAverage":
-      newStats[event.dateId].shifts.paymentInHolidayAverage += Number(
+      newStats[event.dateId].shifts.paymentIntoAverage += Number(
         event.workingHours
       );
+      break;
+
+    case "vacation":
+      newStats.vacation[event.year].usedVacation += Number(event.workingHours);
+      newStats[event.dateId].shifts.vacation += Number(event.workingHours);
       break;
 
     case "obstacleInWork":
@@ -276,9 +291,10 @@ const createDefaultStats = (event) => {
       workingHoursPerDay: 7.5,
       workedHoursIn6: 0,
       workedHoursIn7: 0,
-      paymentInHolidayAverage: 0,
+      paymentIntoAverage: 0,
       obstacleInWork: 0,
       sickLeave: 0,
+      vacation: 0,
       sickLeaveDays: 0,
       nv: 0,
       get workingHoursForMonth() {

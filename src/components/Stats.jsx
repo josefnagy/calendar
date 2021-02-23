@@ -8,6 +8,7 @@ const Stats = () => {
     const date = useSelector((state) => state.date);
     const dateId = `${date.calYear}-${date.calMonth}`;
     const stats = useSelector((state) => state.stats[dateId]);
+    const vacation = useSelector((state) => state.stats.vacation[date.calYear]);
     const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
     if (typeof stats !== "undefined" && isSignedIn) {
@@ -15,7 +16,7 @@ const Stats = () => {
       const totalWorkedHours =
         stats.shifts.workedHoursIn6 +
         stats.shifts.workedHoursIn7 +
-        stats.shifts.paymentInHolidayAverage;
+        stats.shifts.paymentIntoAverage;
       const overtimeHours =
         workingHoursForMonth < totalWorkedHours
           ? totalWorkedHours - workingHoursForMonth
@@ -38,11 +39,14 @@ const Stats = () => {
       const wageFor6 = Math.round(stats.shifts.workedHoursIn6 * tarif6);
       const wageFor7 = Math.round(stats.shifts.workedHoursIn7 * tarif7);
       const averagePayment = Math.round(
-        stats.shifts.paymentInHolidayAverage * average
+        stats.shifts.paymentIntoAverage * average
       );
       const obstacleInWorkBonus = Math.round(
         stats.shifts.obstacleInWork * average
       );
+
+      const vacationBonus = Math.round(stats.shifts.vacation * average);
+
       const overtimeBonus = Math.round(overtimeBonusPerHour * overtimeHours);
       const holidayBonus = Math.round(
         stats.extras.holidayShiftBonus * holidayBonusPerHour
@@ -68,6 +72,7 @@ const Stats = () => {
         wageFor7 +
         averagePayment +
         obstacleInWorkBonus +
+        vacationBonus +
         overtimeBonus +
         holidayBonus +
         weekendBonus +
@@ -126,8 +131,12 @@ const Stats = () => {
           value: formateHours(stats.shifts.workedHoursIn7),
         },
         {
+          label: "Dovolená",
+          value: formateHours(stats.shifts.vacation),
+        },
+        {
           label: "Platba Průměrem",
-          value: formateHours(stats.shifts.paymentInHolidayAverage),
+          value: formateHours(stats.shifts.paymentIntoAverage),
         },
         {
           label: "Překážka v práci",
@@ -180,6 +189,10 @@ const Stats = () => {
           value: formateMoney(averagePayment),
         },
         {
+          label: "Dovolená",
+          value: formateMoney(vacationBonus),
+        },
+        {
           label: "Přesčas",
           value: formateMoney(overtimeBonus),
         },
@@ -217,12 +230,23 @@ const Stats = () => {
         },
       ];
 
+      const others = [
+        {
+          label: "Celkem Dovolená",
+          value: vacation.totalVacation,
+        },
+        {
+          label: "Čerpaná",
+          value: vacation.usedVacation,
+        },
+      ];
+
       return (
         <>
           <StatsCard title="Směny" stats={shifts} />
           <StatsCard title="Příplatky" stats={extras} />
           <StatsCard title="Mzda" stats={wage} />
-          <StatsCard title="Ostatní" stats={shifts} />
+          <StatsCard title="Ostatní" stats={others} />
         </>
       );
     } else {

@@ -51,7 +51,7 @@ export const eventTypes = [
     name: "Dovolená",
     type: "dovolena",
     defaultWorkingHours: 11,
-    workingHoursType: "holidayAverage",
+    workingHoursType: "vacation",
   },
   {
     name: "Náhradní volno",

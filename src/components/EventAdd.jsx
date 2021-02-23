@@ -19,6 +19,7 @@ const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
 
   const onSubmit = (formValues) => {
     const newStats = calcEventStats(formValues, stats, userId);
+    console.log(newStats);
     newEvent({ ...formValues, userId });
     updateStats({ ...newStats }, userId);
   };
