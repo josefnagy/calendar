@@ -78,6 +78,7 @@ const Stats = () => {
         weekendBonus +
         nightBonus +
         afternoonBonus +
+        stats.extras.unscheduledBonus +
         bonusHer +
         bonusUsl;
 
@@ -96,13 +97,10 @@ const Stats = () => {
       );
       const taxBonus = 2320;
 
-      const wageAfterTax =
-        wageBeforeTax -
-        taxRounded -
-        healthInsurance -
-        socialInsurance +
-        taxBonus;
+      const taxesWithInsurances =
+        taxRounded + healthInsurance + socialInsurance;
 
+      const wageAfterTax = wageBeforeTax - taxesWithInsurances + taxBonus;
       const formateHours = (value) => `${value} hodin`;
       const formateMoney = (value) => {
         const money = value.toString();
@@ -215,6 +213,10 @@ const Stats = () => {
         {
           label: "Prémie za Heřmanice",
           value: formateMoney(bonusHer),
+        },
+        {
+          label: "Avízo",
+          value: formateMoney(stats.extras.unscheduledBonus),
         },
         {
           label: "Prémie za Uhelnou službu",

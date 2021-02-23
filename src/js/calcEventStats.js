@@ -16,6 +16,7 @@ export const deleteEventStats = (eventId, state) => {
   stats[event.dateId].extras.holidayShiftBonus -= event.holidayBonus;
   stats[event.dateId].extras.nightShiftBonus -= event.nightBonus;
   stats[event.dateId].extras.weekendShiftBonus -= event.weekendBonus;
+  stats[event.dateId].extras.unscheduledBonus -= event.unscheduled ? 300 : 0;
 
   switch (event.workingHoursType) {
     case "work":
@@ -109,7 +110,6 @@ export const calcEventStats = (ev, stats) => {
   if (!(event.dateId in stats)) {
     newStats[event.dateId] = createDefaultStats(event);
   }
-  console.log(stats);
   if (!("vacation" in stats)) {
     newStats.vacation = {};
     newStats.vacation[event.year] = { totalVacation: 188, usedVacation: 0 };
@@ -122,6 +122,7 @@ export const calcEventStats = (ev, stats) => {
   newStats[event.dateId].extras.nightShiftBonus += event.nightBonus;
   newStats[event.dateId].extras.weekendShiftBonus += event.weekendBonus;
   newStats[event.dateId].extras.holidayShiftBonus += event.holidayBonus;
+  newStats[event.dateId].extras.unscheduledBonus += event.unscheduled ? 300 : 0;
 
   switch (event.workingHoursType) {
     case "work":
@@ -198,6 +199,7 @@ const createEvent = (event) => {
   event.weekendBonus = 0;
   event.afternoonBonus = 0;
   event.nightBonus = 0;
+
   const nextDay = {
     weekendBonus: 0,
     holidayBonus: 0,
@@ -306,6 +308,7 @@ const createDefaultStats = (event) => {
       nightShiftBonus: 0,
       afternoonShiftBonus: 0,
       holidayShiftBonus: 0,
+      unscheduledBonus: 0,
     },
   };
   return defStats;
