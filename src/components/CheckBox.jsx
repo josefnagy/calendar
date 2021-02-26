@@ -7,8 +7,7 @@ const Checkbox = ({ value, setValue, label }) => {
       <input
         type="checkbox"
         checked={value}
-        // value={value}
-        onChange={() => setValue(!value)}
+        onChange={(e) => setValue(e.target.checked)}
       />
       <span className="checkmark"></span>
     </label>

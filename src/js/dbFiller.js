@@ -50,6 +50,7 @@ export const dbFiller = () => {
         month,
         notes: "",
         type: types[counter],
+        unscheduled: false,
         workingHours: workingHours[counter],
         workingHoursType: "work",
         year,

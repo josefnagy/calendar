@@ -32,6 +32,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
         ? setSelectedLocation({ name: eventToEdit.location })
         : "";
       setWorkingHours(eventToEdit.workingHours);
+      console.log(eventToEdit);
       setUnscheduled(eventToEdit.unscheduled);
       setNotes(eventToEdit.notes);
     }
@@ -72,9 +73,10 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
 
     if (eventToEdit) {
       const editedValues = difference(formValues, eventToEdit);
-      onSubmit(editedValues, formValues);
+      // onSubmit(editedValues, formValues);
     } else {
-      onSubmit(formValues);
+      // onSubmit(formValues);
+      console.log(formValues);
     }
   };
 
