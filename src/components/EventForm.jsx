@@ -17,8 +17,6 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   const [notes, setNotes] = useState("");
   const [unscheduled, setUnscheduled] = useState(false);
 
-  console.log(unscheduled);
-
   useEffect(() => {
     if (eventToEdit) {
       setSelectedEvents({
