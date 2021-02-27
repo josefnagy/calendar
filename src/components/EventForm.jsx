@@ -73,10 +73,9 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
 
     if (eventToEdit) {
       const editedValues = difference(formValues, eventToEdit);
-      // onSubmit(editedValues, formValues);
+      onSubmit(editedValues, formValues);
     } else {
-      // onSubmit(formValues);
-      console.log(formValues);
+      onSubmit(formValues);
     }
   };
 
