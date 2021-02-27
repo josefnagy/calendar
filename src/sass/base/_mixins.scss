@@ -25,3 +25,9 @@
   background-color: $danger;
   color: black;
 }
+
+@mixin respond-small {
+  @media screen and (max-width: 375px) {
+    @content;
+  }
+}

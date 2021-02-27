@@ -5,4 +5,9 @@
   gap: 1rem;
   padding: $main-section-padding;
   height: 100%;
+
+  @include respond-small {
+    gap: 0;
+    padding: 0;
+  }
 }
