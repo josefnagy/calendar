@@ -35,6 +35,10 @@
   position: relative;
   transition: all 0.4s;
 
+  @include respond-small {
+    font-size: 1rem;
+  }
+
   &::before {
     position: absolute;
     content: "";
@@ -45,19 +49,33 @@
 
     transition: all 0.2s;
     z-index: -1;
+
+    @include respond-small {
+      top: -0.5rem;
+      left: -0.7rem;
+      width: 50px;
+      height: 20px;
+    }
   }
 
   &:hover {
     &::before {
       position: absolute;
       content: "";
-      top: -0.9rem;
-      left: -1rem;
-      width: 72px;
-      height: 35px;
+      top: -0.5rem;
+      left: -0.7rem;
+      width: 50px;
+      height: 20px;
       border: 1px solid $primary;
       // background-color: $primary;
       z-index: -1;
+
+      @include respond-small {
+        top: -0.5rem;
+        left: -0.7rem;
+        width: 50px;
+        height: 20px;
+      }
     }
 
     // color: black;

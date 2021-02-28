@@ -245,10 +245,10 @@ const Stats = () => {
 
       return (
         <>
-          <StatsCard title="Směny" stats={shifts} />
-          <StatsCard title="Příplatky" stats={extras} />
-          <StatsCard title="Mzda" stats={wage} />
-          <StatsCard title="Ostatní" stats={others} />
+          <StatsCard title="Směny" stats={shifts} className="shifts" />
+          <StatsCard title="Příplatky" stats={extras} className="extras" />
+          <StatsCard title="Mzda" stats={wage} className="wage" />
+          <StatsCard title="Ostatní" stats={others} className="others" />
         </>
       );
     } else {

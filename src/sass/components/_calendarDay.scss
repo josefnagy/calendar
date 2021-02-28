@@ -9,7 +9,8 @@
 
   @include respond-small {
     grid-template-columns: 1fr;
-    grid-template-rows: 20% auto;
+    grid-template-rows: 22% auto;
+    max-width: 52px;
   }
 
   ul {
@@ -44,7 +45,8 @@
       grid-column: 1;
       align-self: flex-start;
       text-align: left;
-      font-size: 0.8rem;
+      font-size: 0.6rem;
+      padding: 0.5rem;
     }
   }
 
@@ -56,6 +58,14 @@
     color: $red;
     font-size: 1.1rem;
     padding: 0.5rem 0.5rem 0 0.5rem;
+
+    @include respond-small {
+      grid-row: 2;
+      grid-column: 1;
+      align-self: flex-end;
+      text-align: left;
+      font-size: 0.6rem;
+    }
   }
 
   .day {

@@ -20,12 +20,23 @@
     @include button-primary;
   }
 
+  .btn__discard {
+    @include respond-small {
+      font-size: 1.3rem;
+    }
+  }
+
   .btn__add:hover {
     @include button-primary-hover;
   }
 
   .btn__discard:hover {
     @include button-danger-hover;
+  }
+
+  @include respond-small {
+    width: 100vw;
+    justify-content: space-around;
   }
 }
 

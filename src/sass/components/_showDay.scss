@@ -4,6 +4,11 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   height: 100%;
+
+  @include respond-small {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
 }
 
 .showday__event-list {
@@ -28,6 +33,10 @@
     font-size: 3.5rem;
     color: $event-gray;
     margin-bottom: 3rem;
+
+    @include respond-small {
+      font-size: 2rem;
+    }
   }
 
   .item__buttons {

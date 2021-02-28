@@ -27,7 +27,6 @@ const EventEdit = ({
 
   return (
     <div>
-      EventEditt
       <EventForm
         onSubmit={onSubmit}
         id={match.params.id}

@@ -1,3 +1,7 @@
 .add-event {
   padding: $main-section-padding;
+
+  @include respond-small {
+    padding: 0;
+  }
 }
