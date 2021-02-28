@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header.jsx";
 import Aside from "./components/Aside.jsx";
@@ -21,7 +21,8 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Router history={history} basename="/calendar">
+      <Router history={history}>
+        {/* <Router basename="/calendar"> */}
         <Aside />
         <Header />
         <main className="main">

@@ -15,6 +15,8 @@ module.exports = merge(common, {
   devServer: {
     historyApiFallback: true,
     contentBase: paths.build,
+    // publicPath: "/calendar",
+    // openPage: "/calendar",
     open: true,
     compress: true,
     hot: true,

@@ -2,12 +2,7 @@ import db, { auth } from "../apis/firebase";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
-import {
-  nextMonthDate,
-  prevMonthDate,
-  whatADay,
-  getWorkingDaysInMonth,
-} from "../js/cal";
+import { nextMonthDate, prevMonthDate, whatADay } from "../js/cal";
 
 import {
   SET_DATE,
@@ -190,7 +185,6 @@ export const fetchStats = (userId) => {
 };
 
 export const updateStats = (newStats, userId) => {
-  console.log(newStats);
   return async (dispatch) => {
     await db
       .collection("stats")
@@ -210,6 +204,7 @@ export const newEvent = (event) => {
   const id = uuid();
   event.createdAt = Date.now();
   event.key = id;
+  let history2 = useHistory();
 
   const eventWithCalculatedValues = createEvent(event);
 
@@ -226,6 +221,7 @@ export const newEvent = (event) => {
         console.log("Error adding event ", err);
       });
     dispatch({ type: NEW_EVENT, payload: eventWithCalculatedValues });
+
     history.push(`/day/${eventWithCalculatedValues.id}`);
   };
 };
