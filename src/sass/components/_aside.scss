@@ -1,6 +1,10 @@
 .aside {
   display: grid;
   grid-template-rows: 2fr 8fr 2fr;
+
+  @include respond-small {
+    display: none;
+  }
   .user {
     grid-row: 3;
 

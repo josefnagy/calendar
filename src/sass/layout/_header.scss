@@ -2,6 +2,10 @@
   font-size: 6rem;
   font-family: $font2;
   text-transform: uppercase;
+
+  @include respond-small {
+    font-size: 2rem;
+  }
 }
 .hidden {
   display: none;
