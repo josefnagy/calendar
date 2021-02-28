@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import EventForm from "./EventForm.jsx";
 import { newEvent, updateStats } from "../actions/index";
-// import { events } from "../js/januaryEvents";
 import { dbFiller } from "../js/dbFiller";
 import { calcEventStats } from "../js/calcEventStats";
 
@@ -11,7 +10,6 @@ const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
   const onFillDb = () => {
     let newStats = {};
     const events = dbFiller();
-    console.log(events);
     events.forEach((event) => {
       const userId = "qJ8kMeeqFVN2rPk6zPsRXydlSXn1";
       newStats = calcEventStats(event, newStats, userId);
@@ -22,7 +20,6 @@ const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
 
   const onSubmit = (formValues) => {
     const newStats = calcEventStats(formValues, stats, userId);
-    console.log(newStats);
     newEvent({ ...formValues, userId });
     updateStats({ ...newStats }, userId);
   };
@@ -36,7 +33,6 @@ const EventAdd = ({ newEvent, match, userId, updateStats, stats }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return { userId: state.auth.user.uid, stats: state.stats };
 };
 

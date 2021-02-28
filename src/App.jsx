@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Header from "./components/Header.jsx";
 import Aside from "./components/Aside.jsx";
@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Router history={history}>
+      <Router history={history} basename="/calendar">
         <Aside />
         <Header />
         <main className="main">
