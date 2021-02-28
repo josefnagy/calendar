@@ -1,10 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-<<<<<<< HEAD
-import { Router, Route, Switch } from "react-router-dom";
-=======
-import { BrowserRouter as Router, Route } from "react-router-dom";
->>>>>>> mobile
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header.jsx";
 import Aside from "./components/Aside.jsx";
