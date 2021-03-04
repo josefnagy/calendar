@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { auth } from "../apis/firebase.js";
 
+import { URL } from "../js/config";
 import Arrows from "./Arrows.jsx";
 
 const Header = ({ date }) => {
@@ -13,12 +13,18 @@ const Header = ({ date }) => {
   const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
   useEffect(() => {
-    if (window.location.pathname !== "/") {
+    if (window.location.pathname !== URL) {
       const str = window.location.pathname.split("/");
-      const dayId = str[2] ? str[2].split("-") : 0;
-      setDay(dayId[2]);
-      setMonth(dayId[1]);
-      setYear(dayId[0]);
+      if (str[2] === "day") {
+        const dayId = str[3] ? str[3].split("-") : 0;
+        setDay(dayId[2]);
+        setMonth(dayId[1]);
+        setYear(dayId[0]);
+      } else if (str[2] === "month") {
+        setDay(undefined);
+        setYear(str[3]);
+        setMonth(str[4]);
+      }
     } else {
       setDay(undefined);
       setMonth(date.calMonth);
@@ -32,7 +38,7 @@ const Header = ({ date }) => {
   return (
     <header className={`header ${hidden}`}>
       <Link
-        to={`/month/${date.calYear}/${date.calMonth}`}
+        to={`${URL}/month/${date.calYear}/${date.calMonth}`}
         className="header__date"
       >{`${day ? day + "." : ""} ${
         month
@@ -42,7 +48,7 @@ const Header = ({ date }) => {
       <div className="header__links">
         {isSignedIn ? (
           <Link
-            to={`/stats/${date.calYear}/${date.calMonth}`}
+            to={`${URL}/stats/${date.calYear}/${date.calMonth}`}
             className="header__link"
           >
             <svg

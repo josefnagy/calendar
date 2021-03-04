@@ -14,6 +14,8 @@ import Login from "./components/Login.jsx";
 import Stats from "./components/Stats.jsx";
 import GuardedRoute from "./components/GuardedRoute.jsx";
 
+import { URL } from "./js/config";
+
 import history from "./history";
 
 const App = () => {
@@ -22,35 +24,42 @@ const App = () => {
   return (
     <div className="app-container">
       <Router history={history}>
-        {/* <Router basename="/calendar"> */}
         <Aside />
         <Header />
         <main className="main">
           <Switch>
-            <Route path="/" exact component={Calendar} />
-            <Route path="/month/:year/:month" exact component={Calendar} />
-            <Route path="/day/:id" exact component={ShowDay} />
-            <Route path="/auth/login" exact component={Login} />
-            <Route path="/auth/signup" exact component={Signup} />
+            <Route path={`${URL}/`} exact component={Calendar} />
+            <Route
+              path={`${URL}/month/:year/:month`}
+              exact
+              component={Calendar}
+            />
+            <Route path={`${URL}/day/:id`} exact component={ShowDay} />
+            <Route path={`${URL}/auth/login`} exact component={Login} />
+            <Route path={`${URL}/auth/signup`} exact component={Signup} />
             <GuardedRoute
-              path="/day/:id/event/:eventId/edit"
+              path={`${URL}/day/:id/event/:eventId/edit`}
               exact
               component={EventEdit}
               auth={isSignedIn}
             />
             <GuardedRoute
-              path="/day/:id/event/:eventId/delete"
+              path={`${URL}/day/:id/event/:eventId/delete`}
               exact
               component={ShowDay}
               auth={isSignedIn}
             />
             <GuardedRoute
-              path="/stats/:year/:month"
+              path={`${URL}/stats/:year/:month`}
               exact
               component={Stats}
               auth={isSignedIn}
             />
-            <Route path="/day/:id/event/new" exact component={EventAdd} />
+            <Route
+              path={`${URL}/day/:id/event/new`}
+              exact
+              component={EventAdd}
+            />
           </Switch>
         </main>
       </Router>

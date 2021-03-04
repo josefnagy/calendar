@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { prevMonthDate, nextMonthDate } from "../js/cal";
+import { URL } from "../js/config";
 
 const Arrows = ({ date }) => {
   const month = Number(date.calMonth);
@@ -13,7 +14,7 @@ const Arrows = ({ date }) => {
   return (
     <>
       <Link
-        to={`/month/${prevYear}/${prevMonth}`}
+        to={`${URL}/month/${prevYear}/${prevMonth}`}
         className="arrows__button-left"
       >
         <svg id="Capa_1" viewBox="0 0 490.667 490.667" xmlSpace="preserve">
@@ -26,11 +27,11 @@ const Arrows = ({ date }) => {
           />
         </svg>
       </Link>
-      <Link to={"/"} className="button-today">
+      <Link to={`${URL}`} className="button-today">
         Today
       </Link>
       <Link
-        to={`/month/${nextYear}/${nextMonth}`}
+        to={`${URL}/month/${nextYear}/${nextMonth}`}
         className="arrows__button-right"
       >
         <svg id="Capa_1" viewBox="0 0 490.667 490.667" xmlSpace="preserve">

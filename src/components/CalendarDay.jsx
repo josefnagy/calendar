@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { setSelectedDay } from "../actions";
+import { URL } from "../js/config";
 
 const CalendarDay = ({ day, events, setSelectedDay }) => {
   const renderEvents = events.map((event) => {
@@ -15,7 +16,7 @@ const CalendarDay = ({ day, events, setSelectedDay }) => {
   // console.log(day);
 
   return (
-    <Link to={`/day/${dayId}`} onClick={() => setSelectedDay(dayIdArr)}>
+    <Link to={`${URL}/day/${dayId}`} onClick={() => setSelectedDay(dayIdArr)}>
       <div
         className={`
         calendar__day

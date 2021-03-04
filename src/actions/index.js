@@ -204,7 +204,6 @@ export const newEvent = (event) => {
   const id = uuid();
   event.createdAt = Date.now();
   event.key = id;
-  let history2 = useHistory();
 
   const eventWithCalculatedValues = createEvent(event);
 

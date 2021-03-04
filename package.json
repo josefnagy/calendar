@@ -51,8 +51,9 @@
     "webpack-merge": "^5.2.0"
   },
   "dependencies": {
-    "@react-firebase/database": "^0.3.11",
+    "@react-firebase/database": "^0.2.10",
     "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
     "firebase": "^8.2.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
