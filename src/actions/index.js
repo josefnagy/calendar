@@ -125,6 +125,8 @@ export const deleteEvent = (id) => {
 };
 
 export const editEvent = (eventId, updatedValues, id) => {
+  updatedValues.updatedAt = Date.now();
+
   return async (dispatch) => {
     const res = await db
       .collection("events")
@@ -203,6 +205,7 @@ export const updateStats = (newStats, userId) => {
 export const newEvent = (event) => {
   const id = uuid();
   event.createdAt = Date.now();
+  event.updatedAt = Date.now();
   event.key = id;
 
   const eventWithCalculatedValues = createEvent(event);

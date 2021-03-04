@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: paths.build,
     filename: "[name].bundle.js",
-    publicPath: "/",
+    publicPath: "/calendar",
   },
 
   // Customize the webpack build process
