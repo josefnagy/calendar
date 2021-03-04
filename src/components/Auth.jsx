@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { auth } from "../apis/firebase";
+import { URL } from "../js/config";
 import AuthPortal from "./AuthPortal.jsx";
 import { login, logout, setUser } from "../actions";
 
@@ -33,7 +34,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
         <>
           <li className="auth__item">
             <Link
-              to="/auth/login"
+              to={`${URL}/auth/login`}
               onClick={() => setOpen(!open)}
               className="auth__link"
             >
@@ -42,7 +43,7 @@ const Auth = ({ isSignedIn, logout, setUser, userEmail }) => {
           </li>
           <li className="auth__item">
             <Link
-              to="/auth/signup"
+              to={`${URL}/auth/signup`}
               onClick={() => setOpen(!open)}
               className="auth__link"
             >

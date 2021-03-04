@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import InputBox from "./InputBox.jsx";
 import { login, setError, cleanError } from "../actions/index.js";
 import { validateEmail, validatePassword } from "../js/validate";
+import { URL } from "../js/config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -60,7 +61,7 @@ const Login = () => {
           </div>
           <div className="signup__footer">
             <span>Jestě nemáš účet?</span>
-            <Link to="/signup" className="signup__link">
+            <Link to={`${URL}/signup`} className="signup__link">
               Zaregistrovat se
             </Link>
           </div>

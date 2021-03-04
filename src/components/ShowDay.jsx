@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { showADay } from "../actions";
+import { URL } from "../js/config";
 import DeletePortal from "./DeletePortal.jsx";
 
 const ShowDay = ({
@@ -31,7 +32,7 @@ const ShowDay = ({
           <span className="item__label">{event.label}</span>
           <span className="item__buttons">
             <Link
-              to={`/day/${event.id}/event/${event.key}/edit/`}
+              to={`${URL}/day/${event.id}/event/${event.key}/edit/`}
               className="item__edit"
             >
               e
@@ -39,7 +40,7 @@ const ShowDay = ({
 
             <Link
               to={{
-                pathname: `/day/${event.id}/event/${event.key}/delete/`,
+                pathname: `${URL}/day/${event.id}/event/${event.key}/delete/`,
                 deleteEvent: true,
               }}
               className="item__delete"
@@ -81,7 +82,7 @@ const ShowDay = ({
           <div className="event-list__btn-container">
             <Link
               to={{
-                pathname: `/day/${match.params.id}/event/new`,
+                pathname: `${URL}/day/${match.params.id}/event/new`,
                 dayId: match.params.id,
               }}
               className="event-list__add-event-btn"

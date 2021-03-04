@@ -7,6 +7,7 @@ import { eventTypes, functionTypes, locationTypes } from "../js/eventsConfig";
 import InputBox from "./InputBox.jsx";
 import CheckBox from "./CheckBox.jsx";
 import Dropdown from "./Dropdown.jsx";
+import { URL } from "../js/config";
 
 const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
   const [selectedEvents, setSelectedEvents] = useState("");
@@ -144,7 +145,7 @@ const EventForm = ({ onSubmit, id, eventId, eventToEdit }) => {
           />
         </div>
         <div className="form__buttons">
-          <Link className="btn__discard" to={`/day/${id}`}>
+          <Link className="btn__discard" to={`${URL}/day/${id}`}>
             Zpět
           </Link>
           <button className="btn__add" onClick={() => handleAddEvent()}>

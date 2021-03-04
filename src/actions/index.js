@@ -1,5 +1,4 @@
 import db, { auth } from "../apis/firebase";
-import _ from "lodash";
 import { v4 as uuid } from "uuid";
 
 import { nextMonthDate, prevMonthDate, whatADay } from "../js/cal";
@@ -26,6 +25,7 @@ import {
 } from "./types";
 
 import history from "../history";
+import { URL } from "../js/config";
 
 export const createUser = (email, password) => {
   return async (dispatch) => {
@@ -34,7 +34,7 @@ export const createUser = (email, password) => {
       .then((userCredential) => {
         console.log("User Created");
         dispatch({ type: CREATE_USER, payload: userCredential });
-        history.push("/");
+        history.push(URL);
       })
       .catch((error) => {
         console.error("Error creating user: ", error);
@@ -62,7 +62,7 @@ export const login = (email, password) => {
       .then((userCredential) => {
         console.log("User logged IN");
         dispatch({ type: LOGIN, payload: userCredential });
-        history.push("/");
+        history.push(URL);
       })
       .catch((error) => {
         console.error("Error loggin in user: ", error);
@@ -137,7 +137,7 @@ export const editEvent = (eventId, updatedValues, id) => {
       .catch((error) => {
         console.log("Error updating document: ", error);
       });
-    history.push(`/day/${id}`);
+    history.push(`${URL}/day/${id}`);
     dispatch(res);
   };
 };
@@ -221,7 +221,7 @@ export const newEvent = (event) => {
       });
     dispatch({ type: NEW_EVENT, payload: eventWithCalculatedValues });
 
-    history.push(`/day/${eventWithCalculatedValues.id}`);
+    history.push(`${URL}/day/${eventWithCalculatedValues.id}`);
   };
 };
 

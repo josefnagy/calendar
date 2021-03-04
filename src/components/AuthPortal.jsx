@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const AuthPortal = ({ isOpen, children, setOpen }) => {

@@ -5,6 +5,7 @@ import { connect, useSelector } from "react-redux";
 
 import { deleteEvent, updateStats } from "../actions";
 import { deleteEventStats } from "../js/calcEventStats";
+import { URL } from "../js/config";
 
 const DeletePortal = ({
   isOpen,
@@ -29,10 +30,14 @@ const DeletePortal = ({
       <h3>Delete Event</h3>
       {children}
       <div className="deleteModal__buttons">
-        <Link to={`/day/${id}`} className="btn__back">
+        <Link to={`${URL}/day/${id}`} className="btn__back">
           No
         </Link>
-        <Link to={`/day/${id}`} className="btn__delete" onClick={handleDelete}>
+        <Link
+          to={`${URL}/day/${id}`}
+          className="btn__delete"
+          onClick={handleDelete}
+        >
           Yes
         </Link>
       </div>
