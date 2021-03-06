@@ -233,7 +233,6 @@ export const newEvent = (event) => {
       .commit()
       .then(() => {
         console.log("Data succesfully written");
-        // return { type: NEW_EVENT, payload: formValues };
       })
       .catch((err) => {
         console.log("Error adding event ", err);
@@ -322,7 +321,7 @@ export const fetchEvents = (year, month, userId) => {
       ])
       .get()
       .then((querySnapshot) => {
-        if (querySnapshot.exists) return createEventsArray(querySnapshot);
+        if (!querySnapshot.empty) return createEventsArray(querySnapshot);
         else console.log("emptY");
         return "";
       });

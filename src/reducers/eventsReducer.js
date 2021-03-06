@@ -24,6 +24,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     // * TIMHLE SE RESETNE LOCAL STORAGE
     // * localStorage.clear('persist:persistedStore')
+
     case "persist/REHYDRATE":
       if (action.payload) {
         return {
@@ -43,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
       return state;
 
     case FETCH_EVENTS: {
+      console.log(action.payload);
       const allEvents = _.mapKeys(action.payload.res, "key");
       return {
         ...state,
@@ -83,6 +85,7 @@ export default (state = INITIAL_STATE, action) => {
           events: { ...e1 },
         },
         allEvents: { ...e2 },
+        updatedAt: updatedEvent.updatedAt,
       };
     }
 
@@ -143,9 +146,9 @@ export default (state = INITIAL_STATE, action) => {
           allEvents: newEvntObj,
           selectedDay: {
             ...state.selectedDay,
-            // events: { ...state.selectedDay.events, newEvnt },
             events: newSelectedDayEventsObj,
           },
+          updatedAt: action.payload.updatedAt,
         };
       }
       return {
@@ -153,9 +156,9 @@ export default (state = INITIAL_STATE, action) => {
         allEvents: { ...state.allEvents, newEvnt },
         selectedDay: {
           ...state.selectedDay,
-          // events: { ...state.selectedDay, newEvnt },
           events: newSelectedDayEventsObj,
         },
+        updatedAt: action.payload.updatedAt,
       };
     }
     case DELETE_EVENT:
@@ -166,6 +169,7 @@ export default (state = INITIAL_STATE, action) => {
           ...state.selectedDay,
           events: _.omit(state.selectedDay.events, action.payload),
         },
+        updatedAt: Date.now(),
       };
 
     default:
