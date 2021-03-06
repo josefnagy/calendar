@@ -15,17 +15,17 @@ const Header = ({ date }) => {
   useEffect(() => {
     console.log("thats weird");
     if (window.location.pathname !== URL) {
-      console.log("hmm");
       const str = window.location.pathname.split("/");
-      if (str[2] === "day") {
-        const dayId = str[3] ? str[3].split("-") : 0;
+      console.log(str);
+      if (str[1] === "day") {
+        const dayId = str[2] ? str[2].split("-") : 0;
         setDay(dayId[2]);
         setMonth(dayId[1]);
         setYear(dayId[0]);
-      } else if (str[2] === "month") {
+      } else if (str[1] === "month") {
         setDay(undefined);
-        setYear(str[3]);
-        setMonth(str[4]);
+        setYear(str[2]);
+        setMonth(str[3]);
       }
     } else {
       setDay(undefined);
