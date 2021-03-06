@@ -132,6 +132,7 @@ const mapStateToProps = (state) => {
       selectedEvents: [],
     };
   }
+  return null;
 };
 
 export default connect(mapStateToProps, { showADay })(ShowDay);

@@ -108,39 +108,49 @@ export const setSelectedDay = (day) => {
 };
 
 export const deleteEvent = (id) => {
+  const updatedAt = Date.now();
+  const batch = db.batch();
+  const deleteEventRef = db.collection("events").doc(id);
+  batch.delete(deleteEventRef);
+
+  const updatedAtRef = db.collection("events").doc("updatedAt");
+  batch.set(updatedAtRef, { updatedAt });
+
   return async (dispatch) => {
-    const res = await db
-      .collection("events")
-      .doc(id)
-      .delete()
+    await batch
+      .commit()
       .then(() => {
         console.log("Document succesfully deleted!");
-        return { type: DELETE_EVENT, payload: id };
+        dispatch({ type: DELETE_EVENT, payload: id });
       })
       .catch((error) => {
         console.error("Error removing event: ", error);
       });
-    dispatch(res);
   };
 };
 
 export const editEvent = (eventId, updatedValues, id) => {
-  updatedValues.updatedAt = Date.now();
+  const updatedAt = Date.now();
+  updatedValues.updatedAt = updatedAt;
+
+  const batch = db.batch();
+  const updatedEvent = db.collection("events").doc(eventId);
+  batch.update(updatedEvent, updatedValues);
+
+  const updatedAtRef = db.collection("events").doc("updatedAt");
+  batch.set(updatedAtRef, { updatedAt });
 
   return async (dispatch) => {
-    const res = await db
-      .collection("events")
-      .doc(eventId)
-      .update(updatedValues)
+    await batch
+      .commit()
       .then(() => {
         console.log("Document succesfully updated");
-        return { type: EDIT_EVENT, payload: [eventId, updatedValues] };
+        dispatch({ type: EDIT_EVENT, payload: [eventId, updatedValues] });
       })
       .catch((error) => {
         console.log("Error updating document: ", error);
       });
     history.push(`${URL}/day/${id}`);
-    dispatch(res);
   };
 };
 
@@ -209,12 +219,18 @@ export const newEvent = (event) => {
   event.key = id;
 
   const eventWithCalculatedValues = createEvent(event);
+  // const evntWithId = { [id]: eventWithCalculatedValues };
+
+  const batch = db.batch();
+  const allEvents = db.collection("events").doc(id);
+  batch.set(allEvents, eventWithCalculatedValues);
+
+  const updatedAt = db.collection("events").doc("updatedAt");
+  batch.set(updatedAt, { updatedAt: event.updatedAt });
 
   return async (dispatch) => {
-    await db
-      .collection("events")
-      .doc(id)
-      .set(eventWithCalculatedValues)
+    await batch
+      .commit()
       .then(() => {
         console.log("Data succesfully written");
         // return { type: NEW_EVENT, payload: formValues };
@@ -306,7 +322,9 @@ export const fetchEvents = (year, month, userId) => {
       ])
       .get()
       .then((querySnapshot) => {
-        return createEventsArray(querySnapshot);
+        if (querySnapshot.exists) return createEventsArray(querySnapshot);
+        else console.log("emptY");
+        return "";
       });
 
     dispatch({
@@ -337,11 +355,7 @@ const createEvent = (event) => {
   event.nightBonus = 0;
 
   const currDayInfo = whatADay(year, month, day);
-  // console.log(currDayInfo);
-  const prevDayInfo = whatADay(year, month, day, "prev");
-  // console.log(prevDayInfo);
   const nextDayInfo = whatADay(year, month, day, "next");
-  // console.log(nextDayInfo);
 
   switch (event.type) {
     case "ranni":

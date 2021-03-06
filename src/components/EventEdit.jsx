@@ -20,6 +20,7 @@ const EventEdit = ({
   const onSubmit = (updatedValues, formValues) => {
     const newStats = deleteEventStats(eventToEdit.key, state);
     const updatedSt = calcEventStats(formValues, newStats, userId);
+    console.log(formValues);
     editEvent(match.params.eventId, updatedValues, match.params.id);
 
     updateStats({ ...updatedSt }, userId);
