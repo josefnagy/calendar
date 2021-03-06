@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useSwipeable } from "react-swipeable";
 
 import CalendarDay from "./CalendarDay.jsx";
 import db from "../apis/firebase";
@@ -98,6 +99,10 @@ const Calendar = ({
     // }
   }, [fetchEvents, showMonth, year, month, userId, synced]);
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+  });
+
   const renderCal = date.calendar.map((day, index) => {
     if (
       day.year === date.currentYear &&
@@ -116,7 +121,11 @@ const Calendar = ({
     return <CalendarDay key={index} day={day} events={eventsInDay} />;
   });
 
-  return <div className="calendar">{renderCal}</div>;
+  return (
+    <div className="calendar" {...handlers}>
+      {renderCal}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

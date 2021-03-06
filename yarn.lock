@@ -8322,6 +8322,11 @@
     "tiny-invariant" "^1.0.2"
     "tiny-warning" "^1.0.0"
 
+"react-swipeable@^6.1.0":
+  "integrity" "sha512-vB6+bv1I5L9nfuM7quu41o/kK1f3a7cTQ3NHNWkOltg5uhBpnH6xvkQJeoPfKQ6K4pnifELXY65wzWwWBa+zGg=="
+  "resolved" "https://registry.npmjs.org/react-swipeable/-/react-swipeable-6.1.0.tgz"
+  "version" "6.1.0"
+
 "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.14.0", "react@^16.8.3 || ^17", "react@>=15":
   "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
