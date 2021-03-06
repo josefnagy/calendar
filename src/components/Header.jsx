@@ -90,9 +90,9 @@ const Header = ({ date }) => {
 const mapStateToProps = (state) => {
   return {
     date: state.date,
-    // day: state.events.selectedDay.day,
-    // month: state.events.selectedDay.month,
-    // year: state.events.selectedDay.year,
+    day: state.events.selectedDay.day,
+    month: state.events.selectedDay.month,
+    year: state.events.selectedDay.year,
   };
 };
 
