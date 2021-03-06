@@ -49,13 +49,13 @@ export default (state = INITIAL_STATE, action) => {
       return state;
 
     case FETCH_EVENTS: {
-      console.log(action.payload);
       const allEvents = _.mapKeys(action.payload.res, "key");
       return {
         ...state,
         allEvents,
         selectedDay: {},
         fetchedMonths: action.payload.fetchedMonths,
+        synced: true,
       };
     }
 

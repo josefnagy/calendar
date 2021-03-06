@@ -44,6 +44,21 @@ export const createUser = (email, password) => {
   };
 };
 
+export const listenForUpdates = () => {
+  console.log("listening ....");
+  return async (dispatch) => {
+    await db
+      .collection("events")
+      .doc("updatedAt")
+      .onSnapshot((doc) => {
+        dispatch({
+          type: CHECK_IF_IN_SYNC,
+          payload: { synced: false, updatedAt: doc.data().updatedAt },
+        });
+      });
+  };
+};
+
 export const setError = (error) => {
   return { type: SET_ERROR, payload: error };
 };

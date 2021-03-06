@@ -8,6 +8,7 @@ import {
   setDate,
   showMonth,
   checkIfInSync,
+  listenForUpdates,
   fetchEventsForMonth,
 } from "../actions";
 import { nextMonthDate, prevMonthDate } from "../js/cal";
@@ -25,15 +26,23 @@ const Calendar = ({
   fetchedMonths,
   checkIfInSync,
   localUpdatedAt,
+  listenForUpdates,
   fetchEventsForMonth,
 }) => {
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
 
   useEffect(() => {
-    console.log("3");
     setDate();
   }, [setDate]);
+
+  useEffect(() => {
+    if (userId) listenForUpdates();
+  }, []);
+
+  // useEffect(() => {
+  //   if (userId) checkIfInSync(localUpdatedAt);
+  // }, [checkIfInSync]);
 
   useEffect(() => {
     //look at params month, and check if there was events fetched for surrounding months
@@ -59,7 +68,6 @@ const Calendar = ({
 
     // check if is someone signedIn
     if (userId) {
-      checkIfInSync(localUpdatedAt);
       if (!synced) {
         fetchEvents(date.calYear, date.calMonth, userId);
         fetchStats(userId);
@@ -107,5 +115,6 @@ export default connect(mapStateToProps, {
   setDate,
   showMonth,
   checkIfInSync,
+  listenForUpdates,
   fetchEventsForMonth,
 })(Calendar);
