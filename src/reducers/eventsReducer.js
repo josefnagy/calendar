@@ -10,6 +10,7 @@ import {
   SET_SELECTED_DAY,
   SHOW_MONTH,
   SET_CAL_DATE,
+  CHECK_IF_IN_SYNC,
   LOGOUT,
   FETCH_EVENTS_FOR_MONTH,
 } from "../actions/types";
@@ -19,6 +20,7 @@ const INITIAL_STATE = {
   selectedDay: {},
   fetchedMonths: [],
   updatedAt: null,
+  synced: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,6 +36,7 @@ export default (state = INITIAL_STATE, action) => {
           selectedDay: action.payload.events.selectedDay,
           fetchedMonths: action.payload.events.fetchedMonths,
           updatedAt: action.payload.events.updatedAt,
+          synced: action.payload.events.synced,
         };
       }
       return state;
@@ -54,6 +57,21 @@ export default (state = INITIAL_STATE, action) => {
         selectedDay: {},
         fetchedMonths: action.payload.fetchedMonths,
       };
+    }
+
+    case CHECK_IF_IN_SYNC: {
+      if (action.payload.synced) {
+        return {
+          ...state,
+          synced: action.payload.synced,
+        };
+      } else {
+        return {
+          ...state,
+          synced: action.payload.synced,
+          updatedAt: action.payload.updatedAt,
+        };
+      }
     }
 
     case FETCH_EVENTS_FOR_MONTH: {

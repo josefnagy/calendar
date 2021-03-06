@@ -22,6 +22,7 @@ import {
   SET_ERROR,
   UPDATE_STATS,
   FETCH_STATS,
+  CHECK_IF_IN_SYNC,
 } from "./types";
 
 import history from "../history";
@@ -84,6 +85,32 @@ export const logout = () => {
         console.error("An Error happended", error);
       });
     dispatch(res);
+  };
+};
+
+export const checkIfInSync = (localUpdated) => {
+  console.log("checking if something new in DB");
+  return async (dispatch) => {
+    await db
+      .collection("events")
+      .doc("updatedAt")
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log("local: ", localUpdated);
+          console.log("db: ", doc.data());
+          if (doc.data().updatedAt > localUpdated) {
+            console.log("v DB je novejsi update");
+            dispatch({
+              type: CHECK_IF_IN_SYNC,
+              payload: { synced: false, updatedAt: doc.data().updatedAt },
+            });
+          } else {
+            console.log("DB a local copy jsou stejne");
+            dispatch({ type: CHECK_IF_IN_SYNC, payload: { synced: true } });
+          }
+        }
+      });
   };
 };
 

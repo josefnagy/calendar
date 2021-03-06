@@ -13,6 +13,7 @@ export const SHOW_MONTH = "SHOW_MONTH";
 export const SET_DATE = "SET_DATE";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAN_ERROR = "CLEAN_ERROR";
+export const CHECK_IF_IN_SYNC = "CHECK_IF_IN_SYNC";
 
 export const FETCH_STATS = "FETCH_STATS";
 export const UPDATE_STATS = "UPDATE_STATS";
