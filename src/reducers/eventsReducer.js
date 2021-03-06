@@ -56,6 +56,7 @@ export default (state = INITIAL_STATE, action) => {
         selectedDay: {},
         fetchedMonths: action.payload.fetchedMonths,
         synced: true,
+        updatedAt: action.payload.updatedAt,
       };
     }
 

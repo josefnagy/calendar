@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import CalendarDay from "./CalendarDay.jsx";
+import db from "../apis/firebase";
 import {
   fetchEvents,
   fetchStats,
@@ -24,7 +25,6 @@ const Calendar = ({
   userId,
   setDate,
   fetchedMonths,
-  checkIfInSync,
   localUpdatedAt,
   listenForUpdates,
   fetchEventsForMonth,
@@ -37,7 +37,32 @@ const Calendar = ({
   }, [setDate]);
 
   useEffect(() => {
-    if (userId) listenForUpdates();
+    // if (userId) listenForUpdates(localUpdatedAt);
+    showMonth(year, month);
+    if (userId) {
+      const unsubscribe = db
+        .collection("events")
+        .doc("updatedAt")
+        .onSnapshot((doc) => {
+          if (doc.data().updatedAt > localUpdatedAt) {
+            console.log("updating?...");
+            fetchEvents(
+              date.calYear,
+              date.calMonth,
+              userId,
+              doc.data().updatedAt
+            );
+            fetchStats(userId);
+          } else {
+            console.log("notUpdating");
+          }
+        });
+
+      return () => {
+        console.log("unsub");
+        unsubscribe();
+      };
+    }
   }, []);
 
   // useEffect(() => {
@@ -64,15 +89,14 @@ const Calendar = ({
         fetchEventsForMonth(nextYear, nextMonth, userId);
       }
     }
-    showMonth(year, month);
 
     // check if is someone signedIn
-    if (userId) {
-      if (!synced) {
-        fetchEvents(date.calYear, date.calMonth, userId);
-        fetchStats(userId);
-      }
-    }
+    // if (userId) {
+    //   if (!synced) {
+    //     fetchEvents(date.calYear, date.calMonth, userId);
+    //     fetchStats(userId);
+    //   }
+    // }
   }, [fetchEvents, showMonth, year, month, userId, synced]);
 
   const renderCal = date.calendar.map((day, index) => {

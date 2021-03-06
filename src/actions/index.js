@@ -44,17 +44,24 @@ export const createUser = (email, password) => {
   };
 };
 
-export const listenForUpdates = () => {
+export const listenForUpdates = (localUpdatedAt) => {
   console.log("listening ....");
   return async (dispatch) => {
     await db
       .collection("events")
       .doc("updatedAt")
       .onSnapshot((doc) => {
-        dispatch({
-          type: CHECK_IF_IN_SYNC,
-          payload: { synced: false, updatedAt: doc.data().updatedAt },
-        });
+        console.log("local: ", localUpdatedAt);
+        console.log("fire ...", doc.data());
+        if (doc.data().updatedAt > localUpdatedAt) {
+          console.log("updating?...");
+          dispatch({
+            type: CHECK_IF_IN_SYNC,
+            payload: { synced: false, updatedAt: doc.data().updatedAt },
+          });
+        } else {
+          dispatch({ type: CHECK_IF_IN_SYNC, payload: { synced: true } });
+        }
       });
   };
 };
@@ -338,7 +345,7 @@ export const fetchEventsForMonth = (year, month, userId) => {
   };
 };
 
-export const fetchEvents = (year, month, userId) => {
+export const fetchEvents = (year, month, userId, updatedAt) => {
   // get previous month date (becouse you are showing events in calendar from previous and next month)
   // so you must get events from tree months
   const currentMonthDateId = `${year}-${month}`;
@@ -373,6 +380,7 @@ export const fetchEvents = (year, month, userId) => {
       payload: {
         res,
         fetchedMonths: [prevMonthDateId, currentMonthDateId, nextMonthDateId],
+        updatedAt,
       },
     });
   };
