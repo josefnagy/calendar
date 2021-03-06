@@ -13,7 +13,9 @@ const Header = ({ date }) => {
   const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
   useEffect(() => {
+    console.log("thats weird");
     if (window.location.pathname !== URL) {
+      console.log("hmm");
       const str = window.location.pathname.split("/");
       if (str[2] === "day") {
         const dayId = str[3] ? str[3].split("-") : 0;
@@ -88,9 +90,9 @@ const Header = ({ date }) => {
 const mapStateToProps = (state) => {
   return {
     date: state.date,
-    day: state.events.selectedDay.day,
-    month: state.events.selectedDay.month,
-    year: state.events.selectedDay.year,
+    // day: state.events.selectedDay.day,
+    // month: state.events.selectedDay.month,
+    // year: state.events.selectedDay.year,
   };
 };
 
