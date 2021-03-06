@@ -38,7 +38,6 @@ const Calendar = ({
 
   useEffect(() => {
     // if (userId) listenForUpdates(localUpdatedAt);
-    showMonth(year, month);
     if (userId) {
       const unsubscribe = db
         .collection("events")
@@ -89,8 +88,8 @@ const Calendar = ({
         fetchEventsForMonth(nextYear, nextMonth, userId);
       }
     }
-
-    // check if is someone signedIn
+    showMonth(year, month);
+    // // check if is someone signedIn
     // if (userId) {
     //   if (!synced) {
     //     fetchEvents(date.calYear, date.calMonth, userId);
