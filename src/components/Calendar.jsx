@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useSwipeable } from "react-swipeable";
 
 import CalendarDay from "./CalendarDay.jsx";
+import history from "../history";
 import db from "../apis/firebase";
 import {
   fetchEvents,
@@ -69,6 +70,9 @@ const Calendar = ({
   //   if (userId) checkIfInSync(localUpdatedAt);
   // }, [checkIfInSync]);
 
+  const [prevYear, prevMonth] = prevMonthDate(year, month);
+  const [nextYear, nextMonth] = nextMonthDate(year, month);
+
   useEffect(() => {
     //look at params month, and check if there was events fetched for surrounding months
 
@@ -101,6 +105,10 @@ const Calendar = ({
 
   const handlers = useSwipeable({
     onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    onSwipedLeft: (eventData) =>
+      history.push(`/month/${nextYear}/${nextMonth}`),
+    onSwipedRight: (eventData) =>
+      history.push(`/month/${prevYear}/${prevMonth}`),
   });
 
   const renderCal = date.calendar.map((day, index) => {
