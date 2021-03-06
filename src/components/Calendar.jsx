@@ -31,7 +31,7 @@ const Calendar = ({
   const month = match.params.month ? match.params.month : date.currentMonth;
 
   useEffect(() => {
-    console.log("2");
+    console.log("3");
     setDate();
   }, [setDate]);
 
