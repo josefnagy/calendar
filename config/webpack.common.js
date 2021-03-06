@@ -30,6 +30,13 @@ module.exports = {
             ignore: ["*.DS_Store"],
           },
         },
+        {
+          from: paths.public,
+          to: paths.build,
+          globOptions: {
+            ignore: ["*.html"],
+          },
+        },
       ],
     }),
 
