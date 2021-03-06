@@ -121,7 +121,7 @@ export const deleteEvent = (id) => {
       .commit()
       .then(() => {
         console.log("Document succesfully deleted!");
-        dispatch({ type: DELETE_EVENT, payload: id });
+        dispatch({ type: DELETE_EVENT, payload: [id, updatedAt] });
       })
       .catch((error) => {
         console.error("Error removing event: ", error);

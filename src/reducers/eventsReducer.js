@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   allEvents: {},
   selectedDay: {},
   fetchedMonths: [],
+  updatedAt: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,6 +33,7 @@ export default (state = INITIAL_STATE, action) => {
           allEvents: action.payload.events.allEvents,
           selectedDay: action.payload.events.selectedDay,
           fetchedMonths: action.payload.events.fetchedMonths,
+          updatedAt: action.payload.events.updatedAt,
         };
       }
       return state;
@@ -164,12 +166,12 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_EVENT:
       return {
         ...state,
-        allEvents: _.omit(state.allEvents, action.payload),
+        allEvents: _.omit(state.allEvents, action.payload[0]),
         selectedDay: {
           ...state.selectedDay,
-          events: _.omit(state.selectedDay.events, action.payload),
+          events: _.omit(state.selectedDay.events, action.payload[0]),
         },
-        updatedAt: Date.now(),
+        updatedAt: action.payload[1],
       };
 
     default:
