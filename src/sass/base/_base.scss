@@ -33,6 +33,10 @@ a {
   color: white;
 }
 
+#root {
+  height: 100vh;
+}
+
 #root::before {
   z-index: -1;
 }
