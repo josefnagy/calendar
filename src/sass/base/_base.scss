@@ -15,15 +15,13 @@ html {
   box-sizing: border-box;
 
   @include respond-small {
-    height: -webkit-fill-available;
+    // height: -webkit-fill-available;
   }
 }
 
 body {
   color: coral;
   @include respond-small {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
   }
   background: linear-gradient(to right, $background-black, $background-gray);
 }
@@ -33,9 +31,9 @@ a {
   color: white;
 }
 
-#root {
-  height: 100vh;
-}
+// #root {
+//   height: 100vh;
+// }
 
 #root::before {
   z-index: -1;
