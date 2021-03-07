@@ -2,12 +2,12 @@
   display: grid;
   grid-template-columns: 5rem auto;
   grid-template-rows: 10rem auto;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  height: 100vh;
 
   @include respond-small {
     grid-template-columns: auto;
     grid-template-rows: 6rem auto;
+    min-height: -webkit-fill-available;
   }
 }
 
