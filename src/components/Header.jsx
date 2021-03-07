@@ -13,10 +13,7 @@ const Header = ({ date }) => {
   const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
   useEffect(() => {
-    console.log(date);
-    console.log(window.location.pathname);
     const path = URL || "/";
-    console.log(path);
 
     if (window.location.pathname !== path) {
       const str = window.location.pathname.split("/");
@@ -32,7 +29,6 @@ const Header = ({ date }) => {
         setMonth(str[3]);
       }
     } else {
-      console.log("clicked on today");
       setDay(undefined);
       setMonth(date.calMonth);
       setYear(date.calYear);
