@@ -2,6 +2,7 @@
   font-size: 6rem;
   font-family: $font2;
   text-transform: uppercase;
+  flex: 1;
 
   @include respond-small {
     font-size: 2rem;
@@ -14,6 +15,7 @@
 .header__links {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .header__stats-icon {

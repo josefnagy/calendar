@@ -8,7 +8,9 @@ const Stats = () => {
     const date = useSelector((state) => state.date);
     const dateId = `${date.calYear}-${date.calMonth}`;
     const stats = useSelector((state) => state.stats[dateId]);
-    const vacation = useSelector((state) => state.stats.vacation[date.calYear]);
+    const vacation = useSelector((state) =>
+      state.stats.vacation ? state.stats.vacation[date.calYear] : null
+    );
     const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
     if (typeof stats !== "undefined" && isSignedIn) {

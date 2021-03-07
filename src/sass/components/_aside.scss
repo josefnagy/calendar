@@ -3,12 +3,17 @@
   grid-template-rows: 2fr 8fr 2fr;
 
   @include respond-small {
-    display: none;
+    grid-template-rows: 1fr;
+    justify-content: end;
   }
   .user {
     grid-row: 3;
-
     align-self: end;
+
+    @include respond-small {
+      grid-row: 1;
+      width: 3rem;
+    }
   }
 
   .user__icon {
@@ -23,6 +28,10 @@
     padding: 5px;
     align-self: start;
     transition: all 0.4s;
+
+    @include respond-small {
+      display: none;
+    }
 
     &:hover {
       background-color: $background-black;

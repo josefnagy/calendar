@@ -12,6 +12,7 @@ import {
   SET_CAL_DATE,
   CHECK_IF_IN_SYNC,
   LOGOUT,
+  LISTENING,
   FETCH_EVENTS_FOR_MONTH,
 } from "../actions/types";
 
@@ -21,6 +22,7 @@ const INITIAL_STATE = {
   fetchedMonths: [],
   updatedAt: null,
   synced: false,
+  listening: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,12 +39,26 @@ export default (state = INITIAL_STATE, action) => {
           fetchedMonths: action.payload.events.fetchedMonths,
           updatedAt: action.payload.events.updatedAt,
           synced: action.payload.events.synced,
+          listening: action.payload.events.listening,
         };
       }
       return state;
 
     case LOGOUT: {
-      return { ...state, allEvents: {}, fetchedMonths: [] };
+      return {
+        ...state,
+        allEvents: {},
+        fetchedMonths: [],
+        synced: false,
+        updatedAt: null,
+      };
+    }
+
+    case LISTENING: {
+      return {
+        ...state,
+        listening: !state.listening,
+      };
     }
 
     case SHOW_MONTH:

@@ -11,6 +11,7 @@ import {
   setDate,
   showMonth,
   checkIfInSync,
+  listening,
   listenForUpdates,
   fetchEventsForMonth,
 } from "../actions";
@@ -25,6 +26,9 @@ const Calendar = ({
   match,
   showMonth,
   userId,
+  isSignedIn,
+  listening,
+  list,
   setDate,
   fetchedMonths,
   localUpdatedAt,
@@ -39,13 +43,13 @@ const Calendar = ({
   }, [setDate]);
 
   useEffect(() => {
-    // if (userId) listenForUpdates(localUpdatedAt);
+    // console.log(list);
     if (userId) {
       const unsubscribe = db
         .collection("events")
         .doc("updatedAt")
         .onSnapshot((doc) => {
-          if (doc.data().updatedAt > localUpdatedAt) {
+          if (doc.exists && doc.data().updatedAt > localUpdatedAt) {
             console.log("updating?...");
             fetchEvents(
               date.calYear,
@@ -64,11 +68,7 @@ const Calendar = ({
         unsubscribe();
       };
     }
-  }, []);
-
-  // useEffect(() => {
-  //   if (userId) checkIfInSync(localUpdatedAt);
-  // }, [checkIfInSync]);
+  });
 
   const [prevYear, prevMonth] = prevMonthDate(year, month);
   const [nextYear, nextMonth] = nextMonthDate(year, month);
@@ -146,6 +146,7 @@ const mapStateToProps = (state) => {
     fetchedMonths: state.events.fetchedMonths ? state.events.fetchedMonths : [],
     localUpdatedAt: state.events.updatedAt,
     synced: state.events.synced,
+    list: state.events.listening,
   };
 };
 
@@ -154,6 +155,7 @@ export default connect(mapStateToProps, {
   fetchStats,
   setDate,
   showMonth,
+  listening,
   checkIfInSync,
   listenForUpdates,
   fetchEventsForMonth,

@@ -22,6 +22,7 @@ import {
   SET_ERROR,
   UPDATE_STATS,
   FETCH_STATS,
+  LISTENING,
   CHECK_IF_IN_SYNC,
 } from "./types";
 
@@ -345,6 +346,10 @@ export const fetchEventsForMonth = (year, month, userId) => {
   };
 };
 
+export const listening = () => {
+  return { type: LISTENING };
+};
+
 export const fetchEvents = (year, month, userId, updatedAt) => {
   // get previous month date (becouse you are showing events in calendar from previous and next month)
   // so you must get events from tree months
@@ -381,6 +386,7 @@ export const fetchEvents = (year, month, userId, updatedAt) => {
         res,
         fetchedMonths: [prevMonthDateId, currentMonthDateId, nextMonthDateId],
         updatedAt,
+        synced: true,
       },
     });
   };
