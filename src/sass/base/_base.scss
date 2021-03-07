@@ -14,12 +14,17 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
 
+  // so mobile browsers doesnt bounce
+  overflow: hidden;
+
   @include respond-small {
     // height: -webkit-fill-available;
   }
 }
 
 body {
+  // position: fixed;
+  // overflow: hidden;
   color: coral;
   @include respond-small {
   }

@@ -12,6 +12,10 @@
   width: 1.5rem;
   transform: rotate(180deg);
 
+  @include respond-small {
+    display: none;
+  }
+
   &:hover {
     .arrow {
       fill: $primary;
@@ -21,6 +25,10 @@
 .arrows__button-right {
   width: 1.5rem;
   margin-top: 5px;
+
+  @include respond-small {
+    display: none;
+  }
 
   &:hover {
     .arrow {
