@@ -1,3 +1,16 @@
+.stats-scroll {
+  @include respond-small {
+    overflow-y: scroll !important;
+  }
+}
+
+.stats-scroll-app-ref {
+  @include respond-small {
+    height: auto;
+    max-height: fit-content;
+  }
+}
+
 .stats {
   padding: $main-section-padding;
   display: grid;
@@ -10,7 +23,7 @@
   @include respond-small {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
-    padding: 1rem 0.5rem;
+    padding: 0;
     gap: 0rem;
   }
 

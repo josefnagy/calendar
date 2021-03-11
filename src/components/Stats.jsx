@@ -1,9 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useRef } from "react-redux";
 
 import StatsCard from "./StatsCard.jsx";
 
 const Stats = () => {
+  document.getElementById("core").classList.add("stats-scroll");
+  document
+    .querySelector(".app-container")
+    .classList.add("stats-scroll-app-ref");
+
   const renderStats = () => {
     const date = useSelector((state) => state.date);
     const dateId = `${date.calYear}-${date.calMonth}`;

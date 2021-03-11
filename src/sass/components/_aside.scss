@@ -5,6 +5,7 @@
   @include respond-small {
     grid-template-rows: 1fr;
     justify-content: end;
+    height: auto;
   }
   .user {
     grid-row: 3;

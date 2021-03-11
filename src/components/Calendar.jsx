@@ -38,6 +38,12 @@ const Calendar = ({
   const year = match.params.year ? match.params.year : date.currentYear;
   const month = match.params.month ? match.params.month : date.currentMonth;
 
+  document.getElementById("core").classList.remove("stats-scroll");
+  const appContainerRef = document.querySelector(".app-container");
+  appContainerRef
+    ? appContainerRef.classList.remove("stats-scroll-app-ref")
+    : "";
+
   useEffect(() => {
     setDate();
   }, [setDate]);

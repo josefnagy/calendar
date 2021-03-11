@@ -18,8 +18,7 @@ html {
   overflow: hidden;
 
   @include respond-small {
-    // height: -webkit-fill-available;
-    overflow: scroll;
+    // overflow-y: scroll;
   }
 }
 
@@ -28,6 +27,7 @@ body {
   // overflow: hidden;
   color: coral;
   @include respond-small {
+    // overflow-y: hidden;
   }
   background: linear-gradient(to right, $background-black, $background-gray);
 }
@@ -37,9 +37,11 @@ a {
   color: white;
 }
 
-// #root {
-//   height: 100vh;
-// }
+#root {
+  @include respond-small {
+    // overflow-y: none !important;
+  }
+}
 
 #root::before {
   z-index: -1;
