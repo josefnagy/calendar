@@ -9,7 +9,7 @@
 
   @include respond-small {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: auto auto auto auto;
     padding: 1rem 0.5rem;
     gap: 0rem;
   }
@@ -24,9 +24,11 @@
     height: 100%;
     position: relative;
     padding: 2rem;
+    font-size: 1.3rem;
     @include respond-small {
       padding: 1rem;
       margin-top: 2rem;
+      border-bottom: 1px solid $primary;
     }
   }
 

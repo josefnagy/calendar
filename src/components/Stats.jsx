@@ -193,6 +193,10 @@ const Stats = () => {
           value: formateMoney(vacationBonus),
         },
         {
+          label: "Překážka v práci",
+          value: formateMoney(obstacleInWorkBonus),
+        },
+        {
           label: "Přesčas",
           value: formateMoney(overtimeBonus),
         },
@@ -213,12 +217,12 @@ const Stats = () => {
           value: formateMoney(afternoonBonus),
         },
         {
-          label: "Prémie za Heřmanice",
-          value: formateMoney(bonusHer),
-        },
-        {
           label: "Avízo",
           value: formateMoney(stats.extras.unscheduledBonus),
+        },
+        {
+          label: "Prémie za Heřmanice",
+          value: formateMoney(bonusHer),
         },
         {
           label: "Prémie za Uhelnou službu",

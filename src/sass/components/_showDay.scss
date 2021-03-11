@@ -74,6 +74,9 @@
   .item__location {
     grid-column: 1 / span 6;
     grid-row: 2;
+    @include respond-small {
+      font-size: 1.5rem;
+    }
   }
 
   .item__notes {
@@ -90,6 +93,9 @@
 
   .event-list__add-event-btn {
     @include button-primary;
+    @include respond-small {
+      font-size: 1.5rem;
+    }
   }
 
   .event-list__add-event-btn:hover {

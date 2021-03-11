@@ -19,6 +19,7 @@ html {
 
   @include respond-small {
     // height: -webkit-fill-available;
+    overflow: scroll;
   }
 }
 

@@ -2,6 +2,7 @@
   padding: $main-section-padding;
 
   @include respond-small {
-    padding: 0;
+    padding: 0rem;
+    // width: 100vw;
   }
 }
